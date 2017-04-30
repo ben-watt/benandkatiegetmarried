@@ -1,0 +1,10 @@
+language: csharp
+solution: benandkatiegetmarried.sln
+install:
+  - nuget restore ./benandkatiegetmarried/benandkatiegetmarried.sln
+  - nuget install xunit.runner.console -Version 2.2.0 -OutputDirectory testrunner
+script:
+  - xbuild /p:Configuration=Release ./benandkatiegetmarried/benandkatiegetmarried.sln
+  - mono ./testrunner/xunit.runner.console.2.2.0/tools/xunit.console.exe ./benandkatiegetmarried/benandkatiegetmarried.Tests/bin/Release/benandkatiegetmarried.Tests.dll
+
+  
