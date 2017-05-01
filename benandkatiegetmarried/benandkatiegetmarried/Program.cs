@@ -16,7 +16,10 @@ namespace benandkatiegetmarried
             var url = $"http://*:{port}";
             ManualResetEvent exit = new ManualResetEvent(false);
 
-            Console.CancelKeyPress += (o,e) => exit.Set();
+            Console.CancelKeyPress += (o,e) => {
+                e.Cancel = true;
+                exit.Set();         
+            };
 
             using (WebApp.Start<StartUp>(url))
             {
