@@ -13,8 +13,8 @@ namespace benandkatiegetmarried.Modules
 {
     public class RootModule : NancyModule
     {
-        private IRequestHandler<LoginRequest, LoginResponse> _loginHandler;
-        public RootModule(IRequestHandler<LoginRequest, LoginResponse> loginHandler)
+        private Lazy<IRequestHandler<LoginRequest, LoginResponse>> _loginHandler;
+        public RootModule(Lazy<IRequestHandler<LoginRequest, LoginResponse>> loginHandler)
         {
             this._loginHandler = loginHandler;
             Get["/"] = _ => View["LandingPage"];
@@ -23,7 +23,7 @@ namespace benandkatiegetmarried.Modules
         private dynamic Login()
         {
             var request = this.Bind<LoginRequest>();
-            var response = _loginHandler.Handle(request);
+            var response = _loginHandler.Value.Handle(request);
             if (response.IsValid)
             {
                 this.Login(response.InviteId, DateTime.Now.AddDays(7), "/");

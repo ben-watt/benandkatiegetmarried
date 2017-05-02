@@ -10,6 +10,8 @@ using benandkatiegetmarried.Modules;
 using benandkatiegetmarried;
 using System.IO;
 using Nancy.ViewEngines;
+using benandkatiegetmarried.UseCases;
+using Moq;
 
 namespace benandkatiegetmarriedTests
 {
@@ -18,7 +20,6 @@ namespace benandkatiegetmarriedTests
         [Fact]
         public void Ensure_RootPath_Hits_HomePage()
         {
-
             var bootstrapper = new CustomTestBootstrapper(with =>
             {
                 with.Module<RootModule>();
