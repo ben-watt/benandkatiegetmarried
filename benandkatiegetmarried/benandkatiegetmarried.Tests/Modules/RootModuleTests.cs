@@ -10,7 +10,6 @@ using benandkatiegetmarried.Modules;
 using benandkatiegetmarried;
 using System.IO;
 using Nancy.ViewEngines;
-using benandkatiegetmarried.UseCases;
 using Moq;
 
 namespace benandkatiegetmarriedTests

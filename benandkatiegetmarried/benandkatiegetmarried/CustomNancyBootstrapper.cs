@@ -10,9 +10,8 @@ using Nancy.Bootstrapper;
 using Nancy.TinyIoc;
 using Nancy.Authentication.Forms;
 using Nancy.ViewEngines;
-using benandkatiegetmarried.UseCases;
 using benandkatiegetmarried.DAL;
-using benandkatiegetmarried.DAL.Queries;
+using PetaPoco;
 
 namespace benandkatiegetmarried
 {
@@ -21,8 +20,7 @@ namespace benandkatiegetmarried
         protected override void ConfigureApplicationContainer(TinyIoCContainer container)
         {
             base.ConfigureApplicationContainer(container);
-            container.Register(typeof(IRequestHandler<LoginRequest,LoginResponse>), typeof(LoginGuest));
-            container.Register(typeof(IQueryHandler<CheckInvite, Guid?>), typeof(CheckIfInviteIsValid));
+            container.Register(typeof(IDatabase), WeddingDatabaseBuilder.Default());
         }
         protected override void ApplicationStartup(TinyIoCContainer container, IPipelines pipelines)
         {

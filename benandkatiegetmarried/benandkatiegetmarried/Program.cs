@@ -24,6 +24,7 @@ namespace benandkatiegetmarried
             using (WebApp.Start<StartUp>(url))
             {
                 Console.WriteLine("Starting Server...");
+                Console.WriteLine($"Server Started at {url}");
                 Console.WriteLine("Press Ctrl + C to exit");
                 exit.WaitOne();
                 Console.WriteLine("Exiting");

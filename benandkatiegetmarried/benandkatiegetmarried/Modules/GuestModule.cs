@@ -1,5 +1,4 @@
 ﻿using benandkatiegetmarried.Models;
-using benandkatiegetmarried.UseCases;
 using Nancy;
 using Nancy.ModelBinding;
 using Nancy.Responses;
