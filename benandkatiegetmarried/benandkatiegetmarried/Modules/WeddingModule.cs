@@ -8,58 +8,21 @@ using System.Threading.Tasks;
 using benandkatiegetmarried.DAL.Weddings.Query;
 using benandkatiegetmarried.DAL;
 using benandkatiegetmarried.DAL.Weddings.Commands;
+using benandkatiegetmarried.Models;
 
 namespace benandkatiegetmarried.Modules
 {
-    public class WeddingModule : NancyModule 
+    public class WeddingModule : CrudModule<Wedding, Guid>
     {
 
         private IWeddingCommands _commands;
         private IWeddingQueries _queries;
 
         public WeddingModule(IWeddingCommands weddingCommands
-            , IWeddingQueries weddingqueries) : base("weddings")
+            , IWeddingQueries weddingqueries) : base("weddings", weddingqueries, weddingCommands)
         {
             _queries = weddingqueries;
             _commands = weddingCommands;
-
-            Put["/"] = _ => UpdateWedding();
-            Post["/"] = _ => PostWedding();
-            Get["/"] = _ => GetAll();
-            Get["/{id}"] = p => GetById(p.id);
-        }
-
-        private dynamic UpdateWedding()
-        {
-            var wedding = this.Bind<Models.Wedding>();
-            if (wedding != null)
-            {
-                _commands.Update(wedding);
-                return HttpStatusCode.NoContent;
-            }
-            return HttpStatusCode.BadRequest;
-        }
-
-        private dynamic GetById(dynamic id)
-        {
-            Guid weddingId;
-            if (Guid.TryParse(id, out weddingId))
-            {
-                return _queries.GetById(weddingId);
-            }
-            return HttpStatusCode.BadRequest;
-        }
-
-        private dynamic GetAll()
-        {
-            return _queries.GetAll();
-        }
-
-        private dynamic PostWedding()
-        {
-            var request = this.Bind<Models.Wedding>();
-            _commands.Create(request);
-            return HttpStatusCode.NoContent;
         }
     }
 }

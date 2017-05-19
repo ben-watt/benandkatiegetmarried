@@ -7,36 +7,43 @@ using PetaPoco;
 
 namespace benandkatiegetmarried.DAL.BaseCommands
 {
-    public class BaseCommands<T> : IBaseCommands<T>
+    public abstract class BaseCommands<T, TKey> : ICrudCommands<T, TKey>
     {
         public IDatabase _db;
         public BaseCommands(IDatabase db)
         {
             _db = db;
         }
-        public void Create(T entity)
-        {
-            using(var uow = _db.GetTransaction())
-            {
-                _db.Insert(entity);
-                uow.Complete();
-            }           
-        }
 
-        public void Delete(T entity)
+        public void Create(IEnumerable<T> entity)
         {
-            using(var uow = _db.GetTransaction())
+            using (var uow = _db.GetTransaction())
             {
-                _db.Delete(entity);
+                foreach (var e in entity)
+                {
+                    _db.Insert(e);
+                }
                 uow.Complete();
             }
         }
 
-        public void Update(T entity)
+        public void Remove(TKey Id)
         {
-            using(var uow = _db.GetTransaction())
+            using (var uow = _db.GetTransaction())
             {
-                _db.Update(entity);
+                _db.Delete<T>("WHERE Id = @0", Id);
+                uow.Complete();
+            }
+        }
+
+        public void Update(IEnumerable<T> entity)
+        {
+            using (var uow = _db.GetTransaction())
+            {
+                foreach (var e in entity)
+                {
+                    _db.Update(e);
+                }
                 uow.Complete();
             }
         }

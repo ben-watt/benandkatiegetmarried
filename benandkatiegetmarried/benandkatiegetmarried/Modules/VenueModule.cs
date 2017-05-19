@@ -1,5 +1,6 @@
 ﻿using benandkatiegetmarried.DAL.Venue.VenueCommands;
 using benandkatiegetmarried.DAL.Venue.VenueQueries;
+using benandkatiegetmarried.Models;
 using Nancy;
 using System;
 using System.Collections.Generic;
@@ -9,33 +10,15 @@ using System.Threading.Tasks;
 
 namespace benandkatiegetmarried.Modules
 {
-    public class VenueModule : NancyModule
+    public class VenueModule : CrudModule<Venue, Guid>
     {
         IVenueQueries _queries;
         IVenueCommands _commands;
-        public VenueModule(IVenueQueries queries
-            , IVenueCommands commands) : base("venues")
+        public VenueModule(IVenueQueries q, IVenueCommands c) 
+            : base("venues", q , c )
         {
-            _queries = queries;
-            _commands = commands;
-
-            Get["/"] = _ => GetAll();
-            Get["/{id}"] = p => GetById(p.id);
-        }
-
-        private dynamic GetById(dynamic id)
-        {
-            Guid venueId;
-            if(Guid.TryParse(id, out venueId))
-            {
-                return _queries.GetById(venueId);
-            }
-            return HttpStatusCode.BadRequest;
-        }
-
-        private dynamic GetAll()
-        {
-            return _queries.GetAll();
+            _queries = q;
+            _commands = c;
         }
     }
 }

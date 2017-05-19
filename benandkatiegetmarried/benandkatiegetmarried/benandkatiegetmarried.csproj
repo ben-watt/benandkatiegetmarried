@@ -109,6 +109,7 @@
     <Compile Include="Models\PetaPoco.cs" />
     <Compile Include="Models\Venue.cs" />
     <Compile Include="Models\Wedding.cs" />
+    <Compile Include="Modules\CrudModule.cs" />
     <Compile Include="Modules\GuestModule.cs" />
     <Compile Include="Modules\RootModule.cs" />
     <Compile Include="Modules\VenueModule.cs" />

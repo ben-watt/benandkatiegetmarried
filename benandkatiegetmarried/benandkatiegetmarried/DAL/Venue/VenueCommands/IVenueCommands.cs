@@ -8,7 +8,7 @@ using benandkatiegetmarried.Models;
 
 namespace benandkatiegetmarried.DAL.Venue.VenueCommands
 {
-    public interface IVenueCommands : IBaseCommands<Models.Venue>
+    public interface IVenueCommands : ICrudCommands<Models.Venue, Guid>
     {
     }
 }

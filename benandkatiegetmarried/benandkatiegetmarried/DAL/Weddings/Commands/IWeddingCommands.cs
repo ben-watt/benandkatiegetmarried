@@ -8,7 +8,7 @@ using benandkatiegetmarried.DAL.BaseCommands;
 
 namespace benandkatiegetmarried.DAL.Weddings.Commands
 {
-    public interface IWeddingCommands : IBaseCommands<Wedding>
+    public interface IWeddingCommands : ICrudCommands<Wedding, Guid>
     { 
     }
 }

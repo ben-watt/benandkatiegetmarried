@@ -12,6 +12,11 @@ using Nancy.Authentication.Forms;
 using Nancy.ViewEngines;
 using benandkatiegetmarried.DAL;
 using PetaPoco;
+using benandkatiegetmarried.DAL.BaseQueries;
+using benandkatiegetmarried.Models;
+using benandkatiegetmarried.DAL.Weddings.Query;
+using benandkatiegetmarried.DAL.BaseCommands;
+using benandkatiegetmarried.DAL.Weddings.Commands;
 
 namespace benandkatiegetmarried
 {

@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace benandkatiegetmarried.DAL.BaseCommands
 {
-    public interface IBaseCommands<T>
+    public interface ICrudCommands<T, TKey>
     {
-        void Create(T entity);
-        void Delete(T entity);
-        void Update(T entity);
+        void Create(IEnumerable<T> entity);
+        void Remove(TKey Id);
+        void Update(IEnumerable<T> entity);
     }
 }

@@ -11,6 +11,8 @@ using benandkatiegetmarried.DAL.Venue.VenueQueries;
 using benandkatiegetmarried.Models;
 using Nancy.Testing;
 using Nancy;
+using benandkatiegetmarried.DAL.BaseQueries;
+using benandkatiegetmarried.DAL.BaseCommands;
 
 namespace benandkatiegetmarriedTests.Modules
 {
@@ -28,7 +30,7 @@ namespace benandkatiegetmarriedTests.Modules
                     config.Module<VenueModule>()
                         .Dependency(_queries.Object)
                         .Dependency(_commands.Object)
-                );
+                        );
         }
         [Fact]
         public void GetAllReturnsAllVenues()

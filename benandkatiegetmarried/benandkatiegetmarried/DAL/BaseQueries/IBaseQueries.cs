@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace benandkatiegetmarried.DAL.BaseQueries
 {
-    public interface IBaseQueries<T, TKey>
+    public interface ICrudQueries<T, TKey>
     {
         IEnumerable<T> GetAll();
         T GetById(TKey Id);

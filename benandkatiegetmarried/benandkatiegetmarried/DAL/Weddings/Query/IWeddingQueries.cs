@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace benandkatiegetmarried.DAL.Weddings.Query
 {
-    public interface IWeddingQueries : IBaseQueries<Wedding, Guid>
+    public interface IWeddingQueries : ICrudQueries<Wedding, Guid>
     {
     }
 }

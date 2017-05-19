@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace benandkatiegetmarried.DAL.BaseQueries
 {
-    public class BaseQueries<T, TKey> : IBaseQueries<T, TKey>
+    public abstract class BaseQueries<T, TKey> : ICrudQueries<T, TKey>
     {
         private IDatabase _db;
 
