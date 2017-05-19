@@ -90,10 +90,18 @@
   <ItemGroup>
     <Compile Include="Common\IValid.cs" />
     <Compile Include="CustomNancyBootstrapper.cs" />
+    <Compile Include="DAL\BaseCommands\BaseCommands.cs" />
+    <Compile Include="DAL\BaseCommands\IBaseCommands.cs" />
+    <Compile Include="DAL\BaseQueries\BaseQueries.cs" />
+    <Compile Include="DAL\BaseQueries\IBaseQueries.cs" />
     <Compile Include="DAL\Invite\Queries\GetInviteByPassword.cs" />
+    <Compile Include="DAL\Venue\VenueCommands\IVenueCommands.cs" />
+    <Compile Include="DAL\Venue\VenueCommands\VenueCommands.cs" />
+    <Compile Include="DAL\Venue\VenueQueries\IVenueQueries.cs" />
+    <Compile Include="DAL\Venue\VenueQueries\VenueQueries.cs" />
     <Compile Include="DAL\WeddingDatabaseBuilder.cs" />
-    <Compile Include="DAL\Weddings\Commands\CreateWedding.cs" />
     <Compile Include="DAL\Weddings\Commands\IWeddingCommands.cs" />
+    <Compile Include="DAL\Weddings\Commands\WeddingCommands.cs" />
     <Compile Include="DAL\Weddings\Query\IWeddingQueries.cs" />
     <Compile Include="DAL\Weddings\Query\WeddingQueries.cs" />
     <Compile Include="Models\Invite.cs" />
@@ -103,6 +111,7 @@
     <Compile Include="Models\Wedding.cs" />
     <Compile Include="Modules\GuestModule.cs" />
     <Compile Include="Modules\RootModule.cs" />
+    <Compile Include="Modules\VenueModule.cs" />
     <Compile Include="Modules\WeddingModule.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -128,6 +137,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Nancy.Viewengines.Razor.1.4.3\build\Nancy.ViewEngines.Razor.targets" Condition="Exists('..\packages\Nancy.Viewengines.Razor.1.4.3\build\Nancy.ViewEngines.Razor.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

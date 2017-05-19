@@ -15,12 +15,12 @@ namespace benandkatiegetmarried.Modules
     {
 
         private IWeddingCommands _commands;
-        private IWeddingQueries _querys;
+        private IWeddingQueries _queries;
 
         public WeddingModule(IWeddingCommands weddingCommands
             , IWeddingQueries weddingqueries) : base("weddings")
         {
-            _querys = weddingqueries;
+            _queries = weddingqueries;
             _commands = weddingCommands;
 
             Put["/"] = _ => UpdateWedding();
@@ -34,7 +34,7 @@ namespace benandkatiegetmarried.Modules
             var wedding = this.Bind<Models.Wedding>();
             if (wedding != null)
             {
-                _commands.UpdateWedding(wedding);
+                _commands.Update(wedding);
                 return HttpStatusCode.NoContent;
             }
             return HttpStatusCode.BadRequest;
@@ -42,13 +42,17 @@ namespace benandkatiegetmarried.Modules
 
         private dynamic GetById(dynamic id)
         {
-            var weddingId = id ?? Guid.NewGuid();
-            return _querys.GetById(id);
+            Guid weddingId;
+            if (Guid.TryParse(id, out weddingId))
+            {
+                return _queries.GetById(weddingId);
+            }
+            return HttpStatusCode.BadRequest;
         }
 
         private dynamic GetAll()
         {
-            return _querys.GetAll();
+            return _queries.GetAll();
         }
 
         private dynamic PostWedding()

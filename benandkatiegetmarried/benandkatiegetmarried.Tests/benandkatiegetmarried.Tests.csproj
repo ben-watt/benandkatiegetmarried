@@ -81,6 +81,7 @@
     <Compile Include="Models\GuestTests.cs" />
     <Compile Include="Models\InviteTests.cs" />
     <Compile Include="Models\WeddingTests.cs" />
+    <Compile Include="Modules\VenueModuleTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Modules\RootModuleTests.cs" />
     <Compile Include="TestRootPathProvider.cs" />

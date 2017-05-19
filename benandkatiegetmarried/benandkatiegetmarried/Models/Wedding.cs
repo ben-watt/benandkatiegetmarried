@@ -27,8 +27,6 @@ namespace benandkatiegetmarried.Models
         public Guid VenueId { get; set; }
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
-        [PetaPoco.Ignore]
-        public IList<Guest> Guests { get; set; }
 
         public void SetDates(DateTime Start, DateTime End)
         {
