@@ -1,4 +1,5 @@
-﻿using benandkatiegetmarried.DAL.Venue.VenueCommands;
+﻿using benandkatiegetmarried.Common.Validation;
+using benandkatiegetmarried.DAL.Venue.VenueCommands;
 using benandkatiegetmarried.DAL.Venue.VenueQueries;
 using benandkatiegetmarried.Models;
 using Nancy;
@@ -14,8 +15,10 @@ namespace benandkatiegetmarried.Modules
     {
         IVenueQueries _queries;
         IVenueCommands _commands;
-        public VenueModule(IVenueQueries q, IVenueCommands c) 
-            : base("venues", q , c )
+        public VenueModule(IVenueQueries q
+            , IVenueCommands c
+            , VenueValidator v) 
+            : base("venues", q , c , v)
         {
             _queries = q;
             _commands = c;

@@ -1,10 +1,11 @@
 ﻿using benandkatiegetmarried.Common;
+using Nancy.Security;
 using System;
 using System.Collections.Generic;
 
 namespace benandkatiegetmarried.Models
 {
-    public class Invite : IValid
+    public class Invite : IUserIdentity
     {
         private string _guestType;
 
@@ -13,29 +14,23 @@ namespace benandkatiegetmarried.Models
             Id = Guid.NewGuid();
             this.Guests = new List<Guest>();
         }
+        public Guid Id { get; set; }
         public string Password { get; set; }
         public IList<Guest> Guests { get; set; }
         public string Greeting { get; set; }
-        public Guid Id { get; set; }
-
-        public bool IsValid()
-        {
-            if (String.IsNullOrEmpty(Password) 
-                || Guests.Count < 1)
-            {
-                return false;
-            }
-            return true;
-        }
+        [PetaPoco.Ignore]
+        public string UserName => throw new NotImplementedException();
+        [PetaPoco.Ignore]
+        public IEnumerable<string> Claims => throw new NotImplementedException();
 
         public void AssociateGuest(Guest guest)
         {
-            if (guest.IsValid() && Guests.Count == 0)
+            if (Guests.Count == 0)
             {
                 this.Guests.Add(guest);
                 this._guestType = guest.Type;
             }
-            else if (guest.IsValid() && _guestType == guest.Type)
+            else if (_guestType == guest.Type)
             {
                 this.Guests.Add(guest);
             }

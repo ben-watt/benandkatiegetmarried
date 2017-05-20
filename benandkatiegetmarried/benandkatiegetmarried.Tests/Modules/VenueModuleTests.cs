@@ -35,7 +35,7 @@ namespace benandkatiegetmarriedTests.Modules
         [Fact]
         public void GetAllReturnsAllVenues()
         {
-            _queries.Setup(x => x.GetAll()).Returns(() => new List<Venue> { new Venue { VenueId = Guid.Empty, PostCode = "M21 7JS", Name = "Home" } });
+            _queries.Setup(x => x.GetAll()).Returns(() => new List<Venue> { new Venue { Id = Guid.Empty, Postcode = "M21 7JS", Name = "Home" } });
 
             var browser = new Browser(_bootstrapper, x =>
                 x.Header("Accept", "application/json"));
@@ -46,14 +46,14 @@ namespace benandkatiegetmarriedTests.Modules
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.Equal(1, model.Count());
             Assert.Equal("application/json; charset=utf-8", response.Body.ContentType);
-            Assert.Equal("M21 7JS", model.FirstOrDefault().PostCode);
+            Assert.Equal("M21 7JS", model.FirstOrDefault().Postcode);
 
         }
 
         [Fact]
         public void GetById_ShouldReturnTheCorrectVenue()
         {
-            _queries.Setup(X => X.GetById(Guid.Empty)).Returns(() => new Venue { VenueId = Guid.Empty, PostCode = "M21 7JS" });
+            _queries.Setup(X => X.GetById(Guid.Empty)).Returns(() => new Venue { Id = Guid.Empty, Postcode = "M21 7JS" });
 
             var browser = new Browser(_bootstrapper, x =>
                 x.Header("Accept", "application/json"));
@@ -61,10 +61,10 @@ namespace benandkatiegetmarriedTests.Modules
             var response = browser.Get("/venues/" + Guid.Empty.ToString());
             var model = response.Body.DeserializeJson<Venue>();
 
-            Assert.Equal("M21 7JS", model.PostCode);
+            Assert.Equal("M21 7JS", model.Postcode);
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.Equal("application/json; charset=utf-8", response.Body.ContentType);
-            Assert.Equal(Guid.Empty, model.VenueId);
+            Assert.Equal(Guid.Empty, model.Id);
         }
     }
 }

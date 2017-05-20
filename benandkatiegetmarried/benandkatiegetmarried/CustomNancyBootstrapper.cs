@@ -17,6 +17,8 @@ using benandkatiegetmarried.Models;
 using benandkatiegetmarried.DAL.Weddings.Query;
 using benandkatiegetmarried.DAL.BaseCommands;
 using benandkatiegetmarried.DAL.Weddings.Commands;
+using benandkatiegetmarried.Common.Validation;
+using FluentValidation;
 
 namespace benandkatiegetmarried
 {
@@ -26,6 +28,8 @@ namespace benandkatiegetmarried
         {
             base.ConfigureApplicationContainer(container);
             container.Register(typeof(IDatabase), WeddingDatabaseBuilder.Default());
+            container.Register(typeof(Common.Validation.IValidator<Venue>), new VenueValidator());
+            container.Register(typeof(Common.Validation.IValidator<Wedding>), new WeddingValidator());
         }
         protected override void ApplicationStartup(TinyIoCContainer container, IPipelines pipelines)
         {

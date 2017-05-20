@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FluentValidation, Version=7.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentValidation.7.0.0\lib\net45\FluentValidation.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Owin, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.3.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
     </Reference>
@@ -88,7 +91,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\IValid.cs" />
+    <Compile Include="Common\Validation\InviteValidator.cs" />
+    <Compile Include="Common\Validation\IValidator.cs" />
+    <Compile Include="Common\Validation\IWeddingValidator.cs" />
+    <Compile Include="Common\Validation\VenueValidator.cs" />
     <Compile Include="CustomNancyBootstrapper.cs" />
     <Compile Include="DAL\BaseCommands\BaseCommands.cs" />
     <Compile Include="DAL\BaseCommands\IBaseCommands.cs" />
@@ -104,6 +110,7 @@
     <Compile Include="DAL\Weddings\Commands\WeddingCommands.cs" />
     <Compile Include="DAL\Weddings\Query\IWeddingQueries.cs" />
     <Compile Include="DAL\Weddings\Query\WeddingQueries.cs" />
+    <Compile Include="Models\Event.cs" />
     <Compile Include="Models\Invite.cs" />
     <Compile Include="Models\Guest.cs" />
     <Compile Include="Models\PetaPoco.cs" />

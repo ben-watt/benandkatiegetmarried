@@ -19,23 +19,6 @@ namespace benandkatiegetmarriedTests.Models
             Assert.NotEqual(Guid.Empty, i.Id);
         }
         [Fact]
-        public void Invite_IsOnlyValidWithAPasswordAndAtleastOneGuest()
-        {
-            Invite i = new Invite();
-            Assert.Equal(false, i.IsValid());
-        }
-        [Fact]
-        public void Invite_CanOnlyAssociateWithValidGuests()
-        {
-            var g = new Mock<Guest>();
-            g.Setup(x => x.IsValid()).Returns(false);
-            
-            Invite i = new Invite();
-            Action execute = () => { i.AssociateGuest((Guest)g.Object); };
-
-            Assert.Throws<ArgumentException>(execute);
-        }
-        [Fact]
         public void Invite_GuestsGetAssociatedCorrectly()
         {
             var g = new Guest() { FirstName = "Ben"

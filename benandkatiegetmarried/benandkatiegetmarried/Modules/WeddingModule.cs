@@ -9,6 +9,7 @@ using benandkatiegetmarried.DAL.Weddings.Query;
 using benandkatiegetmarried.DAL;
 using benandkatiegetmarried.DAL.Weddings.Commands;
 using benandkatiegetmarried.Models;
+using benandkatiegetmarried.Common.Validation;
 
 namespace benandkatiegetmarried.Modules
 {
@@ -19,7 +20,9 @@ namespace benandkatiegetmarried.Modules
         private IWeddingQueries _queries;
 
         public WeddingModule(IWeddingCommands weddingCommands
-            , IWeddingQueries weddingqueries) : base("weddings", weddingqueries, weddingCommands)
+            , IWeddingQueries weddingqueries
+            , IValidator<Wedding> weddingValidator) 
+            : base("weddings", weddingqueries, weddingCommands, weddingValidator)
         {
             _queries = weddingqueries;
             _commands = weddingCommands;
