@@ -13,7 +13,8 @@ namespace benandkatiegetmarried.Models
         {
             Id = Guid.NewGuid();
         }
-
+        [PetaPoco.Column("EventId")]
+        public new Guid Id { get; set; }
         public string Bride { get; set; }
         public string Groom { get; set; }
     }

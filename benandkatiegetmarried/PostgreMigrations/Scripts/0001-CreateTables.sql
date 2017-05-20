@@ -1,12 +1,11 @@
 ﻿
 CREATE SCHEMA core
 
-
 CREATE TABLE core.Events 
 (
     "Id" uuid NOT NULL,
-    "EventName" character varying(500),
-	"EventType" character varying(200),
+    "Name" character varying(500),
+	"Type" character varying(200),
     "StartTime" timestamp,
     "EndTime" timestamp,
 	CONSTRAINT events_pkey PRIMARY KEY ("Id")
@@ -14,16 +13,16 @@ CREATE TABLE core.Events
 
 CREATE TABLE core.Weddings
 (
-    "Id" uuid NOT NULL,
+    "EventId" uuid NOT NULL references core.Events("Id"),
     "Bride" character varying(200) NOT NULL,
     "Groom" character varying(200) NOT NULL,
-    CONSTRAINT weddings_pkey PRIMARY KEY ("Id")
+    CONSTRAINT weddings_pkey PRIMARY KEY ("EventId")
 )
 
 CREATE TABLE core.Venues 
 (
 	"Id" uuid NOT NULL,
-	"eventId" uuid NOT NULL,
+	"EventId" uuid NOT NULL references core.Events("Id"),
 	"Name" character varying(500) NOT NULL,
 	"AddressLine1" character varying(500) NULL,
 	"AddressLine2" character varying(500) NULL,
@@ -39,6 +38,7 @@ CREATE TABLE core.Venues
 CREATE TABLE core.Invites
 (
 	"Id" uuid NOT NULL,
+	"EventId" uuid NOT NULL references core.Events("Id"),
 	"Password" character varying NOT NULL,
 	"Greeting" character varying (500) NOT NULL,
 	CONSTRAINT invites_pkey PRIMARY KEY ("Id")
@@ -47,6 +47,8 @@ CREATE TABLE core.Invites
 CREATE TABLE core.Guests
 (
 	"Id" uuid NOT NULL,
+	"EventId" uuid NOT NULL references core.Events("Id"),
+	"InviteId" uuid NOT NULL references core.Invites("Id"),
 	"FirstName" character varying (200) NOT NULL,
 	"LastName" character varying (200) NOT NULL,
 	"UserName" character varying NULL,

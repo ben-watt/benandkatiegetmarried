@@ -106,10 +106,10 @@
     <Compile Include="DAL\Venue\VenueQueries\IVenueQueries.cs" />
     <Compile Include="DAL\Venue\VenueQueries\VenueQueries.cs" />
     <Compile Include="DAL\WeddingDatabaseBuilder.cs" />
-    <Compile Include="DAL\Weddings\Commands\IWeddingCommands.cs" />
-    <Compile Include="DAL\Weddings\Commands\WeddingCommands.cs" />
-    <Compile Include="DAL\Weddings\Query\IWeddingQueries.cs" />
-    <Compile Include="DAL\Weddings\Query\WeddingQueries.cs" />
+    <Compile Include="DAL\Wedding\Commands\IWeddingCommands.cs" />
+    <Compile Include="DAL\Wedding\Commands\WeddingCommands.cs" />
+    <Compile Include="DAL\Wedding\Query\IWeddingQueries.cs" />
+    <Compile Include="DAL\Wedding\Query\WeddingQueries.cs" />
     <Compile Include="Models\Event.cs" />
     <Compile Include="Models\Invite.cs" />
     <Compile Include="Models\Guest.cs" />

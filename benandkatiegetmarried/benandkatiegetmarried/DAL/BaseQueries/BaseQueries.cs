@@ -9,13 +9,13 @@ namespace benandkatiegetmarried.DAL.BaseQueries
 {
     public abstract class BaseQueries<T, TKey> : ICrudQueries<T, TKey>
     {
-        private IDatabase _db;
+        protected IDatabase _db;
 
         public BaseQueries(IDatabase db)
         {
             this._db = db;
         }
-        public IEnumerable<T> GetAll()
+        public virtual IEnumerable<T> GetAll()
         {
             IEnumerable<T> result;
             using(var uow = _db.GetTransaction())
@@ -26,7 +26,7 @@ namespace benandkatiegetmarried.DAL.BaseQueries
             return result;
         }
 
-        public T GetById(TKey Id)
+        public virtual T GetById(TKey Id)
         {
             T result;
             using (var uow = _db.GetTransaction())
