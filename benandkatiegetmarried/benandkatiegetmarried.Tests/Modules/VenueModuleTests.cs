@@ -21,6 +21,7 @@ namespace benandkatiegetmarriedTests.Modules
         private Mock<IVenueQueries> _queries;
         private Mock<IVenueCommands> _commands;
         private ConfigurableBootstrapper _bootstrapper;
+        private Browser _apiBrowser;
 
         public VenueModuleTests()
         {
@@ -31,16 +32,16 @@ namespace benandkatiegetmarriedTests.Modules
                         .Dependency(_queries.Object)
                         .Dependency(_commands.Object)
                         );
+            _apiBrowser = new Browser(_bootstrapper, x =>
+                x.Header("Accept", "application/json"));
         }
         [Fact]
         public void GetAllReturnsAllVenues()
         {
             _queries.Setup(x => x.GetAll()).Returns(() => new List<Venue> { new Venue { Id = Guid.Empty, Postcode = "M21 7JS", Name = "Home" } });
 
-            var browser = new Browser(_bootstrapper, x =>
-                x.Header("Accept", "application/json"));
+            var response = _apiBrowser.Get("/venues");
 
-            var response = browser.Get("/venues");
             var model = response.Body.DeserializeJson<IEnumerable<Venue>>();
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
@@ -53,12 +54,7 @@ namespace benandkatiegetmarriedTests.Modules
         [Fact]
         public void GetById_ShouldReturnTheCorrectVenue()
         {
-            _queries.Setup(X => X.GetById(Guid.Empty)).Returns(() => new Venue { Id = Guid.Empty, Postcode = "M21 7JS" });
-
-            var browser = new Browser(_bootstrapper, x =>
-                x.Header("Accept", "application/json"));
-
-            var response = browser.Get("/venues/" + Guid.Empty.ToString());
+            var response = _apiBrowser.Get("/venues/" + Guid.Empty.ToString());
             var model = response.Body.DeserializeJson<Venue>();
 
             Assert.Equal("M21 7JS", model.Postcode);

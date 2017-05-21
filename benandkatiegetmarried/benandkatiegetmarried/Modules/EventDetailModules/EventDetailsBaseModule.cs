@@ -4,6 +4,7 @@ using benandkatiegetmarried.DAL.BaseQueries;
 using FluentValidation.Results;
 using Nancy;
 using Nancy.ModelBinding;
+using Nancy.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,21 +13,22 @@ using System.Threading.Tasks;
 
 namespace benandkatiegetmarried.Modules
 {
-    public abstract class CrudModule<TEntity, TKey> : NancyModule
+    public abstract class EventDetailsBaseModule<TEntity, TKey> : NancyModule
     {
         private ICrudQueries<TEntity, TKey> _queries;
         private ICrudCommands<TEntity, TKey> _commands;
         private IValidator<TEntity> _validator;
 
-        protected CrudModule(string modulePath
+        protected EventDetailsBaseModule(string modulePath
             , ICrudQueries<TEntity, TKey> queries
             , ICrudCommands<TEntity, TKey> commands
-            , IValidator<TEntity> validator) : base(modulePath)
+            , IValidator<TEntity> validator) : base("api/events/{eventId}/" + modulePath)
         {
+            this.RequiresAuthentication();
             _queries = queries;
             _commands = commands;
             _validator = validator;
-            
+
             Get["/"] = _ => GetAll();
             Get["/{id}"] = p => GetById(p.Id);
             Post["/"] = _ => Create();

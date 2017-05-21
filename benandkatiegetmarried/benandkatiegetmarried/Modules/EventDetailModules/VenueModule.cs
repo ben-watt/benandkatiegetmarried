@@ -11,17 +11,16 @@ using System.Threading.Tasks;
 
 namespace benandkatiegetmarried.Modules
 {
-    public class VenueModule : CrudModule<Venue, Guid>
+    public class VenueModule : EventDetailsBaseModule<Venue, Guid>
     {
         IVenueQueries _queries;
         IVenueCommands _commands;
-        public VenueModule(IVenueQueries q
-            , IVenueCommands c
-            , VenueValidator v) 
-            : base("venues", q , c , v)
+        public VenueModule(IVenueQueries queries
+            , IVenueCommands commands
+            , IValidator<Venue> validator) : base("venues", queries , commands , validator)
         {
-            _queries = q;
-            _commands = c;
+            _queries = queries;
+            _commands = commands;
         }
     }
 }

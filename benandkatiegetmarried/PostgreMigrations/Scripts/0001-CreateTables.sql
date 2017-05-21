@@ -56,3 +56,34 @@ CREATE TABLE core.Guests
 	"IsFeatured" bool default false NOT NULL,
 	CONSTRAINT guests_pkey PRIMARY KEY ("Id")
 )
+
+CREATE TABLE core.RSVPs
+(
+	"Id" uuid NOT NULL,
+	"EventId" uuid NOT NULL references core.Events("Id"),
+	"InviteId" uuid NOT NULL references core.Invites("Id"),
+	"GuestId" uuid NOT NULL references core.Guests("Id"),
+	"Response" bool DEFAULT NULL,
+	"ResponseMessage" string NULL,
+	"DietaryRequirements" string NULL,
+	"SongLink" string NULL
+	CONSTRAINT RSVP_pkey PRIMARY KEY ("Id")
+)
+
+CREATE TABLE core.MealChoises 
+(
+	"Id" uuid NOT NULL,
+	"GuestId" uuid NOT NULL references core.Guests("Id"),
+	"RSVPId" uuid NOT NULL references core.RSVPs("Id"),
+	"MealId" uuid NOT NULL references core.Meals("Id")
+)
+
+CREATE TABLE core.Meals (
+	"Id" uuid NOT NULL,
+	"EventId" uuid NOT NULL references core.Events("Id"),
+	"Name" string NOT NULL,
+	"Course" string NULL,
+	"MealGroup" string NULL
+	CONSTRAINT meals_pkey PRIMARY KEY ("Id")
+)
+

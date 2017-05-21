@@ -13,15 +13,16 @@ namespace benandkatiegetmarried.Models
         {
             Id = Guid.NewGuid();
             this.Guests = new List<Guest>();
+            this.UserName = Id.ToString();
         }
         public Guid Id { get; set; }
         public string Password { get; set; }
         public IList<Guest> Guests { get; set; }
         public string Greeting { get; set; }
         [PetaPoco.Ignore]
-        public string UserName => throw new NotImplementedException();
+        public string UserName { get; set; }
         [PetaPoco.Ignore]
-        public IEnumerable<string> Claims => throw new NotImplementedException();
+        public IEnumerable<string> Claims { get; set; }
 
         public void AssociateGuest(Guest guest)
         {

@@ -13,16 +13,15 @@ using benandkatiegetmarried.Common.Validation;
 
 namespace benandkatiegetmarried.Modules
 {
-    public class WeddingModule : CrudModule<Wedding, Guid>
+    public class WeddingModule : EventBaseModule<Wedding, Guid>
     {
-
         private IWeddingCommands _commands;
         private IWeddingQueries _queries;
 
         public WeddingModule(IWeddingCommands weddingCommands
             , IWeddingQueries weddingqueries
             , IValidator<Wedding> weddingValidator) 
-            : base("weddings", weddingqueries, weddingCommands, weddingValidator)
+            : base("api/weddings", weddingqueries, weddingCommands, weddingValidator)
         {
             _queries = weddingqueries;
             _commands = weddingCommands;

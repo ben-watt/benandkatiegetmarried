@@ -1,4 +1,5 @@
-﻿using Nancy;
+﻿using benandkatiegetmarried.UseCases.Login;
+using Nancy;
 using Nancy.Authentication.Forms;
 using Nancy.ModelBinding;
 using Nancy.Responses;
@@ -12,22 +13,36 @@ namespace benandkatiegetmarried.Modules
 {
     public class RootModule : NancyModule
     {
-        public RootModule()
+        private IHandler<LoginRequest, LoginResponse> _loginHandler;
+        public RootModule(IHandler<LoginRequest, LoginResponse> loginHandler)
         {
+            _loginHandler = loginHandler;
+
             Get["/"] = _ => View["LandingPage"];
             Post["/login"] = _ => Login();
+            Post["/logout"] = _ => Logout();
         }
+
+        private dynamic Logout()
+        {
+            return this.LogoutAndRedirect("/");
+        }
+
         private dynamic Login()
         {
-            //var request = this.Bind<LoginRequest>();
-            //var response = _loginHandler.Value.Handle(request);
-            //if (response.IsValid)
-            //{
-            //    this.Login(response.InviteId, DateTime.Now.AddDays(7), "/");
-            //}
-            //return this.Response.AsRedirect("/", RedirectResponse.RedirectType.SeeOther)
-            //    .WithStatusCode(HttpStatusCode.Unauthorized);
-            return 200;
+            var request = this.Bind<LoginRequest>();
+            if(request != null)
+            {
+                var response = _loginHandler.Handle(request);
+                if (response.IsValid)
+                {
+                    this.Login(response.InviteId, DateTime.Now.AddDays(7), "/");
+                    return HttpStatusCode.OK;
+                }
+                return HttpStatusCode.BadRequest;
+            }           
+            return this.Response.AsRedirect("/", RedirectResponse.RedirectType.SeeOther)
+                .WithStatusCode(HttpStatusCode.Unauthorized);
         }
     }
 }
