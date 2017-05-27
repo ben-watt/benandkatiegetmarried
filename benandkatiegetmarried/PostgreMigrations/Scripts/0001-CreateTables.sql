@@ -76,6 +76,7 @@ CREATE TABLE core.MealChoises
 	"GuestId" uuid NOT NULL references core.Guests("Id"),
 	"RSVPId" uuid NOT NULL references core.RSVPs("Id"),
 	"MealId" uuid NOT NULL references core.Meals("Id")
+	CONSTRAINT mealChoises_pKey PRIMARY KEY ("Id")
 )
 
 CREATE TABLE core.Meals (
@@ -86,4 +87,12 @@ CREATE TABLE core.Meals (
 	"MealGroup" string NULL
 	CONSTRAINT meals_pkey PRIMARY KEY ("Id")
 )
+
+CREATE TABLE core.Users (
+	"Id" uuid NOT NULL,
+	"UserName" string NOT NULL,
+	"Password" string NOT NULL,
+	CONSTRAINT users_pkey PRIMARY KEY ("Id")
+)
+
 

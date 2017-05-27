@@ -14,6 +14,7 @@ namespace benandkatiegetmarried.Models
             Id = Guid.NewGuid();
             this.Guests = new List<Guest>();
             this.UserName = Id.ToString();
+            this.Claims = new List<string> { "Guest" };
         }
         public Guid Id { get; set; }
         public string Password { get; set; }
@@ -22,7 +23,7 @@ namespace benandkatiegetmarried.Models
         [PetaPoco.Ignore]
         public string UserName { get; set; }
         [PetaPoco.Ignore]
-        public IEnumerable<string> Claims { get; set; }
+        public IEnumerable<string> Claims {get; set;}
 
         public void AssociateGuest(Guest guest)
         {

@@ -16,17 +16,6 @@ namespace benandkatiegetmarried.DAL.Login
         {
             _db = db;
         }
-        public IUserIdentity GetUserFromIdentifier(Guid identifier, NancyContext context)
-        {
-            Models.Invite invite;
-            using (var uow = _db.GetTransaction())
-            {
-                invite = _db.FirstOrDefault<Models.Invite>("WHERE Id = @0", identifier);
-                uow.Complete();
-            }
-            return invite;
-        }
-
         public Models.Invite GetInviteFromPassword(string password)
         {
             Models.Invite invite;
@@ -37,5 +26,38 @@ namespace benandkatiegetmarried.DAL.Login
             }
             return invite;
         }
+
+        public Guid GetUserIdFromPasswordAndUsername(string username, string password)
+        {
+            Guid userId;
+            using(var uow = _db.GetTransaction())
+            {
+                userId = _db.FirstOrDefault<Guid>(
+                    @"SELECT Id 
+                      FROM users 
+                      WHERE username = @0 AND password = @1", username.ToLower(), password);
+            }
+            return userId;
+        }
+
+        public IUserIdentity GetUserFromIdentifier(Guid identifier, NancyContext context)
+        {
+            if (context.Request.Path.Contains("userLogin"))
+            {
+                return GetFromIdentifier<Models.User>(identifier);
+            }
+            return GetFromIdentifier<Models.Invite>(identifier);
+        }
+
+        private IUserIdentity GetFromIdentifier<T>(Guid identifier) where T : IUserIdentity
+        {
+            T entity;
+            using (var uow = _db.GetTransaction())
+            {
+                entity = _db.FirstOrDefault<T>("WHERE Id = @0", identifier);
+            }
+            return entity;
+        }
+
     }
 }

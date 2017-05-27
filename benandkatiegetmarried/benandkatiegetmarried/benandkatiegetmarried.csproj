@@ -122,6 +122,7 @@
     <Compile Include="Models\Meal.cs" />
     <Compile Include="Models\PetaPoco.cs" />
     <Compile Include="Models\RSVP.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Models\Venue.cs" />
     <Compile Include="Models\Wedding.cs" />
     <Compile Include="Modules\EventDetailModules\EventDetailsBaseModule.cs" />
@@ -138,9 +139,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="StartUp.cs" />
-    <Compile Include="UseCases\Login\IHandler.cs" />
+    <Compile Include="UseCases\IHandler.cs" />
+    <Compile Include="UseCases\Login\UserLoginRequest.cs" />
     <Compile Include="UseCases\Login\LoginHandler.cs" />
-    <Compile Include="UseCases\Login\LoginRequest.cs" />
+    <Compile Include="UseCases\Login\GuestLoginRequest.cs" />
     <Compile Include="UseCases\Login\LoginResponse.cs" />
   </ItemGroup>
   <ItemGroup>

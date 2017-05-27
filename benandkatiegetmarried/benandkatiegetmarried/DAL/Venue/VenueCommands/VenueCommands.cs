@@ -8,7 +8,7 @@ using PetaPoco;
 
 namespace benandkatiegetmarried.DAL.Venue.VenueCommands
 {
-    public class VenueCommands : BaseCommands<Models.Venue, Guid>, IVenueCommands
+    public class VenueCommands : CrudCommands<Models.Venue, Guid>, IVenueCommands
     {
         public VenueCommands(IDatabase db) : base(db)
         {

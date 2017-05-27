@@ -7,10 +7,10 @@ using PetaPoco;
 
 namespace benandkatiegetmarried.DAL.BaseCommands
 {
-    public abstract class BaseCommands<T, TKey> : ICrudCommands<T, TKey>
+    public abstract class CrudCommands<T, TKey> : ICrudCommands<T, TKey>
     {
         public IDatabase _db;
-        public BaseCommands(IDatabase db)
+        public CrudCommands(IDatabase db)
         {
             _db = db;
         }

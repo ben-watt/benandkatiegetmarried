@@ -13,13 +13,14 @@ namespace benandkatiegetmarried.Modules
 {
     public class RootModule : NancyModule
     {
-        private IHandler<LoginRequest, LoginResponse> _loginHandler;
-        public RootModule(IHandler<LoginRequest, LoginResponse> loginHandler)
+        private IHandler<GuestLoginRequest, LoginResponse> _loginHandler;
+        public RootModule(IHandler<GuestLoginRequest, LoginResponse> loginHandler)
         {
             _loginHandler = loginHandler;
 
             Get["/"] = _ => View["LandingPage"];
-            Post["/login"] = _ => Login();
+            Post["/userLogin"] = _ => UserLogin();
+            Post["/guestLogin"] = _ => GuestLogin();
             Post["/logout"] = _ => Logout();
         }
 
@@ -28,19 +29,29 @@ namespace benandkatiegetmarried.Modules
             return this.LogoutAndRedirect("/");
         }
 
-        private dynamic Login()
+        private dynamic UserLogin()
         {
-            var request = this.Bind<LoginRequest>();
-            if(request != null)
+            var request = this.Bind<GuestLoginRequest>();
+            return Login(request);
+        }
+        private dynamic GuestLogin()
+        {
+            var request = this.Bind<GuestLoginRequest>();
+            return Login(request);
+        }
+
+        private dynamic Login(GuestLoginRequest request)
+        {
+            if (request != null)
             {
                 var response = _loginHandler.Handle(request);
                 if (response.IsValid)
                 {
-                    this.Login(response.InviteId, DateTime.Now.AddDays(7), "/");
+                    this.Login(response.Id, DateTime.Now.AddDays(7), "/");
                     return HttpStatusCode.OK;
                 }
                 return HttpStatusCode.BadRequest;
-            }           
+            }
             return this.Response.AsRedirect("/", RedirectResponse.RedirectType.SeeOther)
                 .WithStatusCode(HttpStatusCode.Unauthorized);
         }

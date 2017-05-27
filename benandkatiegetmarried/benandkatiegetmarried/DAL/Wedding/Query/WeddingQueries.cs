@@ -9,7 +9,7 @@ using PetaPoco;
 
 namespace benandkatiegetmarried.DAL.Weddings.Query
 {
-    public class WeddingQueries : BaseQueries<Wedding, Guid>, IWeddingQueries
+    public class WeddingQueries : CrudQueries<Wedding, Guid>, IWeddingQueries
     {
         public WeddingQueries(IDatabase db) : base(db) {}
         public override IEnumerable<Wedding> GetAll()

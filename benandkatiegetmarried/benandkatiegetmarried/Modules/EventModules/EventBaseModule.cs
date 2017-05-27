@@ -12,7 +12,8 @@ using System.Threading.Tasks;
 
 namespace benandkatiegetmarried.Modules
 {
-    public abstract class EventBaseModule<TEntity, TKey> : NancyModule
+    public abstract class EventBaseModule<TEntity, TKey> 
+        : NancyModule where TEntity : class
     {
         private ICrudQueries<TEntity, TKey> _queries;
         private ICrudCommands<TEntity, TKey> _commands;

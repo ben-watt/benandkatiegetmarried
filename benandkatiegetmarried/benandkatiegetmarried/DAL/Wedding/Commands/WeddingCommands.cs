@@ -8,7 +8,7 @@ using PetaPoco;
 
 namespace benandkatiegetmarried.DAL.Weddings.Commands
 {
-    public class WeddingCommands : BaseCommands<Models.Wedding, Guid>, IWeddingCommands
+    public class WeddingCommands : CrudCommands<Models.Wedding, Guid>, IWeddingCommands
     {
         public WeddingCommands(IDatabase db) : base(db)
         {

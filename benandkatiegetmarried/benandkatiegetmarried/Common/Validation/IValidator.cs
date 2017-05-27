@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace benandkatiegetmarried.Common.Validation
 {
-    public interface IValidator<T>
+    public interface IValidator<T> where T : class
     {
         ValidationResult Validate(T entity);
     }
