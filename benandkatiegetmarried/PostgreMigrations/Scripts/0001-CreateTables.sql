@@ -73,6 +73,7 @@ CREATE TABLE core.RSVPs
 CREATE TABLE core.MealChoises 
 (
 	"Id" uuid NOT NULL,
+    "EventId" uuid NOT NULL references core.Events("Id"),
 	"GuestId" uuid NOT NULL references core.Guests("Id"),
 	"RSVPId" uuid NOT NULL references core.RSVPs("Id"),
 	"MealId" uuid NOT NULL references core.Meals("Id")
@@ -95,4 +96,9 @@ CREATE TABLE core.Users (
 	CONSTRAINT users_pkey PRIMARY KEY ("Id")
 )
 
+CREATE TABLE core.UserEventMapping (
+	"Id" uuid NOT NULL,
+	"UserId" uuid NOT NULL references core.Users("Id"),
+	"EventId" uuid NOT NULL references core.Events("Id")
+)
 

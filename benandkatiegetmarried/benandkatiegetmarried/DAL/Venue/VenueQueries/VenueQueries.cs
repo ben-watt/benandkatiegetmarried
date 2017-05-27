@@ -8,7 +8,7 @@ using PetaPoco;
 
 namespace benandkatiegetmarried.DAL.Venue.VenueQueries
 {
-    class VenueQueries : CrudQueries<Models.Venue, Guid>, IVenueQueries
+    class VenueQueries : EventCrudQueries<Models.Venue, Guid>, IVenueQueries
     {
         public VenueQueries(IDatabase db) : base(db)
         {

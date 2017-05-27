@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace benandkatiegetmarried.DAL.BaseQueries
 {
-    public interface ICrudQueries<T, TKey>
+    public interface IEventCrudQueries<T, TKey>
     {
-        IEnumerable<T> GetAll();
-        T GetById(TKey Id);
+        IEnumerable<T> GetAll(IEnumerable<TKey> eventId);
+        T GetById(TKey Id, IEnumerable<TKey> eventId);
     }
 }

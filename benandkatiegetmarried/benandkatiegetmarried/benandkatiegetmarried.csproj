@@ -107,6 +107,8 @@
     <Compile Include="DAL\Login\ILoginCommands.cs" />
     <Compile Include="DAL\Login\ILoginQueries.cs" />
     <Compile Include="DAL\Login\LoginQueries.cs" />
+    <Compile Include="DAL\UserEvents\IUserEventsQueries.cs" />
+    <Compile Include="DAL\UserEvents\UserEventsQueries.cs" />
     <Compile Include="DAL\Venue\VenueCommands\IVenueCommands.cs" />
     <Compile Include="DAL\Venue\VenueCommands\VenueCommands.cs" />
     <Compile Include="DAL\Venue\VenueQueries\IVenueQueries.cs" />

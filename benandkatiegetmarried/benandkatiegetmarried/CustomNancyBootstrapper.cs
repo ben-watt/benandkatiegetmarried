@@ -19,6 +19,7 @@ using benandkatiegetmarried.DAL.BaseCommands;
 using benandkatiegetmarried.DAL.Weddings.Commands;
 using benandkatiegetmarried.Common.Validation;
 using FluentValidation;
+using Nancy.Session;
 
 namespace benandkatiegetmarried
 {
@@ -31,6 +32,7 @@ namespace benandkatiegetmarried
             container.Register(typeof(Common.Validation.IValidator<Venue>), new VenueValidator());
             container.Register(typeof(Common.Validation.IValidator<Wedding>), new WeddingValidator());
         }
+        
         protected override void ApplicationStartup(TinyIoCContainer container, IPipelines pipelines)
         {
             base.ApplicationStartup(container, pipelines);
@@ -39,6 +41,7 @@ namespace benandkatiegetmarried
                 RedirectUrl = "~/",
                 UserMapper = container.Resolve<IUserMapper>()
             };
+            CookieBasedSessions.Enable(pipelines);
             FormsAuthentication.Enable(pipelines, authConfig);
         }
         protected override void ConfigureConventions(NancyConventions nancyConventions)

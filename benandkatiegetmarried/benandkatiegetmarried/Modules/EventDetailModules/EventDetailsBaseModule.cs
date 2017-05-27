@@ -16,17 +16,18 @@ namespace benandkatiegetmarried.Modules
     public abstract class EventDetailsBaseModule<TEntity, TKey> 
         : NancyModule where TEntity : class
     {
-        private ICrudQueries<TEntity, TKey> _queries;
+        private IEventCrudQueries<TEntity, TKey> _queries;
         private ICrudCommands<TEntity, TKey> _commands;
         private IValidator<TEntity> _validator;
 
         protected EventDetailsBaseModule(string modulePath
-            , ICrudQueries<TEntity, TKey> queries
+            , IEventCrudQueries<TEntity, TKey> queries
             , ICrudCommands<TEntity, TKey> commands
             , IValidator<TEntity> validator) : base("api/events/{eventId}/" + modulePath)
         {
             this.RequiresAuthentication();
             this.RequiresClaims("User");
+
             _queries = queries;
             _commands = commands;
             _validator = validator;
@@ -40,12 +41,19 @@ namespace benandkatiegetmarried.Modules
 
         private dynamic GetAll()
         {
-           return _queries.GetAll();
+            var userEvents = GetCurrentUsersEventsFromSession();
+            return _queries.GetAll(userEvents);
+        }
+
+        private IEnumerable<TKey> GetCurrentUsersEventsFromSession()
+        {
+            return (IEnumerable<TKey>)Session["user-events"];
         }
 
         private dynamic GetById(dynamic Id)
         {
-            return _queries.GetById(Id);
+            var userEvents = (IEnumerable<TKey>)Session["user-events"];
+            return _queries.GetById(Id, userEvents);
         }
 
         private dynamic Create()

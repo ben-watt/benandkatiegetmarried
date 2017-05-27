@@ -7,7 +7,7 @@ using PetaPoco;
 
 namespace benandkatiegetmarried.DAL.Guest.Commands
 {
-    public class GuestQueries : BaseQueries.CrudQueries<Models.Guest, Guid>, IGuestQueries
+    public class GuestQueries : BaseQueries.EventCrudQueries<Models.Guest, Guid>, IGuestQueries
     {
         public GuestQueries(IDatabase db) : base(db)
         {

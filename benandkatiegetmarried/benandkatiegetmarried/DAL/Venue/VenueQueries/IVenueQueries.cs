@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace benandkatiegetmarried.DAL.Venue.VenueQueries
 {
-    public interface IVenueQueries : ICrudQueries<Models.Venue, Guid>
+    public interface IVenueQueries : IEventCrudQueries<Models.Venue, Guid>
     {
     }
 }

@@ -4,6 +4,7 @@ using benandkatiegetmarried.DAL.BaseQueries;
 using FluentValidation.Results;
 using Nancy;
 using Nancy.ModelBinding;
+using Nancy.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,18 +16,23 @@ namespace benandkatiegetmarried.Modules
     public abstract class EventBaseModule<TEntity, TKey> 
         : NancyModule where TEntity : class
     {
-        private ICrudQueries<TEntity, TKey> _queries;
+        private IEventCrudQueries<TEntity, TKey> _queries;
         private ICrudCommands<TEntity, TKey> _commands;
         private IValidator<TEntity> _validator;
+        protected IEnumerable<TKey> _userEventIds;
 
         protected EventBaseModule(string modulePath
-            , ICrudQueries<TEntity, TKey> queries
+            , IEventCrudQueries<TEntity, TKey> queries
             , ICrudCommands<TEntity, TKey> commands
             , IValidator<TEntity> validator) : base(modulePath)
         {
+            this.RequiresAuthentication();
+            this.RequiresClaims("User");
+
             _queries = queries;
             _commands = commands;
             _validator = validator;
+            _userEventIds = (IEnumerable<TKey>)Session["user-events"];
             
             Get["/"] = _ => GetAll();
             Get["/{id}"] = p => GetById(p.Id);
@@ -37,12 +43,12 @@ namespace benandkatiegetmarried.Modules
 
         private dynamic GetAll()
         {
-           return _queries.GetAll();
+           return _queries.GetAll(_userEventIds);
         }
 
         private dynamic GetById(dynamic Id)
         {
-            return _queries.GetById(Id);
+            return _queries.GetById(Id, _userEventIds);
         }
 
         private dynamic Create()

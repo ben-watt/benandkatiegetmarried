@@ -4,7 +4,7 @@ using System;
 
 namespace benandkatiegetmarried.DAL.Guest.Commands
 {
-    public interface IGuestQueries : ICrudQueries<Models.Guest, Guid>
+    public interface IGuestQueries : IEventCrudQueries<Models.Guest, Guid>
     { 
     }
 }

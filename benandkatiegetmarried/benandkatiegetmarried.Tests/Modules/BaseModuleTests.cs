@@ -1,6 +1,8 @@
 ﻿using benandkatiegetmarried.Models;
 using Moq;
 using Nancy;
+using Nancy.Bootstrapper;
+using Nancy.Session;
 using Nancy.Testing;
 using System;
 using System.Collections.Generic;
@@ -23,6 +25,7 @@ namespace benandkatiegetmarriedTests.Modules
         protected Mock<TQuerys> _queries = new Mock<TQuerys>();
         protected Mock<TCommands> _commands = new Mock<TCommands>();
         protected Mock<TValidator> _validator = new Mock<TValidator>();
+        protected ConfigurableBootstrapper _bootstrapper => DefaultBootstrapper();
 
         public BaseModuleTests() {}
 
@@ -31,26 +34,36 @@ namespace benandkatiegetmarriedTests.Modules
             return new Browser(bootstrapper, x => x.Header("Accept", "application/json"));
         }
 
-        protected Action<ConfigurableBootstrapper.ConfigurableBootstrapperConfigurator> BootstrapBuilder()
+        protected ConfigurableBootstrapper DefaultBootstrapper()
         {
-            return (config) => config.Module<TModule>()
+            return new ConfigurableBootstrapper((config) => {
+                config.Module<TModule>()
                        .Dependency(_queries.Object)
                        .Dependency(_commands.Object)
                        .Dependency(_validator.Object);
+            });
         }
     }
 
-    public static class BootstrapperBuilder
+    public static class BootstrapperExtensions
     {
-        public static Action<ConfigurableBootstrapper.ConfigurableBootstrapperConfigurator> WithLoggedInUser(
-            this Action<ConfigurableBootstrapper.ConfigurableBootstrapperConfigurator> bootstrapConfig, string userName)
+        public static ConfigurableBootstrapper WithLoggedInUser(
+            this ConfigurableBootstrapper bootstrapper
+            , string userName
+            , IEnumerable<Guid> userEventIds)
         {
-            return bootstrapConfig += (config) => config.RequestStartup((container, pipeline, ctx) => ctx.CurrentUser = new User() { UserName = userName });
-        }
 
-        public static ConfigurableBootstrapper Build(this Action<ConfigurableBootstrapper.ConfigurableBootstrapperConfigurator> config)
-        {
-            return new ConfigurableBootstrapper(config);
+            var session = new Dictionary<string, object>();
+            session.Add("user-events", userEventIds);
+
+            bootstrapper.BeforeRequest.AddItemToEndOfPipeline(ctx =>
+            {
+                ctx.CurrentUser = new User() { UserName = userName };
+                ctx.Request.Session = new Session(session);
+                return null;
+            });
+
+            return bootstrapper;
         }
     }
 }

@@ -33,14 +33,12 @@ namespace benandkatiegetmarriedTests.Modules
         [Fact]
         public void GetAllReturnsAllVenues()
         {
-            _queries.Setup(x => x.GetAll()).Returns(() => new List<Venue> { new Venue { Id = _eventId, EventId = Guid.Empty, Postcode = "M21 7JS", Name = "Home" } });
+            _queries.Setup(x => x.GetAll(It.IsAny<IEnumerable<Guid>>())).Returns(() => new List<Venue> { new Venue { Id = _eventId, EventId = Guid.Empty, Postcode = "M21 7JS", Name = "Home" } });
 
-            var bootstrapper = BootstrapBuilder()
-                .WithLoggedInUser("Ben")
-                .Build();
+            var bootstrapper = _bootstrapper.WithLoggedInUser("Ben", new List<Guid> { Guid.Empty });
+            var browser = GetApiBrowser(bootstrapper);
 
-            var response = GetApiBrowser(bootstrapper).Get($"api/events/{_eventId}/venues");
-        
+            var response = browser.Get($"api/events/{_eventId}/venues");       
 
             var model = response.Body.DeserializeJson<IEnumerable<Venue>>();
 
@@ -54,11 +52,9 @@ namespace benandkatiegetmarriedTests.Modules
         [Fact]
         public void GetById_ShouldReturnTheCorrectVenue()
         {
-            var bootstrapper = BootstrapBuilder()
-                .WithLoggedInUser("Katie")
-                .Build();
+            var bootstrapper = _bootstrapper.WithLoggedInUser("Katie", new List<Guid> { Guid.Empty });
 
-            _queries.Setup(x => x.GetById(Guid.Empty)).Returns(new Venue() { Id = Guid.Empty, Postcode = "M21 7JS" });
+            _queries.Setup(x => x.GetById(Guid.Empty, It.IsAny<IEnumerable<Guid>>())).Returns(new Venue() { Id = Guid.Empty, Postcode = "M21 7JS" });
 
             var response = GetApiBrowser(bootstrapper).Get(
                 $"api/events/{_eventId}/venues/{Guid.Empty.ToString()}"
@@ -66,10 +62,10 @@ namespace benandkatiegetmarriedTests.Modules
 
             var model = response.Body.DeserializeJson<Venue>();
 
-            Assert.Equal("M21 7JS", model.Postcode);
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.Equal("application/json; charset=utf-8", response.Body.ContentType);
             Assert.Equal(Guid.Empty, model.Id);
+            Assert.Equal("M21 7JS", model.Postcode);
         }
     }
 }
