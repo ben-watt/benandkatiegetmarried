@@ -16,6 +16,7 @@ namespace benandkatiegetmarried.DAL.Login
         {
             _db = db;
         }
+
         public Models.Invite GetInviteFromPassword(string password)
         {
             Models.Invite invite;
@@ -39,7 +40,6 @@ namespace benandkatiegetmarried.DAL.Login
             }
             return userId;
         }
-
         public IUserIdentity GetUserFromIdentifier(Guid identifier, NancyContext context)
         {
             if (context.Request.Path.Contains("userLogin"))

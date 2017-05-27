@@ -11,17 +11,23 @@ using benandkatiegetmarried;
 using System.IO;
 using Nancy.ViewEngines;
 using Moq;
+using benandkatiegetmarried.UseCases.Login;
 
 namespace benandkatiegetmarriedTests
 {
     public class RootModuleTests
     {
+        private Mock<IHandler<GuestLoginRequest, LoginResponse>> _loginHandler 
+            = new Mock<IHandler<GuestLoginRequest, LoginResponse>>();
+
+
         [Fact]
         public void Ensure_RootPath_Hits_HomePage()
         {
             var bootstrapper = new CustomTestBootstrapper(with =>
             {
-                with.Module<RootModule>();
+                with.Module<RootModule>()
+                .Dependency(_loginHandler.Object);
             });
             var browser = new Browser(bootstrapper);
             var response = browser.Get("/");

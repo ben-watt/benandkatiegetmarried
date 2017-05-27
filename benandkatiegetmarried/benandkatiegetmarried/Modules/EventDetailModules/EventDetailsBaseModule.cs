@@ -26,6 +26,7 @@ namespace benandkatiegetmarried.Modules
             , IValidator<TEntity> validator) : base("api/events/{eventId}/" + modulePath)
         {
             this.RequiresAuthentication();
+            this.RequiresClaims("User");
             _queries = queries;
             _commands = commands;
             _validator = validator;
