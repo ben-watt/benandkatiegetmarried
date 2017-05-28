@@ -1,4 +1,4 @@
-﻿namespace benandkatiegetmarried.UseCases.Login
+﻿namespace benandkatiegetmarried.UseCases
 {
     public interface IHandler<Request, Response>
     {

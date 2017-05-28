@@ -54,6 +54,7 @@ CREATE TABLE core.Guests
 	"UserName" character varying NULL,
 	"Type" character varying(200) NOT NULL,
 	"IsFeatured" bool default false NOT NULL,
+	"HasSentRsvp" bool default false NOT NULL
 	CONSTRAINT guests_pkey PRIMARY KEY ("Id")
 )
 
@@ -100,5 +101,27 @@ CREATE TABLE core.UserEventMapping (
 	"Id" uuid NOT NULL,
 	"UserId" uuid NOT NULL references core.Users("Id"),
 	"EventId" uuid NOT NULL references core.Events("Id")
+	CONSTRAINT userEventMapping_pkey PRIMARY KEY ("Id")
+)
+
+CREATE TABLE core.MessageBoard (
+	"Id" uuid NOT NULL,
+	"EventId" uuid NOT NULL references core.Events("Id"),
+	"Name" character varying (200) NOT NULL
+	CONSTRAINT messageBoard_pkey PRIMARY KEY ("Id")
+)
+
+CREATE TABLE core.Messages (
+	"Id" uuid NOT NULL,
+	"MessageBoardId" uuid NOT NULL references core.MessageBoard("Id"),
+	"Text" character varying (MAX) NOT NULL
+	CONSTRAINT messages_pkey PRIMARY KEY ("Id")
+)
+
+CREATE TABLE core.MessageAttribution (
+	"Id" uuid NOT NULL,
+	"MessageId" uuid NOT NULL references core.MessageBoard("Id"),
+	"GuestId" uuid NOT NULL references core.Guests("Id")
+	CONSTRAINT messageAttribution PRIMARY KEY ("Id")
 )
 

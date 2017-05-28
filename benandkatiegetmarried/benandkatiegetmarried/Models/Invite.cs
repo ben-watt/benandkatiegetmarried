@@ -17,6 +17,7 @@ namespace benandkatiegetmarried.Models
             this.Claims = new List<string> { "Guest" };
         }
         public Guid Id { get; set; }
+        public Guid EventId { get; set; }
         public string Password { get; set; }
         public IList<Guest> Guests { get; set; }
         public string Greeting { get; set; }

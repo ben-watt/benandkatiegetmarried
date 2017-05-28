@@ -47,7 +47,7 @@ namespace benandkatiegetmarried.Modules
 
         private IEnumerable<TKey> GetCurrentUsersEventsFromSession()
         {
-            return (IEnumerable<TKey>)Session["user-events"];
+            return (IEnumerable<TKey>)Session["user-eventIds"];
         }
 
         private dynamic GetById(dynamic Id)

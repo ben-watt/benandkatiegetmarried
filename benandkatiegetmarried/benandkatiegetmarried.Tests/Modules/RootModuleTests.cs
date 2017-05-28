@@ -13,15 +13,17 @@ using Nancy.ViewEngines;
 using Moq;
 using benandkatiegetmarried.UseCases.Login;
 using benandkatiegetmarried.DAL.UserEvents;
+using benandkatiegetmarried.UseCases;
 
 namespace benandkatiegetmarriedTests
 {
     public class RootModuleTests
     {
-        private Mock<IHandler<GuestLoginRequest, LoginResponse>> _loginHandler 
-            = new Mock<IHandler<GuestLoginRequest, LoginResponse>>();
-        private Mock<IUserEventsQueries> _userEventQueries = new Mock<IUserEventsQueries>();
-
+        private Mock<IHandler<GuestLoginRequest, GuestLoginResponse>> _loginHandler 
+            = new Mock<IHandler<GuestLoginRequest, GuestLoginResponse>>();
+        private Mock<IHandler<UserLoginRequest, UserLoginResponse>> _userLoginHandler
+            = new Mock<IHandler<UserLoginRequest, UserLoginResponse>>();
+        private Mock<IUserQueries> _userEventQueries = new Mock<IUserQueries>();
 
         [Fact]
         public void Ensure_RootPath_Hits_HomePage()
@@ -30,7 +32,8 @@ namespace benandkatiegetmarriedTests
             {
                 with.Module<RootModule>()
                 .Dependency(_loginHandler.Object)
-                .Dependency(_userEventQueries.Object);
+                .Dependency(_userEventQueries.Object)
+                .Dependency(_userLoginHandler.Object);
             });
             var browser = new Browser(bootstrapper);
             var response = browser.Get("/");

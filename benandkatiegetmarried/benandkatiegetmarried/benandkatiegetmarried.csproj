@@ -91,6 +91,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\ModuleExtensions\ModuleExtensions.cs" />
     <Compile Include="Common\Validation\InviteValidator.cs" />
     <Compile Include="Common\Validation\IValidator.cs" />
     <Compile Include="Common\Validation\IWeddingValidator.cs" />
@@ -100,6 +101,12 @@
     <Compile Include="DAL\BaseCommands\IBaseCommands.cs" />
     <Compile Include="DAL\BaseQueries\BaseQueries.cs" />
     <Compile Include="DAL\BaseQueries\IBaseQueries.cs" />
+    <Compile Include="DAL\GuestEventDetails\Queries\GuestEventDetailsQueries.cs" />
+    <Compile Include="DAL\GuestEventDetails\Queries\IGuestEventDetailsQueries.cs" />
+    <Compile Include="DAL\GuestMessageBoard\GuestMessageBoardCommands\GuestMessageBoardCommands.cs" />
+    <Compile Include="DAL\GuestMessageBoard\GuestMessageBoardCommands\IGuestMessageBoardCommands.cs" />
+    <Compile Include="DAL\GuestMessageBoard\GuestMessageBoardQueries\GuestMessageBoardQueries.cs" />
+    <Compile Include="DAL\GuestMessageBoard\GuestMessageBoardQueries\IGuestMessageBoardQueries.cs" />
     <Compile Include="DAL\Guest\Commands\GuestCommands.cs" />
     <Compile Include="DAL\Guest\Commands\IGuestCommands.cs" />
     <Compile Include="DAL\Guest\Queries\GuestQueries.cs" />
@@ -107,8 +114,12 @@
     <Compile Include="DAL\Login\ILoginCommands.cs" />
     <Compile Include="DAL\Login\ILoginQueries.cs" />
     <Compile Include="DAL\Login\LoginQueries.cs" />
-    <Compile Include="DAL\UserEvents\IUserEventsQueries.cs" />
-    <Compile Include="DAL\UserEvents\UserEventsQueries.cs" />
+    <Compile Include="DAL\MessageBoard\Commands\IMessageBoardCommands.cs" />
+    <Compile Include="DAL\MessageBoard\Queries\IMessageBoardQueries.cs" />
+    <Compile Include="DAL\Rsvp\RsvpCommands\IRsvpCommands.cs" />
+    <Compile Include="DAL\Rsvp\RsvpCommands\RsvpCommands.cs" />
+    <Compile Include="DAL\User\IUserQueries.cs" />
+    <Compile Include="DAL\User\UserQueries.cs" />
     <Compile Include="DAL\Venue\VenueCommands\IVenueCommands.cs" />
     <Compile Include="DAL\Venue\VenueCommands\VenueCommands.cs" />
     <Compile Include="DAL\Venue\VenueQueries\IVenueQueries.cs" />
@@ -122,14 +133,20 @@
     <Compile Include="Models\Invite.cs" />
     <Compile Include="Models\Guest.cs" />
     <Compile Include="Models\Meal.cs" />
+    <Compile Include="Models\Message.cs" />
+    <Compile Include="Models\MessageBoard.cs" />
     <Compile Include="Models\PetaPoco.cs" />
     <Compile Include="Models\RSVP.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\Venue.cs" />
     <Compile Include="Models\Wedding.cs" />
     <Compile Include="Modules\EventDetailModules\EventDetailsBaseModule.cs" />
+    <Compile Include="Modules\EventDetailModules\MessageBoardModule.cs" />
     <Compile Include="Modules\EventModules\EventBaseModule.cs" />
     <Compile Include="Modules\EventDetailModules\GuestModule.cs" />
+    <Compile Include="Modules\GuestModules\EventDetailsModule.cs" />
+    <Compile Include="Modules\GuestModules\MessageBoardModule.cs" />
+    <Compile Include="Modules\GuestModules\RsvpModule.cs" />
     <Compile Include="Modules\RootModule.cs" />
     <Compile Include="Modules\EventDetailModules\VenueModule.cs" />
     <Compile Include="Modules\EventModules\WeddingModule.cs" />
@@ -142,10 +159,15 @@
     </Compile>
     <Compile Include="StartUp.cs" />
     <Compile Include="UseCases\IHandler.cs" />
+    <Compile Include="UseCases\Login\LoginResponse.cs" />
     <Compile Include="UseCases\Login\UserLoginRequest.cs" />
     <Compile Include="UseCases\Login\LoginHandler.cs" />
     <Compile Include="UseCases\Login\GuestLoginRequest.cs" />
-    <Compile Include="UseCases\Login\LoginResponse.cs" />
+    <Compile Include="UseCases\Login\GuestLoginResponse.cs" />
+    <Compile Include="UseCases\Login\UserLoginResponse.cs" />
+    <Compile Include="UseCases\Rsvp\RsvpHandler.cs" />
+    <Compile Include="UseCases\Rsvp\RsvpRequest.cs" />
+    <Compile Include="UseCases\Rsvp\RsvpResposne.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">

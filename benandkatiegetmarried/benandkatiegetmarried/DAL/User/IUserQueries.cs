@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace benandkatiegetmarried.DAL.UserEvents
 {
-    public interface IUserEventsQueries
+    public interface IUserQueries
     {
         IEnumerable<Guid> GetEventIdsUserHasAccessTo(Guid userId);
     }

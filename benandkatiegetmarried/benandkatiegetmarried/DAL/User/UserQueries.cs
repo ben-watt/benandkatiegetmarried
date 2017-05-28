@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace benandkatiegetmarried.DAL.UserEvents
 {
-    public class UserEventsQueries : IUserEventsQueries
+    public class UserQueries : IUserQueries
     {
         IDatabase _db;
-        public UserEventsQueries(IDatabase db)
+        public UserQueries(IDatabase db)
         {
             _db = db;
         }

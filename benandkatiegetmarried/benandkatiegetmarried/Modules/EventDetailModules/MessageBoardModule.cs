@@ -1,0 +1,20 @@
+﻿using benandkatiegetmarried.Common.Validation;
+using benandkatiegetmarried.DAL.MessageBoard.Commands;
+using benandkatiegetmarried.DAL.MessageBoard.Queries;
+using benandkatiegetmarried.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace benandkatiegetmarried.Modules.EventDetailModules
+{
+    public class MessageBoardModule : EventBaseModule<MessageBoard, Guid>
+    {
+        public MessageBoardModule(IMessageBoardQueries _queries
+            , IMessageBoardCommands _commands
+            , IValidator<MessageBoard> _validator) 
+            : base("messageboards", _queries, _commands, _validator) {}
+    }
+}

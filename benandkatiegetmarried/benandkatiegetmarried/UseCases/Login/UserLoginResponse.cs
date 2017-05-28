@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace benandkatiegetmarried.UseCases.Login
 {
-    public class LoginResponse
+    public class UserLoginResponse : LoginResponse
     {
-        public bool IsValid { get; set; }
+        public Guid UserId { get; set; }
+        public IEnumerable<Guid> EventIds { get; set; }
     }
 }
