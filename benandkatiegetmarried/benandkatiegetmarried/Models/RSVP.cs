@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace benandkatiegetmarried.Models
 {
-    [PetaPoco.TableName("core.RSVPs")]
     public class RSVP
     {
         public Guid Id { get; set; }

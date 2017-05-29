@@ -12,6 +12,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 using Nancy.Security;
+using FluentValidation;
+using benandkatiegetmarried.DAL.Guest.Queries;
 
 namespace benandkatiegetmarriedTests
 {

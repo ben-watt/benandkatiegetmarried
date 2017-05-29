@@ -12,8 +12,8 @@ namespace benandkatiegetmarried.Common.Validation
     {
         public WeddingValidator()
         {
-            RuleFor(w => w.Bride).NotEmpty().NotNull().WithMessage("A wedding must have a bride");
-            RuleFor(w => w.Groom).NotEmpty().NotNull().WithMessage("A wedding must have a groom");
+            RuleFor(w => w.Bride).NotEmpty().WithMessage("A wedding must have a bride");
+            RuleFor(w => w.Groom).NotEmpty().WithMessage("A wedding must have a groom");
         }
     }
 }

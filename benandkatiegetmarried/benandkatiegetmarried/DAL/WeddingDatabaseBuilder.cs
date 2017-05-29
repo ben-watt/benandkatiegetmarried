@@ -17,6 +17,10 @@ namespace benandkatiegetmarried.DAL
                 .UsingProvider<PostgreSQLDatabaseProvider>()
                 .UsingConnectionString(conn)
                 .UsingIsolationLevel(System.Data.IsolationLevel.ReadCommitted)
+                .UsingDefaultMapper<ConventionMapper>(x =>
+                {
+                    x.InflectTableName = (In, tableName) => String.Concat("core.", tableName);
+                })
                 .Create();
         }
     }

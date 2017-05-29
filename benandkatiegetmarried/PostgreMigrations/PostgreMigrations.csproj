@@ -67,5 +67,8 @@
   <ItemGroup>
     <EmbeddedResource Include="Scripts\0001-CreateTables.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Scripts\0000-AddExtensions.sql" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

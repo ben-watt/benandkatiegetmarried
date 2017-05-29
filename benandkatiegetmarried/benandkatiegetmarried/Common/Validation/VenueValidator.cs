@@ -13,10 +13,10 @@ namespace benandkatiegetmarried.Common.Validation
     {
         public VenueValidator()
         {
-            RuleFor(venue => venue.Id).NotNull().NotEmpty().WithMessage("A venue must have a venue Id");
-            RuleFor(venue => venue.Name).NotNull().WithMessage("A venue must have a name");
-            RuleFor(venue => venue.Postcode).NotNull().WithMessage("A postcode must be supplied");
-            RuleFor(venue => venue.AddressLine1).NotNull().WithMessage("You must supply an address for the venue");
+            RuleFor(venue => venue.Id).NotEmpty().WithMessage("A venue must have a venue Id");
+            RuleFor(venue => venue.Name).NotEmpty().WithMessage("A venue must have a name");
+            RuleFor(venue => venue.Postcode).NotEmpty().WithMessage("A postcode must be supplied");
+            RuleFor(venue => venue.AddressLine1).NotEmpty().WithMessage("You must supply an address for the venue");
         }
     }
 }

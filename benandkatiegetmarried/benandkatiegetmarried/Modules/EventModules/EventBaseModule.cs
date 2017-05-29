@@ -1,11 +1,14 @@
-﻿using benandkatiegetmarried.Common.Validation;
+﻿using benandkatiegetmarried.Common.ModuleExtensions;
+using benandkatiegetmarried.Common.Validation;
 using benandkatiegetmarried.DAL.BaseCommands;
 using benandkatiegetmarried.DAL.BaseQueries;
+using FluentValidation;
 using FluentValidation.Results;
 using Nancy;
 using Nancy.ModelBinding;
 using Nancy.Security;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +17,7 @@ using System.Threading.Tasks;
 namespace benandkatiegetmarried.Modules
 {
     public abstract class EventBaseModule<TEntity, TKey> 
-        : NancyModule where TEntity : class
+        : NancyModule where TEntity : class where TKey : struct
     {
         private IEventCrudQueries<TEntity, TKey> _queries;
         private ICrudCommands<TEntity, TKey> _commands;
@@ -32,7 +35,7 @@ namespace benandkatiegetmarried.Modules
             _queries = queries;
             _commands = commands;
             _validator = validator;
-            _userEventIds = (IEnumerable<TKey>)Session["user-events"];
+            _userEventIds = this.GetFromSession<TKey>("user-eventIds");
             
             Get["/"] = _ => GetAll();
             Get["/{id}"] = p => GetById(p.Id);
@@ -43,12 +46,21 @@ namespace benandkatiegetmarried.Modules
 
         private dynamic GetAll()
         {
-           return _queries.GetAll(_userEventIds);
+            if(_userEventIds.Count() > 0)
+            {
+                return _queries.GetAll(_userEventIds);
+            }
+            return HttpStatusCode.BadRequest;
         }
 
         private dynamic GetById(dynamic Id)
         {
-            return _queries.GetById(Id, _userEventIds);
+            if(_userEventIds.Count() > 0)
+            {
+                return _queries.GetById(Id, _userEventIds);
+            }
+            return HttpStatusCode.BadRequest;
+            
         }
 
         private dynamic Create()

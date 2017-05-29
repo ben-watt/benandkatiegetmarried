@@ -2,7 +2,7 @@
 using benandkatiegetmarried.DAL.BaseQueries;
 using System;
 
-namespace benandkatiegetmarried.DAL.Guest.Commands
+namespace benandkatiegetmarried.DAL.Guest.Queries
 {
     public interface IGuestQueries : IEventCrudQueries<Models.Guest, Guid>
     { 

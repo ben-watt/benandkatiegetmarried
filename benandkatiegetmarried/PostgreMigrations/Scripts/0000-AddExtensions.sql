@@ -1,0 +1,3 @@
+﻿
+CREATE EXTENSION "citext";
+CREATE EXTENSION "uuid-ossp";

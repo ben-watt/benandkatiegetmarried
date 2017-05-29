@@ -2,6 +2,7 @@
 using benandkatiegetmarried.DAL.MessageBoard.Commands;
 using benandkatiegetmarried.DAL.MessageBoard.Queries;
 using benandkatiegetmarried.Models;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Linq;

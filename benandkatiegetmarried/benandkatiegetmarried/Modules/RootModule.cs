@@ -1,6 +1,8 @@
-﻿using benandkatiegetmarried.DAL.UserEvents;
+﻿using benandkatiegetmarried.Common.ErrorHandling;
+using benandkatiegetmarried.DAL.UserEvents;
 using benandkatiegetmarried.UseCases;
 using benandkatiegetmarried.UseCases.Login;
+using FluentValidation;
 using Nancy;
 using Nancy.Authentication.Forms;
 using Nancy.ModelBinding;
@@ -17,19 +19,25 @@ namespace benandkatiegetmarried.Modules
     {
         private IHandler<GuestLoginRequest, GuestLoginResponse> _GuestLoginHandler;
         private IHandler<UserLoginRequest, UserLoginResponse> _UserLoginHandler;
+        private IValidator<GuestLoginRequest> _guestValidator;
+        private IValidator<UserLoginRequest> _userValidator;
         private IUserQueries _userEventQueries;
 
         public RootModule(IHandler<GuestLoginRequest, GuestLoginResponse> guestLoginHandler
             , IHandler<UserLoginRequest, UserLoginResponse> userLoginHandler
+            , IValidator<GuestLoginRequest> guestValidator
+            , IValidator<UserLoginRequest> userValidator
             , IUserQueries userEventQueries)
         {
             _GuestLoginHandler = guestLoginHandler;
             _UserLoginHandler = userLoginHandler;
             _userEventQueries = userEventQueries;
+            _guestValidator = guestValidator;
+            _userValidator = userValidator;
 
             Get["/"] = _ => View["LandingPage"];
-            Post["/userLogin"] = _ => UserLogin();
-            Post["/guestLogin"] = _ => GuestLogin();
+            Post["/user-login"] = _ => UserLogin();
+            Post["/guest-login"] = _ => GuestLogin();
             Post["/logout"] = _ => Logout();
         }
 
@@ -41,16 +49,18 @@ namespace benandkatiegetmarried.Modules
         private dynamic UserLogin()
         {
             var request = this.Bind<UserLoginRequest>();
-            if (request != null)
+            var userValidation = _userValidator.Validate(request);
+            if (!userValidation.IsValid)
             {
-                var response = _UserLoginHandler.Handle(request);
-                if (response.IsValid)
-                {
-                    this.AddRememberMeCookie(response.UserId);
-                    this.Session["user-eventIds"] = response.EventIds;
-                    return HttpStatusCode.OK;
-                }
-                return HttpStatusCode.BadRequest;
+                return ErrorResponse.ValidationError(userValidation.Errors);
+            }
+
+            var response = _UserLoginHandler.Handle(request);
+            if (response.IsValid)
+            {
+                this.AddRememberMeCookie(response.UserId);
+                this.Session["user-eventIds"] = response.EventIds;
+                return HttpStatusCode.OK;
             }
             return RedirectAsUnauthorised();
         }
@@ -58,17 +68,19 @@ namespace benandkatiegetmarried.Modules
         private dynamic GuestLogin()
         {
             var request = this.Bind<GuestLoginRequest>();
-            if (request != null)
+            var guestValidation = _guestValidator.Validate(request);
+            if (!guestValidation.IsValid)
             {
-                var response = _GuestLoginHandler.Handle(request);
-                if (response.IsValid)
-                {
-                    AddRememberMeCookie(response.InviteId);
-                    this.Session["guest-eventId"] = response.EventId;
-                    this.Session["guest-inviteId"] = response.InviteId;
-                    return HttpStatusCode.OK;
-                }
-                return HttpStatusCode.BadRequest;
+                return ErrorResponse.ValidationError(guestValidation.Errors);
+            }
+
+            var response = _GuestLoginHandler.Handle(request);
+            if (response.IsValid)
+            {
+                AddRememberMeCookie(response.InviteId);
+                this.Session["guest-eventId"] = response.EventId;
+                this.Session["guest-inviteId"] = response.InviteId;
+                return HttpStatusCode.OK;
             }
             return RedirectAsUnauthorised();
         }

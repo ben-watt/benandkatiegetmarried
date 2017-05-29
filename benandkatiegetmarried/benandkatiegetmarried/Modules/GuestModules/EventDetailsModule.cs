@@ -11,9 +11,9 @@ namespace benandkatiegetmarried.Modules.GuestModules
 {
     public class EventDetailsModule : NancyModule
     {
-        private IGuestEventDetailsQueries _queries;
+        private IGuestEventDetailsQueries<Guid> _queries;
 
-        public EventDetailsModule(IGuestEventDetailsQueries queries) : base("api")
+        public EventDetailsModule(IGuestEventDetailsQueries<Guid> queries) : base("api")
         {
             _queries = queries;
 
@@ -43,10 +43,10 @@ namespace benandkatiegetmarried.Modules.GuestModules
 
         private dynamic RunQuery(Func<Guid, dynamic> query, string sessionKey)
         {
-            Guid? eventId = this.GetIdFromSession(sessionKey);
-            if (eventId != null)
+            var eventId = this.GetFromSession<Guid>(sessionKey);
+            if (eventId.Count() > 0)
             {
-                return query.Invoke((Guid)eventId);
+                return query.Invoke(eventId.FirstOrDefault());
             }
             return HttpStatusCode.BadRequest;
         }

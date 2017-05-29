@@ -16,6 +16,7 @@ using benandkatiegetmarried.DAL.BaseCommands;
 using benandkatiegetmarried.Common.Validation;
 using Nancy.Authentication.Forms;
 using benandkatiegetmarried.DAL.Login;
+using FluentValidation;
 
 namespace benandkatiegetmarriedTests.Modules
 {

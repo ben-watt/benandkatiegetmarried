@@ -9,16 +9,20 @@ namespace benandkatiegetmarried.Common.ModuleExtensions
 {
     public static class ModuleExtensions
     {
-        public static Guid? GetIdFromSession(this NancyModule module, string sessionKey)
+        public static IEnumerable<T> GetFromSession<T>(this NancyModule module, string sessionKey) where T : struct
         {
             try
             {
-                var eventId = (Guid)module.Request.Session[sessionKey];
-                return eventId;
+                var eventId = (IEnumerable<T>)module.Request.Session[sessionKey];
+                if(eventId != null)
+                {
+                    return eventId;
+                }
+                return new List<T>();
             }
             catch (Exception)
             {
-                return null;
+                return new List<T>();
             }
         }
     }

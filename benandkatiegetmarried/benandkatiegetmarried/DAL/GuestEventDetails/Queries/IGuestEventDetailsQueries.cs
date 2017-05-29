@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace benandkatiegetmarried.DAL.GuestEventDetails.Queries
 {
-    public interface IGuestEventDetailsQueries
+    public interface IGuestEventDetailsQueries<TKey>
     {
-        Models.Event GetEventDetails(Guid eventId);
-        IEnumerable<Models.Venue> GetVenueDetails(Guid eventId);
-        IEnumerable<Models.Guest> GetFeaturedGuests(Guid eventId);
-        IEnumerable<Models.Guest> GetGuestsOnInvite(Guid inviteId);
+        Models.Event GetEventDetails(TKey eventId);
+        IEnumerable<Models.Venue> GetVenueDetails(TKey eventId);
+        IEnumerable<Models.Guest> GetFeaturedGuests(TKey eventId);
+        IEnumerable<Models.Guest> GetGuestsOnInvite(TKey inviteId);
     }
 }

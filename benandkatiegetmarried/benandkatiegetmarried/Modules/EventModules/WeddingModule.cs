@@ -10,6 +10,7 @@ using benandkatiegetmarried.DAL;
 using benandkatiegetmarried.DAL.Weddings.Commands;
 using benandkatiegetmarried.Models;
 using benandkatiegetmarried.Common.Validation;
+using FluentValidation;
 
 namespace benandkatiegetmarried.Modules
 {

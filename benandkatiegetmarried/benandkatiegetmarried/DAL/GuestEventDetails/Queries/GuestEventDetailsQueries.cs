@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace benandkatiegetmarried.DAL.GuestEventDetails.Queries
 {
-    public class GuestEventDetailsQueries : IGuestEventDetailsQueries
+    public class GuestEventDetailsQueries<Guid> : IGuestEventDetailsQueries<Guid>
     {
         private IDatabase _db;
         public GuestEventDetailsQueries(IDatabase db)

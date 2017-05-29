@@ -12,6 +12,8 @@ using System.Threading.Tasks;
 using benandkatiegetmarried.Common.Validation;
 using benandkatiegetmarried.DAL.BaseCommands;
 using benandkatiegetmarried.DAL.BaseQueries;
+using benandkatiegetmarried.DAL.Guest.Queries;
+using FluentValidation;
 using benandkatiegetmarried.DAL.Guest.Commands;
 
 namespace benandkatiegetmarried.Modules

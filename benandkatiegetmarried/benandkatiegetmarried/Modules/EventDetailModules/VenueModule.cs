@@ -2,6 +2,7 @@
 using benandkatiegetmarried.DAL.Venue.VenueCommands;
 using benandkatiegetmarried.DAL.Venue.VenueQueries;
 using benandkatiegetmarried.Models;
+using FluentValidation;
 using Nancy;
 using System;
 using System.Collections.Generic;

@@ -7,7 +7,6 @@ using Nancy.Security;
 
 namespace benandkatiegetmarried.Models
 {
-    [PetaPoco.TableName("Users")]
     public class User : IUserIdentity
     {
         public Guid Id { get; set; }

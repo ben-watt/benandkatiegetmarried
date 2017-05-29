@@ -3,6 +3,7 @@ using benandkatiegetmarried.Common.Validation;
 using benandkatiegetmarried.DAL.GuestMessageBoard.GuestMessageBoardCommands;
 using benandkatiegetmarried.DAL.GuestMessageBoard.GuestMessageBoardQueries;
 using benandkatiegetmarried.Models;
+using FluentValidation;
 using Nancy;
 using Nancy.ModelBinding;
 using Nancy.Responses;
@@ -15,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace benandkatiegetmarried.Modules.GuestModules
 {
-    public class GuestMessageBoard : NancyModule
+    public class GuestMessageBoard: NancyModule
     { 
         private IGuestMessageBoardQueries _queries;
         private IGuestMessageBoardCommands _commands;
@@ -80,10 +81,10 @@ namespace benandkatiegetmarried.Modules.GuestModules
 
         private dynamic GetMessageBoards()
         {
-            Guid? eventId = this.GetIdFromSession("guest-eventId");
-            if(eventId != null)
+            var eventIds = this.GetFromSession<Guid>("guest-eventId");
+            if(eventIds.Count() > 0)
             {
-                var response = _queries.GetMessageBoards((Guid)eventId);
+                var response = _queries.GetMessageBoards(eventIds.FirstOrDefault());
                 return response;
             }
             return new TextResponse("No eventId in the session, unable to process request")

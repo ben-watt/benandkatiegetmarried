@@ -1,4 +1,5 @@
-﻿using FluentValidation.Results;
+﻿using benandkatiegetmarried.Models;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace benandkatiegetmarried.Common.Validation
 {
-    public interface IValidator<T> where T : class
+    public class MessageValidator : AbstractValidator<Message>, IValidator<Message>
     {
-        ValidationResult Validate(T entity);
+        
     }
 }

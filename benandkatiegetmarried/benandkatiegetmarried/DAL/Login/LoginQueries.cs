@@ -35,8 +35,10 @@ namespace benandkatiegetmarried.DAL.Login
             {
                 userId = _db.FirstOrDefault<Guid>(
                     @"SELECT Id 
-                      FROM users 
-                      WHERE username = @0 AND password = @1", username.ToLower(), password);
+                      FROM core.Users 
+                      WHERE username = @0 AND password = @1"
+                    , username.ToLower(), password);
+                uow.Complete();
             }
             return userId;
         }

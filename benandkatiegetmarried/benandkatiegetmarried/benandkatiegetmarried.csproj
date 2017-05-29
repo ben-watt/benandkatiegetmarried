@@ -91,10 +91,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\ErrorHandling\Error.cs" />
+    <Compile Include="Common\ErrorHandling\ErrorHandling.cs" />
+    <Compile Include="Common\ErrorHandling\ErrorResponse.cs" />
+    <Compile Include="Common\ErrorHandling\ValidationError.cs" />
+    <Compile Include="Common\JsonSerialization\CustomJsonSerializer.cs" />
     <Compile Include="Common\ModuleExtensions\ModuleExtensions.cs" />
+    <Compile Include="Common\Validation\GuestLoginValidator.cs" />
+    <Compile Include="Common\Validation\GuestValidator.cs" />
     <Compile Include="Common\Validation\InviteValidator.cs" />
-    <Compile Include="Common\Validation\IValidator.cs" />
-    <Compile Include="Common\Validation\IWeddingValidator.cs" />
+    <Compile Include="Common\Validation\MessageBoardValidator.cs" />
+    <Compile Include="Common\Validation\MessageValidator.cs" />
+    <Compile Include="Common\Validation\RsvpValidator.cs" />
+    <Compile Include="Common\Validation\UserLoginValidator.cs" />
+    <Compile Include="Common\Validation\WeddingValidator.cs" />
     <Compile Include="Common\Validation\VenueValidator.cs" />
     <Compile Include="CustomNancyBootstrapper.cs" />
     <Compile Include="DAL\BaseCommands\BaseCommands.cs" />
@@ -111,13 +121,16 @@
     <Compile Include="DAL\Guest\Commands\IGuestCommands.cs" />
     <Compile Include="DAL\Guest\Queries\GuestQueries.cs" />
     <Compile Include="DAL\Guest\Queries\IGuestQueries.cs" />
-    <Compile Include="DAL\Login\ILoginCommands.cs" />
     <Compile Include="DAL\Login\ILoginQueries.cs" />
     <Compile Include="DAL\Login\LoginQueries.cs" />
     <Compile Include="DAL\MessageBoard\Commands\IMessageBoardCommands.cs" />
+    <Compile Include="DAL\MessageBoard\Commands\MessageBoardCommands.cs" />
     <Compile Include="DAL\MessageBoard\Queries\IMessageBoardQueries.cs" />
+    <Compile Include="DAL\MessageBoard\Queries\MessageBoardQueries.cs" />
     <Compile Include="DAL\Rsvp\RsvpCommands\IRsvpCommands.cs" />
     <Compile Include="DAL\Rsvp\RsvpCommands\RsvpCommands.cs" />
+    <Compile Include="DAL\Rsvp\RsvpQueries\IRsvpQueries.cs" />
+    <Compile Include="DAL\Rsvp\RsvpQueries\RsvpQueries.cs" />
     <Compile Include="DAL\User\IUserQueries.cs" />
     <Compile Include="DAL\User\UserQueries.cs" />
     <Compile Include="DAL\Venue\VenueCommands\IVenueCommands.cs" />

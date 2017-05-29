@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using PetaPoco;
 
-namespace benandkatiegetmarried.DAL.Guest.Commands
+namespace benandkatiegetmarried.DAL.Guest.Queries
 {
     public class GuestQueries : BaseQueries.EventCrudQueries<Models.Guest, Guid>, IGuestQueries
     {

@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace benandkatiegetmarried.Models
 {
-    [PetaPoco.TableName("core.Weddings")]
     public class Wedding : Event
     {
         public Wedding()

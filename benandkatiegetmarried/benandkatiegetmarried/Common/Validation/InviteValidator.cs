@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace benandkatiegetmarried.Common.Validation
 {
-    class InviteValidator : AbstractValidator<Invite>
+    class IValidator : AbstractValidator<Invite> , IValidator<Invite>
     {
-        public InviteValidator()
+        public IValidator()
         {
             RuleFor(i => i.Guests).NotEmpty();
-            RuleFor(i => i.Id).NotNull().NotEmpty();
-            RuleFor(i => i.Greeting).NotNull().NotEmpty();
-            RuleFor(i => i.Password).NotNull().NotEmpty().MinimumLength(20);
+            RuleFor(i => i.Id).NotEmpty();
+            RuleFor(i => i.Greeting).NotEmpty();
+            RuleFor(i => i.Password).NotEmpty().MinimumLength(20);
         }
     }
 }

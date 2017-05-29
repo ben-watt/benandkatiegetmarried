@@ -1,6 +1,7 @@
 ﻿using benandkatiegetmarried.Common.Validation;
 using benandkatiegetmarried.DAL.BaseCommands;
 using benandkatiegetmarried.DAL.BaseQueries;
+using FluentValidation;
 using FluentValidation.Results;
 using Nancy;
 using Nancy.ModelBinding;
