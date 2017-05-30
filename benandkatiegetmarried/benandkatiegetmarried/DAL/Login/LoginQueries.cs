@@ -36,7 +36,7 @@ namespace benandkatiegetmarried.DAL.Login
                 userId = _db.FirstOrDefault<Guid>(
                     @"SELECT Id 
                       FROM core.Users 
-                      WHERE username = @0 AND password = @1"
+                      WHERE username = @0::citext AND password = @1"
                     , username.ToLower(), password);
                 uow.Complete();
             }
