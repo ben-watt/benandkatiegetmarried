@@ -7,6 +7,7 @@ using FluentValidation.Results;
 using Nancy;
 using Nancy.ModelBinding;
 using Nancy.Security;
+using Nancy.Session;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -22,16 +23,30 @@ namespace benandkatiegetmarried.Modules
         private IEventCrudQueries<TEntity, TKey> _queries;
         private ICrudCommands<TEntity, TKey> _commands;
         private IValidator<TEntity> _validator;
-        protected IEnumerable<TKey> _userEventIds => this.GetFromSession<TKey>("user-eventIds");
+        private ISession _session;
+
+        protected IEnumerable<TKey> _userEventIds => (IEnumerable<TKey>)_session["user-eventIds"];
 
         protected EventBaseModule(string modulePath
             , IEventCrudQueries<TEntity, TKey> queries
             , ICrudCommands<TEntity, TKey> commands
-            , IValidator<TEntity> validator) : base(modulePath)
+            , IValidator<TEntity> validator
+            , ISession session) : base(modulePath)
         {
+
+            this.Before += (ctx) =>
+            {
+                var con = ctx as NancyContext;
+                return null;
+            };
+
+            this.After += (ctx) => {
+                var con = ctx as NancyContext;
+            };
+
             this.RequiresAuthentication();
             this.RequiresClaims("User");
-
+            _session = session;
             _queries = queries;
             _commands = commands;
             _validator = validator;
@@ -45,11 +60,11 @@ namespace benandkatiegetmarried.Modules
 
         private dynamic GetAll()
         {
-            if(_userEventIds.Count() > 0)
+            if (_userEventIds.Count() > 0)
             {
                 return _queries.GetAll(_userEventIds);
             }
-            return HttpStatusCode.BadRequest;
+            return HttpStatusCode.OK;
         }
 
         private dynamic GetById(dynamic Id)

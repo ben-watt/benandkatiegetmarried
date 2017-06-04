@@ -18,7 +18,7 @@ namespace benandkatiegetmarried.DAL.Weddings.Query
                 @"  SELECT *
                     FROM core.Events as e
                        INNER JOIN core.weddings AS w
-                           ON e.""Id"" = w.""EventId""
+                           ON e.Id = w.EventId
                     WHERE e.Id IN (@0)";
 
             var result = new List<Wedding>();
