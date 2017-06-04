@@ -12,7 +12,7 @@ namespace benandkatiegetmarried.Models
         public string Name { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
-        public EventTypes EventType { get; set; }
+        public EventTypes Type { get; set; }
 
         public void SetDates(DateTime startTime, DateTime endTime)
         {

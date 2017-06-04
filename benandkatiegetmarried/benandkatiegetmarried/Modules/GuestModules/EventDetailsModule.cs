@@ -1,6 +1,8 @@
 ﻿using benandkatiegetmarried.Common.ModuleExtensions;
 using benandkatiegetmarried.DAL.GuestEventDetails.Queries;
 using Nancy;
+using Nancy.Security;
+using Nancy.Session;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +14,17 @@ namespace benandkatiegetmarried.Modules.GuestModules
     public class EventDetailsModule : NancyModule
     {
         private IGuestEventDetailsQueries<Guid> _queries;
+        private ISession _session;
 
-        public EventDetailsModule(IGuestEventDetailsQueries<Guid> queries) : base("api")
+        public EventDetailsModule(IGuestEventDetailsQueries<Guid> queries
+            , ISession session): base("api")
         {
+
+            this.RequiresAuthentication();
+            this.RequiresClaims("Guest");
+
             _queries = queries;
+            _session = session;
 
             Get["/venue-details"] = _ => GetVenueDetails();
             Get["/featured-guests"] = _ => GetFeaturedGuests();
@@ -25,7 +34,7 @@ namespace benandkatiegetmarried.Modules.GuestModules
 
         private dynamic GetGuestsOnInvite()
         {
-            return RunQuery((x) => _queries.GetEventDetails(x), "guest-inviteId");
+            return RunQuery((x) => _queries.GetGuestsOnInvite(x), "guest-inviteId");
         }
 
         private dynamic GetEventDetails()
@@ -43,12 +52,12 @@ namespace benandkatiegetmarried.Modules.GuestModules
 
         private dynamic RunQuery(Func<Guid, dynamic> query, string sessionKey)
         {
-            var eventId = this.GetFromSession<Guid>(sessionKey);
+            var eventId = (IEnumerable<Guid>)_session[sessionKey];
             if (eventId.Count() > 0)
             {
                 return query.Invoke(eventId.FirstOrDefault());
             }
-            return HttpStatusCode.BadRequest;
+            throw new ArgumentNullException($"Could not find {sessionKey} from session");
         }
     }
 }

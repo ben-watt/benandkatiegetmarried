@@ -81,8 +81,8 @@ namespace benandkatiegetmarried.Modules
             var response = _GuestLoginHandler.Handle(request);
             if (response.IsValid)
             {
-                _session["guest-eventId"] = response.EventId;
-                _session["guest-inviteId"] = response.InviteId;
+                _session["guest-eventId"] = new List<Guid>() { response.EventId };
+                _session["guest-inviteId"] = new List<Guid>() { response.InviteId };
                 _session["type"] = "Guest";
                 return LoginWithRememberMe(response.InviteId);
             }
@@ -97,7 +97,7 @@ namespace benandkatiegetmarried.Modules
 
         private Response LoginWithRememberMe(Guid id)
         {
-            return this.Login(id , DateTime.Now.AddDays(7), "/api/weddings");
+            return this.Login(id , DateTime.Now.AddDays(7));
         }
     }
 }

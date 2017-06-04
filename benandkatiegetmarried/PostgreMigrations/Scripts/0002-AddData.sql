@@ -24,4 +24,7 @@ INSERT INTO core.UserEventMapping (Id, UserId, EventId) VALUES
 (uuid_generate_v4(), benId, eventId)
 , (uuid_generate_v4(), katieId, eventId);
 
+INSERT INTO core.Invites (Id, EventId, Password, Greeting) VALUES
+(uuid_generate_v4(), eventId, 'test123', 'Well hello ben and katie, you are guests as well as users');
+
 END $$
