@@ -15,6 +15,7 @@ using benandkatiegetmarried.DAL.BaseQueries;
 using benandkatiegetmarried.DAL.Guest.Queries;
 using FluentValidation;
 using benandkatiegetmarried.DAL.Guest.Commands;
+using Nancy.Session;
 
 namespace benandkatiegetmarried.Modules
 {
@@ -22,6 +23,7 @@ namespace benandkatiegetmarried.Modules
     {
         public GuestModule(IGuestQueries queries
             , IGuestCommands commands
-            , IValidator<Guest> validator) : base("guests", queries, commands, validator) {}
+            , IValidator<Guest> validator
+            , ISession session) : base("guests", queries, commands, validator, session) {}
     }
 }

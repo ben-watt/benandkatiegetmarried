@@ -22,7 +22,7 @@ namespace benandkatiegetmarried.Modules
         private IEventCrudQueries<TEntity, TKey> _queries;
         private ICrudCommands<TEntity, TKey> _commands;
         private IValidator<TEntity> _validator;
-        protected IEnumerable<TKey> _userEventIds;
+        protected IEnumerable<TKey> _userEventIds => this.GetFromSession<TKey>("user-eventIds");
 
         protected EventBaseModule(string modulePath
             , IEventCrudQueries<TEntity, TKey> queries
@@ -35,7 +35,6 @@ namespace benandkatiegetmarried.Modules
             _queries = queries;
             _commands = commands;
             _validator = validator;
-            _userEventIds = this.GetFromSession<TKey>("user-eventIds");
             
             Get["/"] = _ => GetAll();
             Get["/{id}"] = p => GetById(p.Id);

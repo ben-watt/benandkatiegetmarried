@@ -12,7 +12,6 @@ namespace benandkatiegetmarried.Common.Validation
     {
         public IValidator()
         {
-            RuleFor(i => i.Guests).NotEmpty();
             RuleFor(i => i.Id).NotEmpty();
             RuleFor(i => i.Greeting).NotEmpty();
             RuleFor(i => i.Password).NotEmpty().MinimumLength(20);

@@ -6,15 +6,19 @@ using System.Threading.Tasks;
 using Nancy;
 using Nancy.Security;
 using PetaPoco;
+using Nancy.Session;
 
 namespace benandkatiegetmarried.DAL.Login
 {
     public class LoginQueries : ILoginQueries
     {
-        IDatabase _db;
-        public LoginQueries(IDatabase db)
+        private IDatabase _db;
+        private ISession _session;
+
+        public LoginQueries(IDatabase db, ISession session)
         {
             _db = db;
+            _session = session;
         }
 
         public Models.Invite GetInviteFromPassword(string password)
@@ -44,7 +48,7 @@ namespace benandkatiegetmarried.DAL.Login
         }
         public IUserIdentity GetUserFromIdentifier(Guid identifier, NancyContext context)
         {
-            if (context.Request.Path.Contains("userLogin"))
+            if((string)_session["type"] == "User")
             {
                 return GetFromIdentifier<Models.User>(identifier);
             }

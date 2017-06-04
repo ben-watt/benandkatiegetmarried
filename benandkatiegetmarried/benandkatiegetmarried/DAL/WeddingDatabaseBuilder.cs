@@ -19,7 +19,8 @@ namespace benandkatiegetmarried.DAL
                 .UsingIsolationLevel(System.Data.IsolationLevel.ReadCommitted)
                 .UsingDefaultMapper<ConventionMapper>(x =>
                 {
-                    x.InflectTableName = (In, tableName) => String.Concat("core.", tableName);
+                    x.InflectTableName = (In, tableName) => String.Concat("core.", tableName, "s");
+                    x.InflectColumnName = (In, col) => col.ToLower();
                 })
                 .Create();
         }

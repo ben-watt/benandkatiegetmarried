@@ -28,7 +28,7 @@ namespace benandkatiegetmarried.UseCases.Login
             var invite = _queries.GetInviteFromPassword(request.Password);
             if(invite != null)
                 return new GuestLoginResponse() { IsValid = true, InviteId = invite.Id, EventId = invite.EventId };
-            throw new Exception("Could not valid find invite");
+            throw new Exception("Could not find a valid invite");
 
         }
 
@@ -38,11 +38,11 @@ namespace benandkatiegetmarried.UseCases.Login
             if (userId != Guid.Empty)
             {
                 var userEvents = _userQueries.GetEventIdsUserHasAccessTo(userId);
-                if(userEvents != null)
+                if(userEvents.Count() > 0)
                 {
                     return new UserLoginResponse() { IsValid = true, UserId = userId , EventIds = userEvents };
                 }
-                throw new Exception("User does not have access to any events");
+                return new UserLoginResponse() { IsValid = true, UserId = userId, EventIds = null };
             }
             throw new Exception("User does not exist");
         }

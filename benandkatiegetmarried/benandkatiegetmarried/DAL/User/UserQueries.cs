@@ -1,5 +1,6 @@
 ﻿using PetaPoco;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,7 +17,7 @@ namespace benandkatiegetmarried.DAL.UserEvents
         }
         public IEnumerable<Guid> GetEventIdsUserHasAccessTo(Guid userId)
         {
-            IEnumerable<Guid> eventIds;
+            IEnumerable<Guid> eventIds = new List<Guid>();
             using (var uow = _db.GetTransaction())
             {
                 eventIds = _db.Query<Guid>(@"SELECT EventId 

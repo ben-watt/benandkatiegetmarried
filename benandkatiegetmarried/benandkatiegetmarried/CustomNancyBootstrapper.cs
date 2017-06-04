@@ -50,6 +50,7 @@ namespace benandkatiegetmarried
             container.Register(typeof(IValidator<MessageBoard>), typeof(MessageBoardValidator));
             container.Register(typeof(IGuestEventDetailsQueries<Guid>), typeof(GuestEventDetailsQueries<Guid>));
             container.Register<JsonSerializer, CustomJsonSerializer>();
+            container.Register(typeof(ISession), new Session());
         }
         
         protected override void ApplicationStartup(TinyIoCContainer container, IPipelines pipelines)
@@ -57,7 +58,7 @@ namespace benandkatiegetmarried
             base.ApplicationStartup(container, pipelines);
             var authConfig = new FormsAuthenticationConfiguration()
             {
-                RedirectUrl = "~/",
+                DisableRedirect = true,
                 UserMapper = container.Resolve<IUserMapper>()
             };
             CookieBasedSessions.Enable(pipelines);

@@ -4,6 +4,7 @@ using benandkatiegetmarried.DAL.Venue.VenueQueries;
 using benandkatiegetmarried.Models;
 using FluentValidation;
 using Nancy;
+using Nancy.Session;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,8 @@ namespace benandkatiegetmarried.Modules
         IVenueCommands _commands;
         public VenueModule(IVenueQueries queries
             , IVenueCommands commands
-            , IValidator<Venue> validator) : base("venues", queries , commands , validator)
+            , IValidator<Venue> validator
+            , ISession session) : base("venues", queries , commands , validator, session)
         {
             _queries = queries;
             _commands = commands;

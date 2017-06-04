@@ -6,6 +6,7 @@ using FluentValidation.Results;
 using Nancy;
 using Nancy.ModelBinding;
 using Nancy.Security;
+using Nancy.Session;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,11 +21,13 @@ namespace benandkatiegetmarried.Modules
         private IEventCrudQueries<TEntity, TKey> _queries;
         private ICrudCommands<TEntity, TKey> _commands;
         private IValidator<TEntity> _validator;
+        private ISession _session;
 
         protected EventDetailsBaseModule(string modulePath
             , IEventCrudQueries<TEntity, TKey> queries
             , ICrudCommands<TEntity, TKey> commands
-            , IValidator<TEntity> validator) : base("api/events/{eventId}/" + modulePath)
+            , IValidator<TEntity> validator
+            , ISession session) : base("api/events/{eventId}/" + modulePath)
         {
             this.RequiresAuthentication();
             this.RequiresClaims("User");
@@ -32,6 +35,7 @@ namespace benandkatiegetmarried.Modules
             _queries = queries;
             _commands = commands;
             _validator = validator;
+            _session = session;
 
             Get["/"] = _ => GetAll();
             Get["/{id}"] = p => GetById(p.Id);
@@ -48,12 +52,12 @@ namespace benandkatiegetmarried.Modules
 
         private IEnumerable<TKey> GetCurrentUsersEventsFromSession()
         {
-            return (IEnumerable<TKey>)Session["user-eventIds"];
+            return (IEnumerable<TKey>)_session["user-eventIds"];
         }
 
         private dynamic GetById(dynamic Id)
         {
-            var userEvents = (IEnumerable<TKey>)Session["user-events"];
+            var userEvents = (IEnumerable<TKey>)_session["user-events"];
             return _queries.GetById(Id, userEvents);
         }
 

@@ -93,7 +93,7 @@ CREATE TABLE core.MealChoises
 CREATE TABLE core.Users (
 	Id uuid NOT NULL,
 	UserName citext NOT NULL,
-	Password text NOT NULL,
+	Password text NOT NULL
 	CONSTRAINT users_pkey PRIMARY KEY (Id)
 )
 

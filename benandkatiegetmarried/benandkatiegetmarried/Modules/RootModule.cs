@@ -7,6 +7,7 @@ using Nancy;
 using Nancy.Authentication.Forms;
 using Nancy.ModelBinding;
 using Nancy.Responses;
+using Nancy.Session;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,18 +23,21 @@ namespace benandkatiegetmarried.Modules
         private IValidator<GuestLoginRequest> _guestValidator;
         private IValidator<UserLoginRequest> _userValidator;
         private IUserQueries _userEventQueries;
+        private ISession _session;
 
         public RootModule(IHandler<GuestLoginRequest, GuestLoginResponse> guestLoginHandler
             , IHandler<UserLoginRequest, UserLoginResponse> userLoginHandler
             , IValidator<GuestLoginRequest> guestValidator
             , IValidator<UserLoginRequest> userValidator
-            , IUserQueries userEventQueries)
+            , IUserQueries userEventQueries
+            , ISession session)
         {
             _GuestLoginHandler = guestLoginHandler;
             _UserLoginHandler = userLoginHandler;
             _userEventQueries = userEventQueries;
             _guestValidator = guestValidator;
             _userValidator = userValidator;
+            _session = session;
 
             Get["/"] = _ => View["LandingPage"];
             Post["/user-login"] = _ => UserLogin();
@@ -58,9 +62,9 @@ namespace benandkatiegetmarried.Modules
             var response = _UserLoginHandler.Handle(request);
             if (response.IsValid)
             {
-                this.AddRememberMeCookie(response.UserId);
-                this.Session["user-eventIds"] = response.EventIds;
-                return HttpStatusCode.OK;
+                _session["user-eventIds"] = response.EventIds;
+                _session["type"] = "User";
+                return LoginWithRememberMe(response.UserId);
             }
             return RedirectAsUnauthorised();
         }
@@ -77,23 +81,23 @@ namespace benandkatiegetmarried.Modules
             var response = _GuestLoginHandler.Handle(request);
             if (response.IsValid)
             {
-                AddRememberMeCookie(response.InviteId);
-                this.Session["guest-eventId"] = response.EventId;
-                this.Session["guest-inviteId"] = response.InviteId;
-                return HttpStatusCode.OK;
+                _session["guest-eventId"] = response.EventId;
+                _session["guest-inviteId"] = response.InviteId;
+                _session["type"] = "Guest";
+                return LoginWithRememberMe(response.InviteId);
             }
             return RedirectAsUnauthorised();
         }
 
         private Response RedirectAsUnauthorised()
         {
-            return this.Response.AsRedirect("/", RedirectResponse.RedirectType.SeeOther)
+            return Response.AsRedirect("/", RedirectResponse.RedirectType.SeeOther)
                             .WithStatusCode(HttpStatusCode.Unauthorized);
         }
 
-        private Response AddRememberMeCookie(Guid id)
+        private Response LoginWithRememberMe(Guid id)
         {
-            return this.Login(id , DateTime.Now.AddDays(7), "/");
+            return this.Login(id , DateTime.Now.AddDays(7), "/api/weddings");
         }
     }
 }
