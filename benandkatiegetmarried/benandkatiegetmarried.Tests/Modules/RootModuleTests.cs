@@ -16,6 +16,7 @@ using benandkatiegetmarried.DAL.UserEvents;
 using benandkatiegetmarried.UseCases;
 using FluentValidation;
 using FluentValidation.Results;
+using Nancy.Session;
 
 namespace benandkatiegetmarriedTests
 {
@@ -30,6 +31,8 @@ namespace benandkatiegetmarriedTests
         private Mock<IUserQueries> _userEventQueries = new Mock<IUserQueries>();
         private Mock<IValidator<GuestLoginRequest>> _guestValidator = new Mock<IValidator<GuestLoginRequest>>();
         private Mock<IValidator<UserLoginRequest>> _userValidator = new Mock<IValidator<UserLoginRequest>>();
+        private Mock<ISession> _session = new Mock<ISession>();
+
         private Browser _browser;
         private ConfigurableBootstrapper _bootstrapper;
 
@@ -43,7 +46,8 @@ namespace benandkatiegetmarriedTests
                 .Dependency(_guestLoginHandler.Object)
                 .Dependency(_userLoginHandler.Object)
                 .Dependency(_guestValidator.Object)
-                .Dependency(_userValidator.Object);
+                .Dependency(_userValidator.Object)
+                .Dependency(_session.Object);
             });
             _browser = new Browser(_bootstrapper);
         }

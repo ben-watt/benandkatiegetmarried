@@ -16,7 +16,7 @@ namespace benandkatiegetmarriedTests.Modules
         , TQuerys
         , TCommands
         , TValidator
-        , TEntity> 
+        , TEntity > 
         where TModule : NancyModule
         where TQuerys : class
         where TCommands : class
@@ -25,6 +25,7 @@ namespace benandkatiegetmarriedTests.Modules
         protected Mock<TQuerys> _queries = new Mock<TQuerys>();
         protected Mock<TCommands> _commands = new Mock<TCommands>();
         protected Mock<TValidator> _validator = new Mock<TValidator>();
+        protected Mock<ISession> _session = new Mock<ISession>();
         protected ConfigurableBootstrapper _bootstrapper => DefaultBootstrapper();
 
         public BaseModuleTests() {}
@@ -40,7 +41,8 @@ namespace benandkatiegetmarriedTests.Modules
                 config.Module<TModule>()
                        .Dependency(_queries.Object)
                        .Dependency(_commands.Object)
-                       .Dependency(_validator.Object);
+                       .Dependency(_validator.Object)
+                       .Dependency(_session.Object);
             });
         }
     }

@@ -52,7 +52,7 @@ namespace benandkatiegetmarried
             container.Register<JsonSerializer, CustomJsonSerializer>();
             container.Register(typeof(ISession), new Session());
         }
-        
+
         protected override void ApplicationStartup(TinyIoCContainer container, IPipelines pipelines)
         {
             base.ApplicationStartup(container, pipelines);
