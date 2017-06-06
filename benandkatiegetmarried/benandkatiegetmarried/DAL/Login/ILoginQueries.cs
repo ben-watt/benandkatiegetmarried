@@ -9,7 +9,7 @@ namespace benandkatiegetmarried.DAL.Login
 {
     public interface ILoginQueries : IUserMapper
     {
-        Models.Invite GetInviteFromPassword(string password);
+        Models.Invite GetInviteFromSecurityCode(string securityCode);
         Guid GetUserIdFromPasswordAndUsername(string username, string password);
     }
 }

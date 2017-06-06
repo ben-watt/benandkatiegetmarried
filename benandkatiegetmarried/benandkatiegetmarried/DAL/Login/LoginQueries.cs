@@ -21,12 +21,12 @@ namespace benandkatiegetmarried.DAL.Login
             _session = session;
         }
 
-        public Models.Invite GetInviteFromPassword(string password)
+        public Models.Invite GetInviteFromSecurityCode(string securityCode)
         {
             Models.Invite invite;
             using(var uow = _db.GetTransaction())
             {
-                invite = _db.FirstOrDefault<Models.Invite>("WHERE Password = @0", password);
+                invite = _db.FirstOrDefault<Models.Invite>("WHERE SecurityCode = @0::citext", securityCode);
                 uow.Complete();
             }
             return invite;
@@ -64,6 +64,5 @@ namespace benandkatiegetmarried.DAL.Login
             }
             return entity;
         }
-
     }
 }

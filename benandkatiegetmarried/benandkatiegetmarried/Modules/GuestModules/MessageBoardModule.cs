@@ -1,4 +1,5 @@
-﻿using benandkatiegetmarried.Common.ModuleExtensions;
+﻿using benandkatiegetmarried.Common.ErrorHandling;
+using benandkatiegetmarried.Common.ModuleExtensions;
 using benandkatiegetmarried.Common.Validation;
 using benandkatiegetmarried.DAL.GuestMessageBoard.GuestMessageBoardCommands;
 using benandkatiegetmarried.DAL.GuestMessageBoard.GuestMessageBoardQueries;
@@ -57,7 +58,9 @@ namespace benandkatiegetmarried.Modules.GuestModules
                 var response = _queries.GetMessagesFromInvite(messageBoardId, inviteQuery);
                 return response;
             }
-            return HttpStatusCode.BadRequest;
+            return ErrorResponse.FromError(
+                new Error() { ErrorMessage = "Message Board Id and Invite Query must be Guids" })
+                .WithStatusCode(HttpStatusCode.BadRequest);
         }
         private dynamic GetAllMessagesOnBoard(dynamic id)
         {

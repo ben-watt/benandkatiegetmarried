@@ -9,13 +9,13 @@ namespace benandkatiegetmarried.DAL.BaseCommands
 {
     public abstract class CrudCommands<T, TKey> : ICrudCommands<T, TKey>
     {
-        public IDatabase _db;
+        protected IDatabase _db;
         public CrudCommands(IDatabase db)
         {
             _db = db;
         }
 
-        public void Create(IEnumerable<T> entity)
+        public virtual void Create(IEnumerable<T> entity)
         {
             using (var uow = _db.GetTransaction())
             {

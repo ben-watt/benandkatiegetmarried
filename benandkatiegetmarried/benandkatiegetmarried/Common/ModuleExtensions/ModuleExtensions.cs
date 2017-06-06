@@ -1,4 +1,5 @@
 ﻿using Nancy;
+using Nancy.Session;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,5 +26,9 @@ namespace benandkatiegetmarried.Common.ModuleExtensions
                 return new List<T>();
             }
         }
+    }
+
+    public static class SessionExtensions
+    {
     }
 }

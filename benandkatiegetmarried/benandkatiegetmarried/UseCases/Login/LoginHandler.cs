@@ -14,24 +14,32 @@ namespace benandkatiegetmarried.UseCases.Login
         IHandler<UserLoginRequest, UserLoginResponse>
     {
         private ILoginQueries _queries;
+        private ILoginCommands _commands;
         private IUserQueries _userQueries;
 
         public LoginHandler(ILoginQueries queries
-            , IUserQueries userQueries)
+            , IUserQueries userQueries
+            , ILoginCommands commands)
         {
             _queries = queries;
             _userQueries = userQueries;
+            _commands = commands;
         }
         public GuestLoginResponse Handle(GuestLoginRequest request)
         {
-
-            var invite = _queries.GetInviteFromPassword(request.Password);
+            var invite = _queries.GetInviteFromSecurityCode(request.SecurityCode);
             if(invite != null)
-                return new GuestLoginResponse() { IsValid = true, InviteId = invite.Id, EventId = invite.EventId };
-            throw new Exception("Could not find a valid invite");
+            {
+                if (invite.LoginAttempts > 3)
+                    throw new UnauthorizedAccessException("Login attempts exceeded");
 
+                if(invite.Password == request.Password)
+                    return new GuestLoginResponse() { IsValid = true, InviteId = invite.Id, EventId = invite.EventId };
+                _commands.UpdateFailedLoginAttempts<Models.Invite>(invite.Id);
+            }              
+            throw new ArgumentException("Invite does not exist");
         }
-
+        
         public UserLoginResponse Handle(UserLoginRequest request)
         {
             var userId = _queries.GetUserIdFromPasswordAndUsername(request.Username, request.Password);
@@ -44,7 +52,7 @@ namespace benandkatiegetmarried.UseCases.Login
                 }
                 return new UserLoginResponse() { IsValid = true, UserId = userId, EventIds = null };
             }
-            throw new Exception("User does not exist");
+            throw new ArgumentException("User does not exist");
         }
     }
 }

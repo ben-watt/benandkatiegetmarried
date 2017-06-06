@@ -12,6 +12,7 @@ using benandkatiegetmarried.Models;
 using benandkatiegetmarried.Common.Validation;
 using FluentValidation;
 using Nancy.Session;
+using benandkatiegetmarried.DAL.Event;
 
 namespace benandkatiegetmarried.Modules
 {
@@ -23,8 +24,14 @@ namespace benandkatiegetmarried.Modules
         public WeddingModule(IWeddingCommands weddingCommands
             , IWeddingQueries weddingqueries
             , IValidator<Wedding> weddingValidator
-            , ISession session) 
-            : base("api/weddings", weddingqueries, weddingCommands, weddingValidator, session)
+            , ISession session
+            , IEventCommands<Wedding> eventCommands) 
+            : base("api/weddings"
+                  , weddingqueries
+                  , weddingCommands
+                  , weddingValidator
+                  , session
+                  , eventCommands)
         {
             _queries = weddingqueries;
             _commands = weddingCommands;

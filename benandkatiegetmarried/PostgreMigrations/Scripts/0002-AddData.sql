@@ -8,8 +8,6 @@ katieId uuid = uuid_generate_v4();
 
 BEGIN 
 
-
-
 INSERT INTO core.Events (Id, Name, Type, StartTime, EndTime) VALUES
 (eventId, 'Ben & Katie Get Married', 'Wedding', '2017-02-24 12:00:00', '2017-02-24 24:00:00');
 
@@ -24,7 +22,7 @@ INSERT INTO core.UserEventMapping (Id, UserId, EventId) VALUES
 (uuid_generate_v4(), benId, eventId)
 , (uuid_generate_v4(), katieId, eventId);
 
-INSERT INTO core.Invites (Id, EventId, Password, Greeting) VALUES
-(uuid_generate_v4(), eventId, 'test123', 'Well hello ben and katie, you are guests as well as users');
+INSERT INTO core.Invites (Id, EventId, SecurityCode, Password, Greeting) VALUES
+(uuid_generate_v4(), eventId, 'ben', 'test123', null);
 
 END $$

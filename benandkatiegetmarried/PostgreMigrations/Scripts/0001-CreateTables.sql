@@ -39,8 +39,10 @@ CREATE TABLE core.Invites
 (
 	Id uuid NOT NULL,
 	EventId uuid NOT NULL references core.Events(Id),
-	Password character varying NOT NULL,
-	Greeting character varying (500) NOT NULL,
+	SecurityCode citext NOT NULL, 
+	Password text NOT NULL,
+	Greeting character varying (500) NULL,
+	LoginAttempts int DEFAULT 0,
 	CONSTRAINT invites_pkey PRIMARY KEY (Id)
 )
 
@@ -94,6 +96,7 @@ CREATE TABLE core.Users (
 	Id uuid NOT NULL,
 	UserName citext NOT NULL,
 	Password text NOT NULL,
+    LoginAttempts int DEFAULT 0,
 	CONSTRAINT users_pkey PRIMARY KEY (Id)
 )
 

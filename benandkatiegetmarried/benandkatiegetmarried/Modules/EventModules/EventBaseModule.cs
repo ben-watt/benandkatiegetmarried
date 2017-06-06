@@ -2,6 +2,7 @@
 using benandkatiegetmarried.Common.Validation;
 using benandkatiegetmarried.DAL.BaseCommands;
 using benandkatiegetmarried.DAL.BaseQueries;
+using benandkatiegetmarried.DAL.Event;
 using FluentValidation;
 using FluentValidation.Results;
 using Nancy;
@@ -18,38 +19,32 @@ using System.Threading.Tasks;
 namespace benandkatiegetmarried.Modules
 {
     public abstract class EventBaseModule<TEntity, TKey> 
-        : NancyModule where TEntity : class where TKey : struct
+        : NancyModule where TEntity : Models.Event where TKey : struct
     {
         private IEventCrudQueries<TEntity, TKey> _queries;
         private ICrudCommands<TEntity, TKey> _commands;
         private IValidator<TEntity> _validator;
         private ISession _session;
+        private IEventCommands<TEntity> _eventCommands;
 
         protected IEnumerable<TKey> _userEventIds => (IEnumerable<TKey>)_session["user-eventIds"];
 
-        protected EventBaseModule(string modulePath
+        public EventBaseModule(string modulePath
             , IEventCrudQueries<TEntity, TKey> queries
             , ICrudCommands<TEntity, TKey> commands
             , IValidator<TEntity> validator
-            , ISession session) : base(modulePath)
+            , ISession session
+            , IEventCommands<TEntity> eventCommands) : base(modulePath)
         {
-
-            this.Before += (ctx) =>
-            {
-                var con = ctx as NancyContext;
-                return null;
-            };
-
-            this.After += (ctx) => {
-                var con = ctx as NancyContext;
-            };
 
             this.RequiresAuthentication();
             this.RequiresClaims("User");
+
             _session = session;
             _queries = queries;
             _commands = commands;
             _validator = validator;
+            _eventCommands = eventCommands;
             
             Get["/"] = _ => GetAll();
             Get["/{id}"] = p => GetById(p.Id);
@@ -83,7 +78,7 @@ namespace benandkatiegetmarried.Modules
             var result = ValidateModel(model);
             if (result.IsValid)
             {
-                _commands.Create(model);
+                _eventCommands.Create(model, (Guid)_session["userId"]);
                 return HttpStatusCode.OK;
             }
             return Negotiate.WithModel(result.Errors)

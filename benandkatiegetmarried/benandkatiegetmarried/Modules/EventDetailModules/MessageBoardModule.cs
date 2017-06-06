@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace benandkatiegetmarried.Modules.EventDetailModules
 {
-    public class MessageBoardModule : EventBaseModule<MessageBoard, Guid>
+    public class MessageBoardModule : EventDetailsBaseModule<MessageBoard, Guid>
     {
         public MessageBoardModule(IMessageBoardQueries _queries
             , IMessageBoardCommands _commands

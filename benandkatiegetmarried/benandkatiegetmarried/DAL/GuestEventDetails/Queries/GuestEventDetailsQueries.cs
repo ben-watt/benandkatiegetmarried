@@ -15,12 +15,12 @@ namespace benandkatiegetmarried.DAL.GuestEventDetails.Queries
         {
             _db = db;
         }
-        public Event GetEventDetails(Guid eventId)
+        public Models.Event GetEventDetails(Guid eventId)
         {
-            Event eventDetails;
+            Models.Event eventDetails;
             using(var uow = _db.GetTransaction())
             {
-                eventDetails = _db.FirstOrDefault<Event>("WHERE Id = @0", eventId);
+                eventDetails = _db.FirstOrDefault<Models.Event>("WHERE Id = @0", eventId);
                 uow.Complete();
             }
             return eventDetails;

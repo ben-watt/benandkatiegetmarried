@@ -62,6 +62,7 @@ namespace benandkatiegetmarried.Modules
             var response = _UserLoginHandler.Handle(request);
             if (response.IsValid)
             {
+                _session["userId"] = response.UserId;
                 _session["user-eventIds"] = response.EventIds;
                 _session["type"] = "User";
                 return LoginWithRememberMe(response.UserId);

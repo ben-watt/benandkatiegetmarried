@@ -13,6 +13,7 @@ namespace benandkatiegetmarried.Common.Validation
         public GuestLoginValidator()
         {
             RuleFor(x => x.Password).NotEmpty().WithMessage("Password cannot be null or empty");
+            RuleFor(x => x.SecurityCode).NotEmpty().WithMessage("Security Code cannot be null or empty");
         }
     }
 }
