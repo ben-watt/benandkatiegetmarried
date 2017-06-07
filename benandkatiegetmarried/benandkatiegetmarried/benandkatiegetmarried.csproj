@@ -111,8 +111,8 @@
     <Compile Include="DAL\BaseCommands\IBaseCommands.cs" />
     <Compile Include="DAL\BaseQueries\BaseQueries.cs" />
     <Compile Include="DAL\BaseQueries\IBaseQueries.cs" />
-    <Compile Include="DAL\Event\EventCrudCommands.cs" />
-    <Compile Include="DAL\Event\IEventCrudCommands.cs" />
+    <Compile Include="DAL\Event\EventCommands.cs" />
+    <Compile Include="DAL\Event\IEventCommands.cs" />
     <Compile Include="DAL\GuestEventDetails\Queries\GuestEventDetailsQueries.cs" />
     <Compile Include="DAL\GuestEventDetails\Queries\IGuestEventDetailsQueries.cs" />
     <Compile Include="DAL\GuestMessageBoard\GuestMessageBoardCommands\GuestMessageBoardCommands.cs" />

@@ -8,11 +8,11 @@ using PetaPoco;
 
 namespace benandkatiegetmarried.DAL.Event
 {
-    public class EventCrudCommands<T> : IEventCommands<T> where T : Models.Event
+    public class EventCommands<T> : IEventCommands<T> where T : Models.Event
     {
         private IDatabase _db;
 
-        public EventCrudCommands(IDatabase db)
+        public EventCommands(IDatabase db)
         {
             _db = db;
         }

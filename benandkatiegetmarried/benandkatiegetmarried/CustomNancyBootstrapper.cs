@@ -27,6 +27,7 @@ using benandkatiegetmarried.UseCases.Rsvp;
 using benandkatiegetmarried.Common.JsonSerialization;
 using Newtonsoft.Json;
 using benandkatiegetmarried.Common.ErrorHandling;
+using benandkatiegetmarried.DAL.Event;
 
 namespace benandkatiegetmarried
 {
@@ -51,6 +52,7 @@ namespace benandkatiegetmarried
             container.Register(typeof(IGuestEventDetailsQueries<Guid>), typeof(GuestEventDetailsQueries<Guid>));
             container.Register<JsonSerializer, CustomJsonSerializer>();
             container.Register(typeof(ISession), new Session());
+            container.Register(typeof(IEventCommands<Wedding>), typeof(EventCommands<Wedding>));
         }
 
         protected override void ApplicationStartup(TinyIoCContainer container, IPipelines pipelines)
@@ -61,6 +63,7 @@ namespace benandkatiegetmarried
                 DisableRedirect = true,
                 UserMapper = container.Resolve<IUserMapper>()
             };
+
             CookieBasedSessions.Enable(pipelines);
             FormsAuthentication.Enable(pipelines, authConfig);
             ErrorHandling.Enable(pipelines);
