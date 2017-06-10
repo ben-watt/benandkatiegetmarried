@@ -13,12 +13,10 @@ namespace benandkatiegetmarried.DAL.Login
     public class LoginQueries : ILoginQueries
     {
         private IDatabase _db;
-        private ISession _session;
 
-        public LoginQueries(IDatabase db, ISession session)
+        public LoginQueries(IDatabase db)
         {
             _db = db;
-            _session = session;
         }
 
         public Models.Invite GetInviteFromSecurityCode(string securityCode)
@@ -48,7 +46,7 @@ namespace benandkatiegetmarried.DAL.Login
         }
         public IUserIdentity GetUserFromIdentifier(Guid identifier, NancyContext context)
         {
-            if((string)_session["type"] == "User")
+            if(context.Request.Session["type"] == "User")
             {
                 return GetFromIdentifier<Models.User>(identifier);
             }

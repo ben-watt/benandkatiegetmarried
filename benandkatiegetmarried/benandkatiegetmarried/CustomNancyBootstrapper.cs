@@ -28,6 +28,7 @@ using benandkatiegetmarried.Common.JsonSerialization;
 using Newtonsoft.Json;
 using benandkatiegetmarried.Common.ErrorHandling;
 using benandkatiegetmarried.DAL.Event;
+using Nancy.Session.InProc;
 
 namespace benandkatiegetmarried
 {
@@ -60,14 +61,28 @@ namespace benandkatiegetmarried
             base.ApplicationStartup(container, pipelines);
             var authConfig = new FormsAuthenticationConfiguration()
             {
-                DisableRedirect = true,
+                DisableRedirect = true, 
                 UserMapper = container.Resolve<IUserMapper>()
             };
 
-            CookieBasedSessions.Enable(pipelines);
             FormsAuthentication.Enable(pipelines, authConfig);
+            pipelines.EnableInProcSessions();
             ErrorHandling.Enable(pipelines);
         }
+
+        protected override void RequestStartup(TinyIoCContainer container, IPipelines pipelines, NancyContext context)
+        {
+            base.RequestStartup(container, pipelines, context);
+
+            var pipe = pipelines;
+
+            pipelines.BeforeRequest.InsertItemAtPipelineIndex(3, (ctx) =>
+            {
+                container.Register(typeof(ISession), ctx.Request.Session);
+                return null;
+            });
+        }
+
         protected override void ConfigureConventions(NancyConventions nancyConventions)
         {
             base.ConfigureConventions(nancyConventions);
