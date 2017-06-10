@@ -41,7 +41,8 @@ CREATE TABLE core.Invites
 	EventId uuid NOT NULL references core.Events(Id),
 	SecurityCode citext NOT NULL, 
 	Password text NOT NULL,
-	Greeting character varying (500) NULL,
+	Greeting text NULL,
+	Type character varying(200) NOT NULL,
 	LoginAttempts int DEFAULT 0,
 	CONSTRAINT invites_pkey PRIMARY KEY (Id)
 )
@@ -53,8 +54,6 @@ CREATE TABLE core.Guests
 	InviteId uuid NOT NULL references core.Invites(Id),
 	FirstName character varying (200) NOT NULL,
 	LastName character varying (200) NOT NULL,
-	UserName character varying NULL,
-	Type character varying(200) NOT NULL,
 	IsFeatured bool default false NOT NULL,
 	HasSentRsvp bool default false NOT NULL,
 	CONSTRAINT guests_pkey PRIMARY KEY (Id)

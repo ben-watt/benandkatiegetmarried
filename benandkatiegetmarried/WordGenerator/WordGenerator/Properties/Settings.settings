@@ -1,0 +1,9 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="WordGenerator.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="DictionaryFile" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">C:\git\Projects\benandkatiegetmarried\benandkatiegetmarried\WordGenerator\WordGenerator\Content\dic.txt</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

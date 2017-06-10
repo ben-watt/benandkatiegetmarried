@@ -1,13 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.12
+VisualStudioVersion = 15.0.26430.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "benandkatiegetmarried", "benandkatiegetmarried\benandkatiegetmarried.csproj", "{2D8F9D36-973E-4756-83C1-DD882AFCCC87}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "benandkatiegetmarried.Tests", "benandkatiegetmarried.Tests\benandkatiegetmarried.Tests.csproj", "{4849C72A-EF88-4D1C-8EE7-12B942B5A67B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostgreMigrations", "PostgreMigrations\PostgreMigrations.csproj", "{3268000F-D0C9-45C3-A10F-6EF984B764F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordGenerator", "WordGenerator\WordGenerator\WordGenerator.csproj", "{5F71BE5C-0365-4230-AF17-7E0E2D524EE4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{3268000F-D0C9-45C3-A10F-6EF984B764F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3268000F-D0C9-45C3-A10F-6EF984B764F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3268000F-D0C9-45C3-A10F-6EF984B764F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F71BE5C-0365-4230-AF17-7E0E2D524EE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F71BE5C-0365-4230-AF17-7E0E2D524EE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F71BE5C-0365-4230-AF17-7E0E2D524EE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F71BE5C-0365-4230-AF17-7E0E2D524EE4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

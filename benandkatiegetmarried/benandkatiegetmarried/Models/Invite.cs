@@ -20,6 +20,7 @@ namespace benandkatiegetmarried.Models
         public string SecurityCode { get; set; }
         public string Password { get; set; }
         public string Greeting { get; set; }
+        public string Type { get; set; }
         public int LoginAttempts { get; set; }
         [PetaPoco.Ignore]
         public string UserName { get; set; }

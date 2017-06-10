@@ -29,6 +29,7 @@ using Newtonsoft.Json;
 using benandkatiegetmarried.Common.ErrorHandling;
 using benandkatiegetmarried.DAL.Event;
 using Nancy.Session.InProc;
+using Nancy.Cryptography;
 
 namespace benandkatiegetmarried
 {
@@ -59,6 +60,14 @@ namespace benandkatiegetmarried
         protected override void ApplicationStartup(TinyIoCContainer container, IPipelines pipelines)
         {
             base.ApplicationStartup(container, pipelines);
+
+            var cryptoConfig = new CryptographyConfiguration(
+                new RijndaelEncryptionProvider(
+                        new PassphraseKeyGenerator("dodeda29fn2k191aed;foim!92cc0z9ldAZZZEgtjkalpoeid", new byte[] { 4, 6, 3, 6, 3, 9, 5 })),
+                new DefaultHmacProvider(
+                        new PassphraseKeyGenerator("oewcn38203ejei0dnmk3o£Q£RFAaru92ofoj", new byte[] { 5, 7, 2, 6, 6, 3 }))
+                        );
+
             var authConfig = new FormsAuthenticationConfiguration()
             {
                 DisableRedirect = true, 

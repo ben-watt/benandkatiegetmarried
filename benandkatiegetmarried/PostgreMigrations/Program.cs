@@ -20,7 +20,7 @@ namespace PostgreMigrations
 
             var upgrader = DeployChanges.To
                 .PostgresqlDatabase(connectionString)
-                .WithScriptsEmbeddedInAssembly(Assembly.GetExecutingAssembly())
+                .WithScriptsAndCodeEmbeddedInAssembly(Assembly.GetExecutingAssembly())
                 .LogToConsole()
                 .Build();
 
