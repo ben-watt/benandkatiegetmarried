@@ -12,7 +12,7 @@ namespace benandkatiegetmarried.DAL
     {
         public static IDatabase Default()
         {
-            var conn = ConfigurationManager.ConnectionStrings["local"].ConnectionString;
+            var conn = ConfigurationManager.ConnectionStrings["database"].ConnectionString;
             return DatabaseConfiguration.Build()
                 .UsingProvider<SqlServerDatabaseProvider>()
                 .UsingConnectionString(conn)

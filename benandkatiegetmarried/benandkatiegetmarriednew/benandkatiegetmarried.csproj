@@ -96,6 +96,11 @@
     <Content Include="packages.config" />
     <Content Include="Views\LandingPage.cshtml" />
     <Content Include="Views\_Layout.cshtml" />
+    <None Include="Properties\PublishProfiles\benandkatiegetmarried - Web Deploy.pubxml" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -113,6 +118,7 @@
     <Compile Include="Common\ErrorHandling\ValidationError.cs" />
     <Compile Include="Common\JsonSerialization\CustomJsonSerializer.cs" />
     <Compile Include="Common\ModuleExtensions\ModuleExtensions.cs" />
+    <Compile Include="Common\Security\SecurityExtensions.cs" />
     <Compile Include="Common\Validation\GuestLoginValidator.cs" />
     <Compile Include="Common\Validation\GuestValidator.cs" />
     <Compile Include="Common\Validation\InviteValidator.cs" />
@@ -184,6 +190,12 @@
     <Compile Include="Modules\GuestModules\RsvpModule.cs" />
     <Compile Include="Modules\RootModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Settings.cs" />
     <Compile Include="UseCases\IHandler.cs" />
     <Compile Include="UseCases\Login\GuestLoginRequest.cs" />
     <Compile Include="UseCases\Login\GuestLoginResponse.cs" />
@@ -196,7 +208,6 @@
     <Compile Include="UseCases\Rsvp\RsvpResposne.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Common\Session\" />
     <Folder Include="DAL\Invite\" />
   </ItemGroup>
   <PropertyGroup>

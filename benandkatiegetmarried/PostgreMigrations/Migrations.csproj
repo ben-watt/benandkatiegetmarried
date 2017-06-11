@@ -35,16 +35,11 @@
     <Reference Include="DbUp, Version=3.3.5.0, Culture=neutral, PublicKeyToken=4b419c53bdfd4cbf, processorArchitecture=MSIL">
       <HintPath>..\packages\dbup.3.3.5\lib\net35\DbUp.dll</HintPath>
     </Reference>
-    <Reference Include="DbUp.Postgresql, Version=3.3.5.0, Culture=neutral, PublicKeyToken=4b419c53bdfd4cbf, processorArchitecture=MSIL">
-      <HintPath>..\packages\dbup-postgresql.3.3.5\lib\net40\DbUp.Postgresql.dll</HintPath>
-    </Reference>
     <Reference Include="Mono.Security, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
       <HintPath>..\packages\Npgsql.2.2.1\lib\net45\Mono.Security.dll</HintPath>
     </Reference>
-    <Reference Include="Npgsql, Version=2.2.1.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
-      <HintPath>..\packages\Npgsql.2.2.1\lib\net45\Npgsql.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />

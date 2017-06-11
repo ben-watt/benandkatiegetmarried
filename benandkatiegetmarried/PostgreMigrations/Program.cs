@@ -1,6 +1,7 @@
 ﻿using DbUp;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
@@ -13,9 +14,18 @@ namespace PostgreMigrations
     {
         static void Main(string[] args)
         {
-            var connectionString =
-                args.FirstOrDefault() 
-                ?? @"Server=localhost;Database=weddingApp;Trusted_Connection=yes;";
+
+            var conn = "database";
+
+            if (args.Count() > 0)
+                conn = args[0];
+
+            var connectionString = ConfigurationManager.ConnectionStrings[conn].ConnectionString;
+
+            if(connectionString == null)
+            {
+                throw new ArgumentException("No database connection string provided");
+            }
 
             EnsureDatabase.For.SqlDatabase(connectionString);
 
