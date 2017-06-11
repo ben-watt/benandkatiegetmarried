@@ -100,13 +100,16 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\benandkatiegetmarried\benandkatiegetmarried.csproj">
-      <Project>{2d8f9d36-973e-4756-83c1-dd882afccc87}</Project>
-      <Name>benandkatiegetmarried</Name>
-    </ProjectReference>
+    <Folder Include="DAL\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="DAL\" />
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\benandkatiegetmarriednew\benandkatiegetmarried.csproj">
+      <Project>{8aa8ef74-7323-4ae7-8f8e-763f4b7ec4d0}</Project>
+      <Name>benandkatiegetmarried</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

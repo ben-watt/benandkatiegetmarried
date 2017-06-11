@@ -70,12 +70,5 @@ namespace benandkatiegetmarriedTests
 
         }
 
-        [Fact]
-        public void Test_Root_Path()
-        {
-            IRootPathProvider root = new CustomRootPathProvider();
-            var rootPath = root.GetRootPath();
-            Assert.Equal(Path.GetFullPath("../.."), rootPath);
-        }
     }
 }

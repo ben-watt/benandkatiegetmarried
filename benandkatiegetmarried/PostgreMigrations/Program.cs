@@ -1,6 +1,7 @@
 ﻿using DbUp;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -14,17 +15,17 @@ namespace PostgreMigrations
         {
             var connectionString =
                 args.FirstOrDefault() 
-                ?? @"Host=localhost;Username=weddingAppUser;Password=Lafo9301;Database=weddingApp;Port=5432";
+                ?? @"Server=localhost;Database=weddingApp;Trusted_Connection=yes;";
 
-            EnsureDatabase.For.PostgresqlDatabase(connectionString);
+            EnsureDatabase.For.SqlDatabase(connectionString);
 
             var upgrader = DeployChanges.To
-                .PostgresqlDatabase(connectionString)
+                .SqlDatabase(connectionString)
                 .WithScriptsAndCodeEmbeddedInAssembly(Assembly.GetExecutingAssembly())
                 .LogToConsole()
                 .Build();
 
-            var result = upgrader.PerformUpgrade();
+            var result =  upgrader.PerformUpgrade();
 
             if (!result.Successful)
             {

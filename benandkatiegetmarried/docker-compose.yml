@@ -1,0 +1,8 @@
+version: '2.1'
+
+services:
+  benandkatiegetmarried:
+    image: benandkatiegetmarried
+    build:
+      context: .\benandkatiegetmarried
+      dockerfile: Dockerfile

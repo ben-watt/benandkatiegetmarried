@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.13
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "benandkatiegetmarried", "benandkatiegetmarried\benandkatiegetmarried.csproj", "{2D8F9D36-973E-4756-83C1-DD882AFCCC87}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "benandkatiegetmarried.Tests", "benandkatiegetmarried.Tests\benandkatiegetmarried.Tests.csproj", "{4849C72A-EF88-4D1C-8EE7-12B942B5A67B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostgreMigrations", "PostgreMigrations\PostgreMigrations.csproj", "{3268000F-D0C9-45C3-A10F-6EF984B764F3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Migrations", "PostgreMigrations\Migrations.csproj", "{3268000F-D0C9-45C3-A10F-6EF984B764F3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordGenerator", "WordGenerator\WordGenerator\WordGenerator.csproj", "{5F71BE5C-0365-4230-AF17-7E0E2D524EE4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "benandkatiegetmarried", "benandkatiegetmarriednew\benandkatiegetmarried.csproj", "{8AA8EF74-7323-4AE7-8F8E-763F4B7EC4D0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2D8F9D36-973E-4756-83C1-DD882AFCCC87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2D8F9D36-973E-4756-83C1-DD882AFCCC87}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2D8F9D36-973E-4756-83C1-DD882AFCCC87}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2D8F9D36-973E-4756-83C1-DD882AFCCC87}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4849C72A-EF88-4D1C-8EE7-12B942B5A67B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4849C72A-EF88-4D1C-8EE7-12B942B5A67B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4849C72A-EF88-4D1C-8EE7-12B942B5A67B}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -33,6 +29,10 @@ Global
 		{5F71BE5C-0365-4230-AF17-7E0E2D524EE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F71BE5C-0365-4230-AF17-7E0E2D524EE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F71BE5C-0365-4230-AF17-7E0E2D524EE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8AA8EF74-7323-4AE7-8F8E-763F4B7EC4D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AA8EF74-7323-4AE7-8F8E-763F4B7EC4D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AA8EF74-7323-4AE7-8F8E-763F4B7EC4D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AA8EF74-7323-4AE7-8F8E-763F4B7EC4D0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
