@@ -3,20 +3,20 @@ CREATE SCHEMA core
 
 CREATE TABLE core.Events 
 (
-    Id uniqueidentifier NOT NULL,
-    Name character varying(500),
-    Type character varying(200),
-    StartTime datetime2,
-    EndTime datetime2,
+	Id uniqueidentifier NOT NULL,
+	Name character varying(500),
+	Type character varying(200),
+	StartTime datetime2,
+	EndTime datetime2,
 	CONSTRAINT events_pkey PRIMARY KEY (Id)
 )
 
 CREATE TABLE core.Weddings
 (
-    EventId uniqueidentifier NOT NULL references core.Events(Id),
-    Bride character varying(200) NOT NULL,
-    Groom character varying(200) NOT NULL,
-    CONSTRAINT weddings_pkey PRIMARY KEY (EventId)
+	EventId uniqueidentifier NOT NULL references core.Events(Id),
+	Bride character varying(200) NOT NULL,
+	Groom character varying(200) NOT NULL,
+	CONSTRAINT weddings_pkey PRIMARY KEY (EventId)
 )
 
 CREATE TABLE core.Venues 
@@ -84,7 +84,7 @@ CREATE TABLE core.Meals (
 CREATE TABLE core.MealChoises 
 (
 	Id uniqueidentifier NOT NULL,
-    EventId uniqueidentifier NOT NULL references core.Events(Id),
+	EventId uniqueidentifier NOT NULL references core.Events(Id),
 	GuestId uniqueidentifier NOT NULL references core.Guests(Id),
 	RSVPId uniqueidentifier NOT NULL references core.RSVPs(Id),
 	MealId uniqueidentifier NOT NULL references core.Meals(Id),
@@ -95,7 +95,7 @@ CREATE TABLE core.Users (
 	Id uniqueidentifier NOT NULL,
 	UserName varchar(max) NOT NULL,
 	Password varchar(max) NOT NULL,
-    LoginAttempts int DEFAULT 0,
+	LoginAttempts int DEFAULT 0,
 	CONSTRAINT users_pkey PRIMARY KEY (Id)
 )
 

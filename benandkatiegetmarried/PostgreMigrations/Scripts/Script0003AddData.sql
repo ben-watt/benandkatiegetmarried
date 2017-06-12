@@ -13,15 +13,15 @@ INSERT INTO core.Weddings (eventId, Bride, Groom) VALUES
 (@eventId, 'Katie', 'Ben');
 
 INSERT INTO core.Users (Id, UserName, Password) VALUES 
-(@benId, 'Ben', 'test123')
-, (@katieId, 'Katie', 'test123');
+(@benId, 'ben', '$2a$10$dBGckjkQD9Cayr65EITvo.ksOr07d7YA97AYCvMHd..4ubFkZLEx.')
+, (@katieId, 'katie', '$2a$10$dBGckjkQD9Cayr65EITvo.ksOr07d7YA97AYCvMHd..4ubFkZLEx.');
 
 INSERT INTO core.UserEventMapping (Id, UserId, eventId) VALUES
 (NEWID(), @benId, @eventId)
 , (NEWID(), @katieId, @eventId);
 
 INSERT INTO core.Invites (Id, eventId, SecurityCode, Password, Greeting, Type) VALUES
-(NEWID(), @eventId, 'ben', 'test123', null, 'Day');
+(NEWID(), @eventId, 'ben', '$2a$10$dBGckjkQD9Cayr65EITvo.ksOr07d7YA97AYCvMHd..4ubFkZLEx.', null, 'Day');
 
 INSERT INTO core.Venues (Id, eventId, Name, AddressLine1, AddressLine2, Town, County, PostCode, Country, Telephone, Website) VALUES
 (NEWID(),

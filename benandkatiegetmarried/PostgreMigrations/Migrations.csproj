@@ -67,6 +67,10 @@
     <EmbeddedResource Include="Scripts\Script0002CreateTables.sql" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\benandkatiegetmarriednew\benandkatiegetmarried.csproj">
+      <Project>{8AA8EF74-7323-4AE7-8F8E-763F4B7EC4D0}</Project>
+      <Name>benandkatiegetmarried</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WordGenerator\WordGenerator\WordGenerator.csproj">
       <Project>{5f71be5c-0365-4230-af17-7e0e2d524ee4}</Project>
       <Name>WordGenerator</Name>

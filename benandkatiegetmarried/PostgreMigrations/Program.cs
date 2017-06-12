@@ -1,4 +1,5 @@
-﻿using DbUp;
+﻿using benandkatiegetmarried.Common.Security;
+using DbUp;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -32,6 +33,7 @@ namespace PostgreMigrations
             var upgrader = DeployChanges.To
                 .SqlDatabase(connectionString)
                 .WithScriptsAndCodeEmbeddedInAssembly(Assembly.GetExecutingAssembly())
+                .WithVariablesDisabled()
                 .LogToConsole()
                 .Build();
 

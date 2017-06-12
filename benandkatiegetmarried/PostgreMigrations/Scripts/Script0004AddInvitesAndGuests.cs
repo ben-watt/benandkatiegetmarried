@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Data;
 using Generators;
 using System.IO;
+using benandkatiegetmarried.Common.Security;
 
 namespace PostgreMigrations.Scripts
 {
@@ -34,15 +35,16 @@ namespace PostgreMigrations.Scripts
                 if(lastInviteGroup.ToString() != inviteGroup)
                 {
                     inviteId = Guid.NewGuid();
-                    
+                    var password = generator.Generate().EncryptPassword();
+
                     script.Append(@"INSERT INTO core.Invites (Id, EventId, SecurityCode, Password, Greeting, Type) ");
-                    script.AppendFormat(@"VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}'); ",
-                        inviteId, eventId, generator.Generate(), generator.Generate(), null, "Day");
+                    script.AppendFormat(@"VALUES ({0}, {1}, {2}, {3}, {4}, {5}); ",
+                        inviteId, eventId, generator.Generate(), password, null, "Day");
                 }
 
                 script.Append(@"INSERT INTO core.Guests (Id, EventId, InviteId, 
                     FirstName, LastName, IsFeatured) ");
-                script.AppendFormat(@"VALUES('{0}','{1}','{2}','{3}','{4}','{5}'); ",
+                script.AppendFormat(@"VALUES({0},{1},{2},{3},{4},{5}); ",
                     Guid.NewGuid(), eventId, inviteId, firstName, lastName, isFeatured);
             }
 
