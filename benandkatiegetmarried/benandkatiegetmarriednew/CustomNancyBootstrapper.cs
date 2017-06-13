@@ -1,22 +1,13 @@
 ﻿using Nancy;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Nancy.Conventions;
 using System.IO;
 using Nancy.Bootstrapper;
 using Nancy.TinyIoc;
 using Nancy.Authentication.Forms;
-using Nancy.ViewEngines;
 using benandkatiegetmarried.DAL;
 using PetaPoco;
-using benandkatiegetmarried.DAL.BaseQueries;
 using benandkatiegetmarried.Models;
-using benandkatiegetmarried.DAL.Weddings.Query;
-using benandkatiegetmarried.DAL.BaseCommands;
-using benandkatiegetmarried.DAL.Weddings.Commands;
 using benandkatiegetmarried.Common.Validation;
 using FluentValidation;
 using Nancy.Session;
@@ -30,6 +21,7 @@ using benandkatiegetmarried.Common.ErrorHandling;
 using benandkatiegetmarried.DAL.Event;
 using Nancy.Session.InProc;
 using Nancy.Cryptography;
+using benandkatiegetmarried.Common.Logging;
 
 namespace benandkatiegetmarried
 {
@@ -82,8 +74,6 @@ namespace benandkatiegetmarried
         protected override void RequestStartup(TinyIoCContainer container, IPipelines pipelines, NancyContext context)
         {
             base.RequestStartup(container, pipelines, context);
-
-            var pipe = pipelines;
 
             pipelines.BeforeRequest.InsertItemAtPipelineIndex(3, (ctx) =>
             {

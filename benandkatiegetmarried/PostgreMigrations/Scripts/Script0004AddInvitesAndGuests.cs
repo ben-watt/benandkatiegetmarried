@@ -38,13 +38,13 @@ namespace PostgreMigrations.Scripts
                     var password = generator.Generate().EncryptPassword();
 
                     script.Append(@"INSERT INTO core.Invites (Id, EventId, SecurityCode, Password, Greeting, Type) ");
-                    script.AppendFormat(@"VALUES ({0}, {1}, {2}, {3}, {4}, {5}); ",
-                        inviteId, eventId, generator.Generate(), password, null, "Day");
+                    script.AppendFormat(@"VALUES ('{0}', '{1}', '{2}', '{3}', null , '{4}'); ",
+                        inviteId, eventId, generator.Generate(), password, "Day");
                 }
 
                 script.Append(@"INSERT INTO core.Guests (Id, EventId, InviteId, 
                     FirstName, LastName, IsFeatured) ");
-                script.AppendFormat(@"VALUES({0},{1},{2},{3},{4},{5}); ",
+                script.AppendFormat(@"VALUES('{0}','{1}','{2}','{3}','{4}','{5}'); ",
                     Guid.NewGuid(), eventId, inviteId, firstName, lastName, isFeatured);
             }
 

@@ -41,8 +41,8 @@ namespace benandkatiegetmarried.Modules
 
             Get["/"] = _ => View["LandingPage"];
             Post["/user-login", true] = async (x, y) => await UserLogin();
-            Post["/guest-login"] = GuestLogin();
-            Post["/logout"] = Logout();
+            Post["/guest-login"] = _ => GuestLogin();
+            Post["/logout"] = _ => Logout();
         }
 
         private dynamic Logout()
