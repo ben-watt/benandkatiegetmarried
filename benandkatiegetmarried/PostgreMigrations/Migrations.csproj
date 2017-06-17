@@ -67,7 +67,7 @@
     <EmbeddedResource Include="Scripts\Script0002CreateTables.sql" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\benandkatiegetmarriednew\benandkatiegetmarried.csproj">
+    <ProjectReference Include="..\benandkatiegetmarried\benandkatiegetmarried.csproj">
       <Project>{8AA8EF74-7323-4AE7-8F8E-763F4B7EC4D0}</Project>
       <Name>benandkatiegetmarried</Name>
     </ProjectReference>

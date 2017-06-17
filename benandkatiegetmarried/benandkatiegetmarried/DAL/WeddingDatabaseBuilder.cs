@@ -12,11 +12,11 @@ namespace benandkatiegetmarried.DAL
     {
         public static IDatabase Default()
         {
-            var conn = ConfigurationManager.ConnectionStrings["postgres"].ConnectionString;
+            var conn = ConfigurationManager.ConnectionStrings["database"].ConnectionString;
             return DatabaseConfiguration.Build()
-                .UsingProvider<PostgreSQLDatabaseProvider>()
+                .UsingProvider<SqlServerDatabaseProvider>()
                 .UsingConnectionString(conn)
-                .UsingIsolationLevel(System.Data.IsolationLevel.ReadCommitted)
+                .UsingIsolationLevel(System.Data.IsolationLevel.ReadUncommitted)
                 .UsingDefaultMapper<ConventionMapper>(x =>
                 {
                     x.InflectTableName = (In, tableName) => String.Concat("core.", tableName, "s");

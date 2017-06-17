@@ -1,4 +1,5 @@
-﻿using benandkatiegetmarried.Common.Validation;
+﻿using benandkatiegetmarried.Common.Security;
+using benandkatiegetmarried.Common.Validation;
 using benandkatiegetmarried.DAL.Login;
 using benandkatiegetmarried.DAL.UserEvents;
 using FluentValidation;
@@ -33,7 +34,7 @@ namespace benandkatiegetmarried.UseCases.Login
                 if (invite.LoginAttempts > 3)
                     throw new UnauthorizedAccessException("Login attempts exceeded");
 
-                if(invite.Password == request.Password)
+                if(invite.Password.CheckPassword(request.Password))
                     return new GuestLoginResponse() { IsValid = true, InviteId = invite.Id, EventId = invite.EventId };
                 _commands.UpdateFailedLoginAttempts<Models.Invite>(invite.Id);
             }              

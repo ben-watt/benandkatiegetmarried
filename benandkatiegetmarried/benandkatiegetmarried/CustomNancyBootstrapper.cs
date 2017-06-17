@@ -1,22 +1,13 @@
 ﻿using Nancy;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Nancy.Conventions;
 using System.IO;
 using Nancy.Bootstrapper;
 using Nancy.TinyIoc;
 using Nancy.Authentication.Forms;
-using Nancy.ViewEngines;
 using benandkatiegetmarried.DAL;
 using PetaPoco;
-using benandkatiegetmarried.DAL.BaseQueries;
 using benandkatiegetmarried.Models;
-using benandkatiegetmarried.DAL.Weddings.Query;
-using benandkatiegetmarried.DAL.BaseCommands;
-using benandkatiegetmarried.DAL.Weddings.Commands;
 using benandkatiegetmarried.Common.Validation;
 using FluentValidation;
 using Nancy.Session;
@@ -30,6 +21,10 @@ using benandkatiegetmarried.Common.ErrorHandling;
 using benandkatiegetmarried.DAL.Event;
 using Nancy.Session.InProc;
 using Nancy.Cryptography;
+using benandkatiegetmarried.Common.Logging;
+using System.Collections.Generic;
+using benandkatiegetmarried.Modules;
+using benandkatiegetmarried.Common.ModuleService;
 
 namespace benandkatiegetmarried
 {
@@ -63,17 +58,17 @@ namespace benandkatiegetmarried
 
             var cryptoConfig = new CryptographyConfiguration(
                 new RijndaelEncryptionProvider(
-                        new PassphraseKeyGenerator("dodeda29fn2k191aed;foim!92cc0z9ldAZZZEgtjkalpoeid", new byte[] { 4, 6, 3, 6, 3, 9, 5 })),
+                        new PassphraseKeyGenerator("dodeda29fn2k191aed;foim!92cc0z9ldAZZZEgtjkalpoeid", new byte[] { 4, 6, 3, 6, 3, 9, 5, 3 })),
                 new DefaultHmacProvider(
-                        new PassphraseKeyGenerator("oewcn38203ejei0dnmk3o£Q£RFAaru92ofoj", new byte[] { 5, 7, 2, 6, 6, 3 }))
+                        new PassphraseKeyGenerator("oewcn38203ejei0dnmk3o£Q£RFAaru92ofoj", new byte[] { 5, 7, 2, 6, 6, 3, 5, 4 }))
                         );
 
             var authConfig = new FormsAuthenticationConfiguration()
             {
-                DisableRedirect = true, 
+                DisableRedirect = true,
                 UserMapper = container.Resolve<IUserMapper>()
-            };
-
+            };          
+            
             FormsAuthentication.Enable(pipelines, authConfig);
             pipelines.EnableInProcSessions();
             ErrorHandling.Enable(pipelines);
@@ -83,7 +78,8 @@ namespace benandkatiegetmarried
         {
             base.RequestStartup(container, pipelines, context);
 
-            var pipe = pipelines;
+            var modules = this.GetAllModules(context);
+            container.Register(typeof(IModuleService), new ModuleService(modules));
 
             pipelines.BeforeRequest.InsertItemAtPipelineIndex(3, (ctx) =>
             {
@@ -99,15 +95,6 @@ namespace benandkatiegetmarried
             {
                 return Path.Combine("Views", viewName);
             });
-        }
-        protected override IRootPathProvider RootPathProvider => new CustomRootPathProvider();
-    }
-
-    public class CustomRootPathProvider : IRootPathProvider
-    {
-        public string GetRootPath()
-        {
-            return Path.GetFullPath(Path.Combine("..", ".."));
         }
     }
 }

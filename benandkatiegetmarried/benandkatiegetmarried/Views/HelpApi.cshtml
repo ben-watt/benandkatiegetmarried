@@ -1,0 +1,23 @@
+﻿@using Nancy;
+@using System.Collections.Generic;
+@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<IEnumerable<INancyModule>>
+@{
+    Layout = @"_Layout";
+}
+
+<div class="container">
+    <ul>
+        @foreach (var module in Model)
+        {
+            <li>@module.ToString()</li>
+            <li>@module.ModulePath</li>
+            <ul>
+                @foreach (var route in module.Routes)
+                {
+                    <li>@route.Description.Method</li>
+                    <li>@route.Description.Path</li>
+                }
+            </ul>
+        }
+    </ul>
+</div>

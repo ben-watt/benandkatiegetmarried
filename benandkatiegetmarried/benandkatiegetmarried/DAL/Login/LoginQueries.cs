@@ -7,6 +7,7 @@ using Nancy;
 using Nancy.Security;
 using PetaPoco;
 using Nancy.Session;
+using benandkatiegetmarried.Common.Security;
 
 namespace benandkatiegetmarried.DAL.Login
 {
@@ -24,7 +25,7 @@ namespace benandkatiegetmarried.DAL.Login
             Models.Invite invite;
             using(var uow = _db.GetTransaction())
             {
-                invite = _db.FirstOrDefault<Models.Invite>("WHERE SecurityCode = @0::citext", securityCode);
+                invite = _db.FirstOrDefault<Models.Invite>("WHERE SecurityCode = @0", securityCode);
                 uow.Complete();
             }
             return invite;
@@ -32,21 +33,25 @@ namespace benandkatiegetmarried.DAL.Login
 
         public Guid GetUserIdFromPasswordAndUsername(string username, string password)
         {
-            Guid userId;
+            Tuple<Guid, string> result;
             using(var uow = _db.GetTransaction())
             {
-                userId = _db.FirstOrDefault<Guid>(
-                    @"SELECT Id 
+                result = _db.FirstOrDefault<Tuple<Guid,string>>(
+                    @"SELECT Id , password
                       FROM core.Users 
-                      WHERE username = @0::citext AND password = @1"
-                    , username.ToLower(), password);
+                      WHERE username = @0"
+                    , username.ToLower());
                 uow.Complete();
             }
-            return userId;
+
+            if (password.CheckPassword(result.Item2))
+                return result.Item1;
+            return Guid.Empty;
+
         }
         public IUserIdentity GetUserFromIdentifier(Guid identifier, NancyContext context)
         {
-            if(context.Request.Session["type"] == "User")
+            if((string)context.Request.Session["type"] == "User")
             {
                 return GetFromIdentifier<Models.User>(identifier);
             }

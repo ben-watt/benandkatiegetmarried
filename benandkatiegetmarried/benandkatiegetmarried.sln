@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Migrations", "PostgreMigrat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordGenerator", "WordGenerator\WordGenerator\WordGenerator.csproj", "{5F71BE5C-0365-4230-AF17-7E0E2D524EE4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "benandkatiegetmarried", "benandkatiegetmarriednew\benandkatiegetmarried.csproj", "{8AA8EF74-7323-4AE7-8F8E-763F4B7EC4D0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "benandkatiegetmarried", "benandkatiegetmarried\benandkatiegetmarried.csproj", "{8AA8EF74-7323-4AE7-8F8E-763F4B7EC4D0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
