@@ -5,19 +5,32 @@
     Layout = @"_Layout";
 }
 
+<link href="~/Content/HelpApi.css" rel="stylesheet" />
 <div class="container">
     <ul>
         @foreach (var module in Model)
         {
-            <li>@module.ToString()</li>
-            <li>@module.ModulePath</li>
-            <ul>
-                @foreach (var route in module.Routes)
-                {
-                    <li>@route.Description.Method</li>
-                    <li>@route.Description.Path</li>
-                }
-            </ul>
+            @{ 
+                var moduleName = module.ToString().Replace("benandkatiegetmarried.Modules.", "");
+            }
+            <li class="modules" id="@moduleName">
+                <span class="moduleName">@moduleName</span>
+            <span class="baseRoot">/@module.ModulePath</span>
+                <ul class="routes">
+                    @foreach (var route in module.Routes.GroupBy(x => x.Description.Method))
+                    {
+                        <li><span class="method">@route.FirstOrDefault().Description.Method</span>
+                        @foreach (var path in route)
+                        {
+                            <ul>
+                                <li>@path.Description.Path</li>
+                            </ul>
+                        }
+                        </li>
+                    }
+                </ul>
+            </li>
+            
         }
     </ul>
 </div>
