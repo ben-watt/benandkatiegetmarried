@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Generators.Properties {
+namespace WordGenerator.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -25,7 +25,7 @@ namespace Generators.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\git\\Projects\\benandkatiegetmarried\\benandkatiegetmarried\\WordGenerator\\WordGen" +
+        [global::System.Configuration.DefaultSettingValueAttribute("D:\\git\\Projects\\benandkatiegetmarried\\benandkatiegetmarried\\WordGenerator\\WordGen" +
             "erator\\Content\\dic.txt")]
         public string DictionaryFile {
             get {

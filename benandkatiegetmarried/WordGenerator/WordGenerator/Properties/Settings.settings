@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="DictionaryFile" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">C:\git\Projects\benandkatiegetmarried\benandkatiegetmarried\WordGenerator\WordGenerator\Content\dic.txt</Value>
+      <Value Profile="(Default)">D:\git\Projects\benandkatiegetmarried\benandkatiegetmarried\WordGenerator\WordGenerator\Content\dic.txt</Value>
     </Setting>
   </Settings>
 </SettingsFile>

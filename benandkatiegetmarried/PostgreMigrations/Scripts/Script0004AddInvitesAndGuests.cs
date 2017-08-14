@@ -35,7 +35,8 @@ namespace PostgreMigrations.Scripts
                 if(lastInviteGroup.ToString() != inviteGroup)
                 {
                     inviteId = Guid.NewGuid();
-                    var password = generator.Generate().EncryptPassword();
+                    //var password = generator.Generate().EncryptPassword();
+                    var password = "poo".EncryptPassword();
 
                     script.Append(@"INSERT INTO core.Invites (Id, EventId, SecurityCode, Password, Greeting, Type) ");
                     script.AppendFormat(@"VALUES ('{0}', '{1}', '{2}', '{3}', null , '{4}'); ",
