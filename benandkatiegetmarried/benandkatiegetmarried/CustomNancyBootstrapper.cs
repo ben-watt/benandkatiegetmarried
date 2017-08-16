@@ -87,10 +87,8 @@ namespace benandkatiegetmarried
             var modules = this.GetAllModules(context);
             container.Register(typeof(IModuleService), new ModuleService(modules));
 
-            pipelines.BeforeRequest.InsertItemAtPipelineIndex(3, (ctx) =>
+            pipelines.BeforeRequest.InsertItemAtPipelineIndex(4, (ctx) =>
             {
-
-
                 container.Register(typeof(ISession), ctx.Request.Session);
                 return null;
             });

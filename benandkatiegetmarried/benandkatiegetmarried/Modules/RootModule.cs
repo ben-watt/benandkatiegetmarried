@@ -32,6 +32,7 @@ namespace benandkatiegetmarried.Modules
             , IUserQueries userEventQueries
             , ISession session)
         {
+
             _GuestLoginHandler = guestLoginHandler;
             _UserLoginHandler = userLoginHandler;
             _userEventQueries = userEventQueries;
@@ -40,7 +41,7 @@ namespace benandkatiegetmarried.Modules
             _session = session;
 
             Get["/"] = _ => View["LandingPage"];
-            Post["/user-login", true] = async (x, y) => await UserLogin();
+            Post["/user-login"] = _ => UserLogin();
             Post["/guest-login"] = _ => GuestLogin();
             Post["/logout"] = _ => Logout();
         }

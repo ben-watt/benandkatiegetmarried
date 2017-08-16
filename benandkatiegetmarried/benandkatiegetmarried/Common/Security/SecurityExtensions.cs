@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Security.Cryptography;
-using BCrypt.Net;
+﻿using BCrypt.Net;
 
 namespace benandkatiegetmarried.Common.Security
 {
@@ -14,9 +9,9 @@ namespace benandkatiegetmarried.Common.Security
             return BCrypt.Net.BCrypt.HashPassword(password);
         }
 
-        public static bool CheckPassword(this string password, string hashedPassword)
+        public static bool CheckPassword(this string password, string text)
         {
-            return BCrypt.Net.BCrypt.Verify(password, hashedPassword);
+            return BCrypt.Net.BCrypt.Verify(text, password);
         }
     }
 }

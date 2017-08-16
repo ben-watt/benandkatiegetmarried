@@ -29,16 +29,20 @@ namespace benandkatiegetmarried.UseCases.Login
         public GuestLoginResponse Handle(GuestLoginRequest request)
         {
             var invite = _queries.GetInviteFromSecurityCode(request.SecurityCode);
-            if(invite != null)
-            {
-                if (invite.LoginAttempts > 3)
-                    throw new UnauthorizedAccessException("Login attempts exceeded");
+            if(invite == null)
+                throw new ArgumentException("Invite does not exist");
+            
+            if (invite.LoginAttempts > 3)
+                throw new UnauthorizedAccessException("Login attempts exceeded");
 
-                if(invite.Password.CheckPassword(request.Password))
-                    return new GuestLoginResponse() { IsValid = true, InviteId = invite.Id, EventId = invite.EventId };
+            if (!invite.Password.CheckPassword(request.Password))
+            {
                 _commands.UpdateFailedLoginAttempts<Models.Invite>(invite.Id);
-            }              
-            throw new ArgumentException("Invite does not exist");
+                throw new UnauthorizedAccessException("Invalid Password");
+            }
+
+            return new GuestLoginResponse() { IsValid = true, InviteId = invite.Id, EventId = invite.EventId };
+ 
         }
         
         public UserLoginResponse Handle(UserLoginRequest request)
