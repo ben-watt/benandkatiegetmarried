@@ -13,20 +13,20 @@ namespace benandkatiegetmarried.Common.ErrorHandling
         private ErrorResponse(object model) 
             : base(model, new JsonNetSerializer()) {}
 
-        public static ErrorResponse FromError(Error error)
+        public static Response FromError(Error error)
         {
-            return new ErrorResponse(error);
+            return new ErrorResponse(error).WithStatusCode(HttpStatusCode.InternalServerError);
         }
-        public static ErrorResponse FromException(Exception e)
+        public static Response FromException(Exception e)
         {
             var error = new Error() { ErrorMessage = e.Message, ErrorDetail = e.ToString() };
-            return new ErrorResponse(error);
+            return new ErrorResponse(error).WithStatusCode(HttpStatusCode.InternalServerError);
         }
 
         internal static dynamic ValidationError(IList<ValidationFailure> errors)
         {
             var error = new ValidationError() { ErrorMessage = "Validation Failure", Errors = errors };
-            return new ErrorResponse(error);
+            return new ErrorResponse(error).WithStatusCode(HttpStatusCode.BadRequest);
         }
     }
 }
