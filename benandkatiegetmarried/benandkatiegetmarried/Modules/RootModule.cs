@@ -40,7 +40,7 @@ namespace benandkatiegetmarried.Modules
             _userValidator = userValidator;
             _session = session;
 
-            Get["/"] = _ => View["LandingPage"];
+            Get["/"] = _ => Response.AsFile("Content/index.html", "text/html");
             Post["/user-login"] = _ => UserLogin();
             Post["/guest-login"] = _ => GuestLogin();
             Post["/logout"] = _ => Logout();
