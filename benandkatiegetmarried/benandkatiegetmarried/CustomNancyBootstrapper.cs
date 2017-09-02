@@ -65,6 +65,7 @@ namespace benandkatiegetmarried
 
             var authConfig = new FormsAuthenticationConfiguration()
             {
+                CryptographyConfiguration = cryptoConfig,
                 DisableRedirect = true,
                 UserMapper = container.Resolve<IUserMapper>()
             };          

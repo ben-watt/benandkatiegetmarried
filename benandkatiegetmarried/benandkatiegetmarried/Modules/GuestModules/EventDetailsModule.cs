@@ -19,6 +19,11 @@ namespace benandkatiegetmarried.Modules.GuestModules
         public EventDetailsModule(IGuestEventDetailsQueries<Guid> queries
             , ISession session): base("api")
         {
+            this.Before.AddItemToEndOfPipeline((ctx) =>
+            {
+                var test = (NancyContext)ctx;
+                return null;
+            });
 
             this.RequiresAuthentication();
             this.RequiresClaims("Guest");
