@@ -81,7 +81,8 @@ namespace benandkatiegetmarried.Modules
             var response = _GuestLoginHandler.Handle(request);
             if (response.IsValid)
             {
-                return LoginWithRememberMe(response.InviteId, "{ \"eventId\" : \""+ response.EventId + "\"}");
+                return LoginWithRememberMe(response.InviteId, 
+                    "{ \"eventId\" : \""+ response.EventId + "\"}");
             }
             return RedirectAsUnauthorised();
         }

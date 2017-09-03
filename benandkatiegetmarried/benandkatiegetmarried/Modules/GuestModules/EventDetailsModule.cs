@@ -12,7 +12,7 @@ namespace benandkatiegetmarried.Modules.GuestModules
         private IIdentity _invite;
 
         public EventDetailsModule(IGuestEventDetailsQueries<Guid> queries)
-            : base("api/{eventId}")
+            : base("api/guest/{eventId}")
         {
             this.Before.AddItemToEndOfPipeline(ctx =>
             {

@@ -47,13 +47,11 @@ namespace benandkatiegetmarried.DAL.Login
         }
         public IUserIdentity GetUserFromIdentifier(Guid identifier, NancyContext context)
         {
-            if (context.CurrentUser == null) return null;
-            
-            if(typeof(User) == context.CurrentUser.GetType())
+            if (context.Request.Url.Path.Contains("/guest/"))
             {
-                return GetFromIdentifier<User>(identifier);
+                return GetFromIdentifier<Invite>(identifier);
             }
-            return GetFromIdentifier<Invite>(identifier);
+            return GetFromIdentifier<User>(identifier);
         }
 
         private IUserIdentity GetFromIdentifier<T>(Guid identifier) where T : IUserIdentity

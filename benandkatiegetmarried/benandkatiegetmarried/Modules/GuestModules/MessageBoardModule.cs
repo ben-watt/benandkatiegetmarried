@@ -25,7 +25,7 @@ namespace benandkatiegetmarried.Modules.GuestModules
 
         public GuestMessageBoard(IGuestMessageBoardQueries queries
             , IGuestMessageBoardCommands commands
-            , IValidator<Message> messageValidator) : base("api/{eventId}/messageboard")
+            , IValidator<Message> messageValidator) : base("api/guest/{eventId}/messageboard")
         {
             this.RequiresAuthentication();
             this.RequiresClaims("Guest");
