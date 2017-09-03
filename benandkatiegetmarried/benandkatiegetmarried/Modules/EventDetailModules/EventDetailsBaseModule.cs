@@ -1,4 +1,5 @@
-﻿using benandkatiegetmarried.Common.Validation;
+﻿using benandkatiegetmarried.Common.Security;
+using benandkatiegetmarried.Common.Validation;
 using benandkatiegetmarried.DAL.BaseCommands;
 using benandkatiegetmarried.DAL.BaseQueries;
 using FluentValidation;
@@ -21,21 +22,27 @@ namespace benandkatiegetmarried.Modules
         private IEventCrudQueries<TEntity, TKey> _queries;
         private ICrudCommands<TEntity, TKey> _commands;
         private IValidator<TEntity> _validator;
-        private ISession _session;
+        private IIdentity _user;
 
         protected EventDetailsBaseModule(string modulePath
             , IEventCrudQueries<TEntity, TKey> queries
             , ICrudCommands<TEntity, TKey> commands
-            , IValidator<TEntity> validator
-            , ISession session) : base("api/events/{eventId}/" + modulePath)
+            , IValidator<TEntity> validator) 
+            : base("api/events/{eventId}/" + modulePath)
         {
+
+            this.Before.AddItemToEndOfPipeline(ctx =>
+            {
+                _user = (IIdentity)ctx.CurrentUser;
+                return null;
+            });
+
             this.RequiresAuthentication();
             this.RequiresClaims("User");
 
             _queries = queries;
             _commands = commands;
             _validator = validator;
-            _session = session;
 
             Get["/"] = _ => GetAll();
             Get["/{id}"] = p => GetById(p.Id);
@@ -46,19 +53,12 @@ namespace benandkatiegetmarried.Modules
 
         private dynamic GetAll()
         {
-            var userEvents = GetCurrentUsersEventsFromSession();
-            return _queries.GetAll(userEvents);
-        }
-
-        private IEnumerable<TKey> GetCurrentUsersEventsFromSession()
-        {
-            return (IEnumerable<TKey>)_session["user-eventIds"];
+            return _queries.GetAll(this._user.Id);
         }
 
         private dynamic GetById(dynamic Id)
         {
-            var userEvents = (IEnumerable<TKey>)_session["user-events"];
-            return _queries.GetById(Id, userEvents);
+            return _queries.GetById(Id, _user.Id);
         }
 
         private dynamic Create()

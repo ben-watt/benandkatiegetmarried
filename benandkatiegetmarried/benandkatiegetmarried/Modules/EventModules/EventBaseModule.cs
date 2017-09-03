@@ -1,5 +1,4 @@
-﻿using benandkatiegetmarried.Common.ModuleExtensions;
-using benandkatiegetmarried.Common.Validation;
+﻿using benandkatiegetmarried.Common.Security;
 using benandkatiegetmarried.DAL.BaseCommands;
 using benandkatiegetmarried.DAL.BaseQueries;
 using benandkatiegetmarried.DAL.Event;
@@ -8,13 +7,8 @@ using FluentValidation.Results;
 using Nancy;
 using Nancy.ModelBinding;
 using Nancy.Security;
-using Nancy.Session;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace benandkatiegetmarried.Modules
 {
@@ -24,27 +18,30 @@ namespace benandkatiegetmarried.Modules
         private IEventCrudQueries<TEntity, TKey> _queries;
         private ICrudCommands<TEntity, TKey> _commands;
         private IValidator<TEntity> _validator;
-        private ISession _session;
         private IEventCommands<TEntity> _eventCommands;
+        private IIdentity _user;
 
-        protected IEnumerable<TKey> _userEventIds => (IEnumerable<TKey>)_session["user-eventIds"];
 
         public EventBaseModule(string modulePath
             , IEventCrudQueries<TEntity, TKey> queries
             , ICrudCommands<TEntity, TKey> commands
             , IValidator<TEntity> validator
-            , ISession session
             , IEventCommands<TEntity> eventCommands) : base(modulePath)
         {
+            this.Before.AddItemToEndOfPipeline(ctx =>
+            {
+                _user = (IIdentity)ctx.CurrentUser;
+                return null;
+            });
 
             this.RequiresAuthentication();
             this.RequiresClaims("User");
 
-            _session = session;
             _queries = queries;
             _commands = commands;
             _validator = validator;
             _eventCommands = eventCommands;
+
             
             Get["/"] = _ => GetAll();
             Get["/{id}"] = p => GetById(p.Id);
@@ -54,19 +51,19 @@ namespace benandkatiegetmarried.Modules
         }
 
         private dynamic GetAll()
-        {
-            if (_userEventIds.Count() > 0)
+        {            
+            if (this._user != null)
             {
-                return _queries.GetAll(_userEventIds);
+                return _queries.GetAll(_user.Id);
             }
-            return HttpStatusCode.OK;
+            return HttpStatusCode.BadRequest;
         }
 
         private dynamic GetById(dynamic Id)
         {
-            if(_userEventIds.Count() > 0)
+            if(this._user != null)
             {
-                return _queries.GetById(Id, _userEventIds);
+                return _queries.GetById(Id, _user.Id);
             }
             return HttpStatusCode.BadRequest;
             
@@ -76,9 +73,9 @@ namespace benandkatiegetmarried.Modules
         {
             var model = this.Bind<IEnumerable<TEntity>>();
             var result = ValidateModel(model);
-            if (result.IsValid)
+            if (result.IsValid && this._user != null)
             {
-                _eventCommands.Create(model, (Guid)_session["userId"]);
+                _eventCommands.Create(model, this._user.Id);
                 return HttpStatusCode.OK;
             }
             return Negotiate.WithModel(result.Errors)

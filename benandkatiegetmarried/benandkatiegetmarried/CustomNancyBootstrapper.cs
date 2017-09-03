@@ -48,7 +48,6 @@ namespace benandkatiegetmarried
             container.Register(typeof(IValidator<MessageBoard>), typeof(MessageBoardValidator));
             container.Register(typeof(IGuestEventDetailsQueries<Guid>), typeof(GuestEventDetailsQueries<Guid>));
             container.Register<JsonSerializer, CustomJsonSerializer>();
-            container.Register(typeof(ISession), new Session());
             container.Register(typeof(IEventCommands<Wedding>), typeof(EventCommands<Wedding>));
         }
 
@@ -71,7 +70,6 @@ namespace benandkatiegetmarried
             };          
             
             FormsAuthentication.Enable(pipelines, authConfig);
-            pipelines.EnableInProcSessions();
             ErrorHandling.Enable(pipelines);
         }
 
@@ -87,12 +85,6 @@ namespace benandkatiegetmarried
 
             var modules = this.GetAllModules(context);
             container.Register(typeof(IModuleService), new ModuleService(modules));
-
-            pipelines.BeforeRequest.InsertItemAtPipelineIndex(4, (ctx) =>
-            {
-                container.Register(typeof(ISession), ctx.Request.Session);
-                return null;
-            });
         }
 
         protected override void ConfigureConventions(NancyConventions nancyConventions)

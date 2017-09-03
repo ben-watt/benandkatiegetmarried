@@ -159,6 +159,7 @@
     <Compile Include="Common\Logging\ILogger.cs" />
     <Compile Include="Common\Logging\Logger.cs" />
     <Compile Include="Common\ModuleExtensions\ModuleExtensions.cs" />
+    <Compile Include="Common\Security\IIdentity.cs" />
     <Compile Include="Common\Security\SecurityExtensions.cs" />
     <Compile Include="Common\Validation\GuestLoginValidator.cs" />
     <Compile Include="Common\Validation\GuestValidator.cs" />

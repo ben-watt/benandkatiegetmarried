@@ -5,6 +5,7 @@ using benandkatiegetmarried.UseCases.Login;
 using FluentValidation;
 using Nancy;
 using Nancy.Authentication.Forms;
+using Nancy.Cookies;
 using Nancy.ModelBinding;
 using Nancy.Responses;
 using Nancy.Session;
@@ -23,14 +24,12 @@ namespace benandkatiegetmarried.Modules
         private IValidator<GuestLoginRequest> _guestValidator;
         private IValidator<UserLoginRequest> _userValidator;
         private IUserQueries _userEventQueries;
-        private ISession _session;
 
         public RootModule(IHandler<GuestLoginRequest, GuestLoginResponse> guestLoginHandler
             , IHandler<UserLoginRequest, UserLoginResponse> userLoginHandler
             , IValidator<GuestLoginRequest> guestValidator
             , IValidator<UserLoginRequest> userValidator
-            , IUserQueries userEventQueries
-            , ISession session)
+            , IUserQueries userEventQueries)
         {
 
             _GuestLoginHandler = guestLoginHandler;
@@ -38,7 +37,6 @@ namespace benandkatiegetmarried.Modules
             _userEventQueries = userEventQueries;
             _guestValidator = guestValidator;
             _userValidator = userValidator;
-            _session = session;
 
             Get["/"] = _ => Response.AsFile("Content/index.html", "text/html");
             Post["/user-login"] = _ => UserLogin();
@@ -63,9 +61,6 @@ namespace benandkatiegetmarried.Modules
             var response = _UserLoginHandler.Handle(request);
             if (response.IsValid)
             {
-                _session["userId"] = response.UserId;
-                _session["user-eventIds"] = response.EventIds;
-                _session["type"] = "User";
                 return LoginWithRememberMe(response.UserId);
             }
             return RedirectAsUnauthorised();
@@ -83,9 +78,6 @@ namespace benandkatiegetmarried.Modules
             var response = _GuestLoginHandler.Handle(request);
             if (response.IsValid)
             {
-                _session["guest-eventId"] = new List<Guid>() { response.EventId };
-                _session["guest-inviteId"] = new List<Guid>() { response.InviteId };
-                _session["type"] = "Guest";
                 return LoginWithRememberMe(response.InviteId);
             }
             return RedirectAsUnauthorised();

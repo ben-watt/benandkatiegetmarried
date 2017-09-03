@@ -25,7 +25,7 @@ namespace benandkatiegetmarried.Modules.GuestModules
 
         public GuestMessageBoard(IGuestMessageBoardQueries queries
             , IGuestMessageBoardCommands commands
-            , IValidator<Message> messageValidator) : base("api/messageboard")
+            , IValidator<Message> messageValidator) : base("api/{eventId}/messageboard")
         {
             this.RequiresAuthentication();
             this.RequiresClaims("Guest");
@@ -34,7 +34,7 @@ namespace benandkatiegetmarried.Modules.GuestModules
             _commands = commands;
             _messageValidator = messageValidator;
 
-            Get["/"] = _ => GetMessageBoards();
+            Get["/"] = p => GetMessageBoards(p.eventId);
             Get["/{messageBoardId}/messages"] = p => GetMessages(p.messageBoardId);
             Post["/{id}"] = _ => PostMessage();
             Delete["/{messageBoardId}/messages/{messageId}"] = p => DeleteMessage(p.messageBoardId, p.messageId);
@@ -82,15 +82,16 @@ namespace benandkatiegetmarried.Modules.GuestModules
             return false;
         }
 
-        private dynamic GetMessageBoards()
+        private dynamic GetMessageBoards(string eventId)
         {
-            var eventIds = this.GetFromSession<Guid>("guest-eventId");
-            if(eventIds.Count() > 0)
+            Guid eventIdGuid;
+            Guid.TryParse(eventId, out eventIdGuid);
+            if(eventIdGuid != null)
             {
-                var response = _queries.GetMessageBoards(eventIds.FirstOrDefault());
+                var response = _queries.GetMessageBoards(eventIdGuid);
                 return response;
             }
-            return new TextResponse("No eventId in the session, unable to process request")
+            return new TextResponse("EventId is not a valid guid")
                 .WithStatusCode(HttpStatusCode.BadRequest);
         }
 

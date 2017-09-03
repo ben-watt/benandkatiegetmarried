@@ -1,11 +1,12 @@
 ﻿using benandkatiegetmarried.Common;
+using benandkatiegetmarried.Common.Security;
 using Nancy.Security;
 using System;
 using System.Collections.Generic;
 
 namespace benandkatiegetmarried.Models
 {
-    public class Invite : IUserIdentity
+    public class Invite : IIdentity
     {
         private string _guestType;
 

@@ -15,8 +15,27 @@ namespace benandkatiegetmarried.DAL.BaseQueries
         {
             this._db = db;
         }
-        public virtual IEnumerable<T> GetAll(IEnumerable<TKey> eventIds)
+
+        private IEnumerable<Guid> GetUserEventIds(Guid userId)
         {
+            IEnumerable<Guid> result;
+            using(var uow = _db.GetTransaction())
+            {
+                result = _db.Query<Guid>(
+                    @"SELECT e.EventId
+                        FROM core.UserEventMapping AS e
+                            INNER JOIN core.Users AS u
+                               ON e.UserId = e.EventId
+                        WHERE u.UserId = @0", userId);
+
+                uow.Complete();
+            }
+            return result;
+        }
+
+        public virtual IEnumerable<T> GetAll(Guid userId)
+        {
+            var eventIds = this.GetUserEventIds(userId);
             IEnumerable<T> result;
             using(var uow = _db.GetTransaction())
             {
@@ -26,8 +45,9 @@ namespace benandkatiegetmarried.DAL.BaseQueries
             return result;
         }
 
-        public virtual T GetById(TKey Id, IEnumerable<TKey> eventIds)
+        public virtual T GetById(TKey Id, Guid userId)
         {
+            var eventIds = this.GetUserEventIds(userId);
             T result;
             using (var uow = _db.GetTransaction())
             {

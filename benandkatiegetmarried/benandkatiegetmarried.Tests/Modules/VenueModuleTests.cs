@@ -34,7 +34,7 @@ namespace benandkatiegetmarriedTests.Modules
         [Fact]
         public void GetAllReturnsAllVenues()
         {
-            _queries.Setup(x => x.GetAll(It.IsAny<IEnumerable<Guid>>())).Returns(() => new List<Venue> { new Venue { Id = _eventId, EventId = Guid.Empty, Postcode = "M21 7JS", Name = "Home" } });
+            _queries.Setup(x => x.GetAll(It.IsAny<Guid>())).Returns(() => new List<Venue> { new Venue { Id = _eventId, EventId = Guid.Empty, Postcode = "M21 7JS", Name = "Home" } });
 
             var bootstrapper = _bootstrapper.WithLoggedInUser("Ben", new List<Guid> { Guid.Empty });
             var browser = GetApiBrowser(bootstrapper);
@@ -55,7 +55,7 @@ namespace benandkatiegetmarriedTests.Modules
         {
             var bootstrapper = _bootstrapper.WithLoggedInUser("Katie", new List<Guid> { Guid.Empty });
 
-            _queries.Setup(x => x.GetById(Guid.Empty, It.IsAny<IEnumerable<Guid>>())).Returns(new Venue() { Id = Guid.Empty, Postcode = "M21 7JS" });
+            _queries.Setup(x => x.GetById(Guid.Empty, It.IsAny<Guid>())).Returns(new Venue() { Id = Guid.Empty, Postcode = "M21 7JS" });
 
             var response = GetApiBrowser(bootstrapper).Get(
                 $"api/events/{_eventId}/venues/{Guid.Empty.ToString()}"

@@ -29,21 +29,18 @@ namespace benandkatiegetmarriedTests
         private string moduleRoot = "/guests";
         private string fullRoot;
         private Browser _apiBrowser;
-        private Mock<ISession> _session;
 
         public GuestModuleTests()
         {
             _queries = new Mock<IGuestQueries>();
             _commands = new Mock<IGuestCommands>();
             _validator = new Mock<IValidator<Guest>>();
-            _session = new Mock<ISession>();
             _bootstrapper = new ConfigurableBootstrapper(config =>
             {
                 config.Module<GuestModule>()
                     .Dependency(_queries.Object)
                     .Dependency(_commands.Object)
-                    .Dependency(_validator.Object)
-                    .Dependency(_session.Object);
+                    .Dependency(_validator.Object);
             });
 
             _apiBrowser = new Browser(_bootstrapper, x =>

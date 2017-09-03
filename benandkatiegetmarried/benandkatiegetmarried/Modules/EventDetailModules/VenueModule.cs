@@ -19,8 +19,8 @@ namespace benandkatiegetmarried.Modules
         IVenueCommands _commands;
         public VenueModule(IVenueQueries queries
             , IVenueCommands commands
-            , IValidator<Venue> validator
-            , ISession session) : base("venues", queries , commands , validator, session)
+            , IValidator<Venue> validator) 
+            : base("venues", queries , commands , validator)
         {
             _queries = queries;
             _commands = commands;

@@ -12,7 +12,7 @@ namespace benandkatiegetmarried.DAL.Weddings.Query
     public class WeddingQueries : EventCrudQueries<Wedding, Guid>, IWeddingQueries
     {
         public WeddingQueries(IDatabase db) : base(db) {}
-        public override IEnumerable<Wedding> GetAll(IEnumerable<Guid> eventIds)
+        public override IEnumerable<Wedding> GetAll(Guid userId)
         {
             var query =
                 @"  SELECT *
@@ -25,7 +25,7 @@ namespace benandkatiegetmarried.DAL.Weddings.Query
 
             using (var uow = _db.GetTransaction())
             {
-                result = _db.Query<Wedding>(query, eventIds).ToList();
+                result = _db.Query<Wedding>(query, userId).ToList();
                 uow.Complete();
             }
             return result;

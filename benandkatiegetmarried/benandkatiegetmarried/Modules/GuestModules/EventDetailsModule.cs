@@ -14,55 +14,41 @@ namespace benandkatiegetmarried.Modules.GuestModules
     public class EventDetailsModule : NancyModule
     {
         private IGuestEventDetailsQueries<Guid> _queries;
-        private ISession _session;
 
-        public EventDetailsModule(IGuestEventDetailsQueries<Guid> queries
-            , ISession session): base("api")
+        public EventDetailsModule(IGuestEventDetailsQueries<Guid> queries)
+            : base("api/{eventId}")
         {
-            this.Before.AddItemToEndOfPipeline((ctx) =>
-            {
-                var test = (NancyContext)ctx;
-                return null;
-            });
 
             this.RequiresAuthentication();
             this.RequiresClaims("Guest");
 
             _queries = queries;
-            _session = session;
 
-            Get["/venue-details"] = _ => GetVenueDetails();
-            Get["/featured-guests"] = _ => GetFeaturedGuests();
-            Get["/event-details"] = _ => GetEventDetails();
             Get["/guests-on-invite"] = _ => GetGuestsOnInvite();
+            Get["/event-details"] = p => GetEventDetails(p.eventId);
+            Get["/featured-guests"] = p => GetFeaturedGuests(p.eventId);
+            Get["/venue-details"] = p => GetVenueDetails(p.eventId);
         }
 
         private dynamic GetGuestsOnInvite()
         {
-            return RunQuery((x) => _queries.GetGuestsOnInvite(x), "guest-inviteId");
+            var inviteId = Request.Headers["inviteId"].First();
+            if (String.IsNullOrEmpty(inviteId)) return new ArgumentException("Must provide an inviteId");   
+            
+            return _queries.GetGuestsOnInvite(Guid.Parse(inviteId));
         }
 
-        private dynamic GetEventDetails()
+        private dynamic GetEventDetails(Guid eventId)
         {
-            return RunQuery((x) => _queries.GetEventDetails(x), "guest-eventId");
+            return _queries.GetEventDetails(eventId);
         }
-        private dynamic GetFeaturedGuests()
+        private dynamic GetFeaturedGuests(Guid eventId)
         {
-            return RunQuery((x) => _queries.GetFeaturedGuests(x), "guest-eventId");
+            return _queries.GetFeaturedGuests(eventId);
         }
-        private dynamic GetVenueDetails()
+        private dynamic GetVenueDetails(Guid eventId)
         {
-            return RunQuery((x) => _queries.GetVenueDetails(x), "guest-eventId");
-        }
-
-        private dynamic RunQuery(Func<Guid, dynamic> query, string sessionKey)
-        {
-            var eventId = (IEnumerable<Guid>)_session[sessionKey];
-            if (eventId.Count() > 0)
-            {
-                return query.Invoke(eventId.FirstOrDefault());
-            }
-            throw new ArgumentNullException($"Could not find {sessionKey} from session");
+            return _queries.GetVenueDetails(eventId);
         }
     }
 }

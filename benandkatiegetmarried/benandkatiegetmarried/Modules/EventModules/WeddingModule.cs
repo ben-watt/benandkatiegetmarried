@@ -24,13 +24,11 @@ namespace benandkatiegetmarried.Modules
         public WeddingModule(IWeddingCommands weddingCommands
             , IWeddingQueries weddingqueries
             , IValidator<Wedding> weddingValidator
-            , ISession session
             , IEventCommands<Wedding> eventCommands) 
             : base("api/weddings"
                   , weddingqueries
                   , weddingCommands
                   , weddingValidator
-                  , session
                   , eventCommands)
         {
             _queries = weddingqueries;

@@ -14,7 +14,8 @@ namespace benandkatiegetmarried.Modules.GuestModules
     public class RsvpModule : NancyModule
     {
         private IHandler<RsvpRequest, RsvpResponse> _rsvpHandler;
-        public RsvpModule(IHandler<RsvpRequest, RsvpResponse> rsvpHandler) : base("api")
+        public RsvpModule(IHandler<RsvpRequest, RsvpResponse> rsvpHandler) 
+            : base("api/{eventId}")
         {
             this.RequiresAuthentication();
             this.RequiresClaims("Guest");

@@ -16,8 +16,7 @@ namespace benandkatiegetmarried.Modules.EventDetailModules
     {
         public MessageBoardModule(IMessageBoardQueries _queries
             , IMessageBoardCommands _commands
-            , IValidator<MessageBoard> _validator
-            , ISession session) 
-            : base("messageboards", _queries, _commands, _validator, session) {}
+            , IValidator<MessageBoard> _validator) 
+            : base("messageboards", _queries, _commands, _validator) {}
     }
 }

@@ -23,7 +23,7 @@ namespace benandkatiegetmarried.Modules
     {
         public GuestModule(IGuestQueries queries
             , IGuestCommands commands
-            , IValidator<Guest> validator
-            , ISession session) : base("guests", queries, commands, validator, session) {}
+            , IValidator<Guest> validator) 
+            : base("guests", queries, commands, validator) {}
     }
 }
