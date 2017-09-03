@@ -39,9 +39,9 @@ namespace benandkatiegetmarried.Modules
             _userValidator = userValidator;
 
             Get["/"] = _ => Response.AsFile("Content/index.html", "text/html");
-            Post["/user-login"] = _ => UserLogin();
-            Post["/guest-login"] = _ => GuestLogin();
-            Post["/logout"] = _ => Logout();
+            Post["api/user-login"] = _ => UserLogin();
+            Post["api/guest-login"] = _ => GuestLogin();
+            Post["api/logout"] = _ => Logout();
         }
 
         private dynamic Logout()
