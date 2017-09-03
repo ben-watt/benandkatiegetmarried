@@ -9,8 +9,10 @@ using Nancy.Cookies;
 using Nancy.ModelBinding;
 using Nancy.Responses;
 using Nancy.Session;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -61,7 +63,8 @@ namespace benandkatiegetmarried.Modules
             var response = _UserLoginHandler.Handle(request);
             if (response.IsValid)
             {
-                return LoginWithRememberMe(response.UserId);
+                return LoginWithRememberMe(response.UserId,
+                    "{ \"eventIds\" :\"" + String.Join(",", response.EventIds) + "\"}");
             }
             return RedirectAsUnauthorised();
         }
@@ -78,7 +81,7 @@ namespace benandkatiegetmarried.Modules
             var response = _GuestLoginHandler.Handle(request);
             if (response.IsValid)
             {
-                return LoginWithRememberMe(response.InviteId);
+                return LoginWithRememberMe(response.InviteId, "{ \"eventId\" : \""+ response.EventId + "\"}");
             }
             return RedirectAsUnauthorised();
         }
@@ -91,7 +94,16 @@ namespace benandkatiegetmarried.Modules
 
         private Response LoginWithRememberMe(Guid id)
         {
-            return this.Login(id , DateTime.Now.AddDays(7));
+            return this.Login(id, DateTime.Now.AddDays(7));            
+        }
+
+        private Response LoginWithRememberMe(Guid id, string responseBody)
+        {
+            var body = Encoding.UTF8.GetBytes(responseBody);
+            var res = this.LoginWithRememberMe(id);
+            res.Contents = s => s.Write(body, 0, body.Length);
+            res.ContentType = "application/json";
+            return res;            
         }
     }
 }
