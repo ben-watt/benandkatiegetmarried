@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Nancy;
 using Nancy.Security;
 using PetaPoco;
-using Nancy.Session;
 using benandkatiegetmarried.Common.Security;
+using benandkatiegetmarried.Models;
 
 namespace benandkatiegetmarried.DAL.Login
 {
@@ -20,7 +16,7 @@ namespace benandkatiegetmarried.DAL.Login
             _db = db;
         }
 
-        public Models.Invite GetInviteFromSecurityCode(string securityCode)
+        public Invite GetInviteFromSecurityCode(string securityCode)
         {
             Models.Invite invite;
             using(var uow = _db.GetTransaction())
@@ -51,11 +47,13 @@ namespace benandkatiegetmarried.DAL.Login
         }
         public IUserIdentity GetUserFromIdentifier(Guid identifier, NancyContext context)
         {
-            if((string)context.Request.Session["type"] == "User")
+            if (context.CurrentUser == null) return null;
+            
+            if(typeof(User) == context.CurrentUser.GetType())
             {
-                return GetFromIdentifier<Models.User>(identifier);
+                return GetFromIdentifier<User>(identifier);
             }
-            return GetFromIdentifier<Models.Invite>(identifier);
+            return GetFromIdentifier<Invite>(identifier);
         }
 
         private IUserIdentity GetFromIdentifier<T>(Guid identifier) where T : IUserIdentity
