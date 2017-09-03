@@ -1,23 +1,24 @@
-﻿using benandkatiegetmarried.Common.ModuleExtensions;
+﻿using benandkatiegetmarried.Common.Security;
 using benandkatiegetmarried.DAL.GuestEventDetails.Queries;
 using Nancy;
 using Nancy.Security;
-using Nancy.Session;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace benandkatiegetmarried.Modules.GuestModules
 {
     public class EventDetailsModule : NancyModule
     {
         private IGuestEventDetailsQueries<Guid> _queries;
+        private IIdentity _invite;
 
         public EventDetailsModule(IGuestEventDetailsQueries<Guid> queries)
             : base("api/{eventId}")
         {
+            this.Before.AddItemToEndOfPipeline(ctx =>
+            {
+                _invite = (IIdentity)ctx.CurrentUser;
+                return null;
+            });
 
             this.RequiresAuthentication();
             this.RequiresClaims("Guest");
@@ -32,10 +33,7 @@ namespace benandkatiegetmarried.Modules.GuestModules
 
         private dynamic GetGuestsOnInvite()
         {
-            var inviteId = Request.Headers["inviteId"].First();
-            if (String.IsNullOrEmpty(inviteId)) return new ArgumentException("Must provide an inviteId");   
-            
-            return _queries.GetGuestsOnInvite(Guid.Parse(inviteId));
+            return _queries.GetGuestsOnInvite(this._invite.Id);
         }
 
         private dynamic GetEventDetails(Guid eventId)
