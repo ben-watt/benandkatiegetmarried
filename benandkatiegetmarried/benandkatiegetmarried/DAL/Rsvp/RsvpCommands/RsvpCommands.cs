@@ -15,17 +15,17 @@ namespace benandkatiegetmarried.DAL.Rsvp.RsvpCommands
         {
             _db = db;
         }
-        public void Create(IEnumerable<RSVP> rsvps)
+
+        public void Create(Models.Rsvp rsvp)
         {
-            using(var uow = _db.GetTransaction())
+            using (var uow = _db.GetTransaction())
             {
-                foreach (var rsvp in rsvps)
-                {
                     _db.Insert(rsvp);
+                    _db.Insert(rsvp.Responses);
                     _db.Update<Models.Guest>(@"UPDATE core.Guests 
                                             SET HasSentRsvp = 1 
-                                            WHERE Id = @0", rsvp.GuestId);
-                }
+                                            WHERE Id IN (@0)",
+                                            rsvp.Responses.Select(x => x.GuestId));
                 uow.Complete();
             }
         }

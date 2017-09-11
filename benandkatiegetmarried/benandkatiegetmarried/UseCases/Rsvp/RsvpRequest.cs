@@ -5,6 +5,6 @@ namespace benandkatiegetmarried.UseCases.Rsvp
 {
     public class RsvpRequest
     {
-        public IEnumerable<Models.RSVP> RSVPs { get; set; }
+        public Models.Rsvp Rsvp { get; set; }
     }
 }

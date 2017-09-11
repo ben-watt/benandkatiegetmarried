@@ -21,7 +21,7 @@ namespace benandkatiegetmarried.DAL.Login
             Models.Invite invite;
             using(var uow = _db.GetTransaction())
             {
-                invite = _db.FirstOrDefault<Models.Invite>("WHERE SecurityCode = @0", securityCode);
+                invite = _db.FirstOrDefault<Invite>("WHERE SecurityCode = @0", securityCode);
                 uow.Complete();
             }
             return invite;
@@ -60,6 +60,7 @@ namespace benandkatiegetmarried.DAL.Login
             using (var uow = _db.GetTransaction())
             {
                 entity = _db.FirstOrDefault<T>("WHERE Id = @0", identifier);
+                uow.Complete();
             }
             return entity;
         }

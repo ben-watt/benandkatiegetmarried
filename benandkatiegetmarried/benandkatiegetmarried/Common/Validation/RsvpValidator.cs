@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace benandkatiegetmarried.Common.Validation
 {
-    public class RsvpValidator : AbstractValidator<RSVP> , IValidator<RSVP>
+    public class RsvpValidator : AbstractValidator<Rsvp> , IValidator<Rsvp>
     {
         public RsvpValidator()
         {
-            RuleFor(x => x.GuestId).NotNull().NotEmpty().WithMessage("A guest Id must be on the rsvp");
+            RuleFor(x => x.Responses.Select(r => r.GuestId)).NotNull().NotEmpty().WithMessage("A guest Ids must be on the rsvp");
         }
     }
 }

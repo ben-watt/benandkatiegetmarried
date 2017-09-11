@@ -6,7 +6,7 @@ namespace benandkatiegetmarried.DAL.Rsvp.RsvpQueries
 {
     public interface IRsvpQueries
     {
-        IEnumerable<RSVP> GetAll();
-        IEnumerable<RSVP> GetByGuestIds(IEnumerable<Guid> guestIds);
+        IEnumerable<Models.Rsvp> GetAll();
+        IEnumerable<Models.Rsvp> GetByGuestIds(IEnumerable<Guid> guestIds);
     }
 }

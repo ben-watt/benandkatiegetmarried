@@ -16,23 +16,23 @@ namespace benandkatiegetmarried.DAL.Rsvp.RsvpQueries
         {
             _db = db;
         }
-        public IEnumerable<RSVP> GetAll()
+        public IEnumerable<Models.Rsvp> GetAll()
         {
-            IEnumerable<RSVP> result;
+            IEnumerable<Models.Rsvp> result;
             using(var uow = _db.GetTransaction())
             {
-                result = _db.Query<RSVP>("");
+                result = _db.Query<Models.Rsvp>("");
                 uow.Complete();
             }
             return result;
         }
 
-        public IEnumerable<RSVP> GetByGuestIds(IEnumerable<Guid> guestIds)
+        public IEnumerable<Models.Rsvp> GetByGuestIds(IEnumerable<Guid> guestIds)
         {
-            IEnumerable<RSVP> result;
+            IEnumerable<Models.Rsvp> result;
             using (var uow = _db.GetTransaction())
             {
-                result = _db.Query<RSVP>("WHERE GuestId IN (@0)", guestIds);
+                result = _db.Query<Models.Rsvp>("WHERE GuestId IN (@0)", guestIds);
                 uow.Complete();
             }
             return result;

@@ -4,6 +4,9 @@ html, body {
     font-size: 16px;
 }
 
+#root {
+    height: 100vh;
+}
 a {
     color: inherit;
     text-decoration: none;
@@ -12,6 +15,8 @@ a {
 .lock {
     overflow: hidden;
 }
+
+
 
 @media(max-width: 800px){
     ::-webkit-scrollbar {  

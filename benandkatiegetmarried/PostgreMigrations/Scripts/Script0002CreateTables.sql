@@ -59,20 +59,20 @@ CREATE TABLE core.Guests
 	CONSTRAINT guests_pkey PRIMARY KEY (Id)
 )
 
-CREATE TABLE core.RSVPs
+CREATE TABLE core.Rsvps
 (
 	Id uniqueidentifier NOT NULL,
 	EventId uniqueidentifier NOT NULL references core.Events(Id),
 	InviteId uniqueidentifier NOT NULL references core.Invites(Id),
 	GuestId uniqueidentifier NOT NULL references core.Guests(Id),
-	Response bit DEFAULT NULL,
 	ResponseMessage varchar(max) NULL,
 	DietaryRequirements character varying (500) NULL,
 	SongLink character varying (500) NULL,
-	CONSTRAINT RSVP_pkey PRIMARY KEY (Id)
+	CONSTRAINT Rsvp_pkey PRIMARY KEY (Id)
 )
 
-CREATE TABLE core.Meals (
+CREATE TABLE core.Meals 
+(
 	Id uniqueidentifier NOT NULL,
 	EventId uniqueidentifier NOT NULL references core.Events(Id),
 	Name character varying (300) NOT NULL,
@@ -81,15 +81,16 @@ CREATE TABLE core.Meals (
 	CONSTRAINT meals_pkey PRIMARY KEY (Id)
 )
 
-CREATE TABLE core.MealChoises 
+CREATE TABLE core.RsvpResponse
 (
 	Id uniqueidentifier NOT NULL,
-	EventId uniqueidentifier NOT NULL references core.Events(Id),
+	RsvpId uniqueidentifier NOT NULL,
 	GuestId uniqueidentifier NOT NULL references core.Guests(Id),
-	RSVPId uniqueidentifier NOT NULL references core.RSVPs(Id),
-	MealId uniqueidentifier NOT NULL references core.Meals(Id),
-	CONSTRAINT mealChoises_pKey PRIMARY KEY (Id)
+	Response bit DEFAULT NULL,
+	MealChoice nvarchar(500) NULL
+	CONSTRAINT RsvpResponse_pkey PRIMARY KEY (Id)
 )
+
 
 CREATE TABLE core.Users (
 	Id uniqueidentifier NOT NULL,

@@ -14,11 +14,11 @@ namespace benandkatiegetmarried.UseCases.Rsvp
 {
     public class RsvpHandler : IHandler<RsvpRequest, RsvpResponse>
     {
-        private IValidator<RSVP> _rsvpValidator;
+        private IValidator<Models.Rsvp> _rsvpValidator;
         private IRsvpCommands _rsvpCommands;
         private IRsvpQueries _rsvpQueries;
 
-        public RsvpHandler(IValidator<RSVP> rsvpValidator
+        public RsvpHandler(IValidator<Models.Rsvp> rsvpValidator
             , IRsvpCommands rsvpCommands
             , IRsvpQueries rsvpQueries)
         {
@@ -29,13 +29,13 @@ namespace benandkatiegetmarried.UseCases.Rsvp
         public RsvpResponse Handle(RsvpRequest request)
         {
             IList<ValidationResult> validationResult = ValidateRSVP(request);
-            var guestIds = request.RSVPs.Select(x => x.GuestId);
+            var guestIds = request.Rsvp.Responses.Select(x => x.GuestId);
             if (ErrorsDuringValidation(validationResult)
                 || RsvpExistsForGuests(guestIds))
             {
                 return new RsvpResponse() { IsValid = false, Errors = (List<ValidationFailure>)validationResult.SelectMany(x => x.Errors) };
             }
-            _rsvpCommands.Create(request.RSVPs);
+            _rsvpCommands.Create(request.Rsvp);
             return new RsvpResponse() { IsValid = true };
         }
 
@@ -57,10 +57,7 @@ namespace benandkatiegetmarried.UseCases.Rsvp
         private IList<ValidationResult> ValidateRSVP(RsvpRequest request)
         {
             IList<ValidationResult> validationResult = new List<ValidationResult>();
-            foreach (var rsvp in request.RSVPs)
-            {
-                validationResult.Add(_rsvpValidator.Validate(rsvp));
-            }
+            validationResult.Add(_rsvpValidator.Validate(request.Rsvp));
             return validationResult;
         }
     }

@@ -10,7 +10,6 @@ using PetaPoco;
 using benandkatiegetmarried.Models;
 using benandkatiegetmarried.Common.Validation;
 using FluentValidation;
-using Nancy.Session;
 using benandkatiegetmarried.UseCases;
 using benandkatiegetmarried.UseCases.Login;
 using benandkatiegetmarried.DAL.GuestEventDetails.Queries;
@@ -19,12 +18,9 @@ using benandkatiegetmarried.Common.JsonSerialization;
 using Newtonsoft.Json;
 using benandkatiegetmarried.Common.ErrorHandling;
 using benandkatiegetmarried.DAL.Event;
-using Nancy.Session.InProc;
 using Nancy.Cryptography;
-using benandkatiegetmarried.Common.Logging;
-using System.Collections.Generic;
-using benandkatiegetmarried.Modules;
 using benandkatiegetmarried.Common.ModuleService;
+using Nancy.Hosting.Aspnet;
 
 namespace benandkatiegetmarried
 {
@@ -33,10 +29,9 @@ namespace benandkatiegetmarried
         protected override void ConfigureApplicationContainer(TinyIoCContainer container)
         {
             base.ConfigureApplicationContainer(container);
-            container.Register(typeof(IDatabase), WeddingDatabaseBuilder.Default());
             container.Register(typeof(IHandler<GuestLoginRequest, GuestLoginResponse>), typeof(LoginHandler));
             container.Register(typeof(IHandler<UserLoginRequest, UserLoginResponse>), typeof(LoginHandler));
-            container.Register(typeof(IHandler<RsvpRequest, RsvpResponse>), typeof(RsvpHandler));
+            container.Register(typeof(IHandler<RsvpRequest, UseCases.Rsvp.RsvpResponse>), typeof(RsvpHandler));
             container.Register(typeof(IValidator<Guest>), typeof(GuestValidator));
             container.Register(typeof(IValidator<Invite>), typeof(Common.Validation.IValidator));
             container.Register(typeof(IValidator<Venue>), typeof(VenueValidator));
@@ -44,7 +39,7 @@ namespace benandkatiegetmarried
             container.Register(typeof(IValidator<Wedding>), typeof(WeddingValidator));
             container.Register(typeof(IValidator<UserLoginRequest>), typeof(UserLoginValidator));
             container.Register(typeof(IValidator<GuestLoginRequest>), typeof(GuestLoginValidator));
-            container.Register(typeof(IValidator<RSVP>), typeof(RsvpValidator));
+            container.Register(typeof(IValidator<Rsvp>), typeof(RsvpValidator));
             container.Register(typeof(IValidator<MessageBoard>), typeof(MessageBoardValidator));
             container.Register(typeof(IGuestEventDetailsQueries<Guid>), typeof(GuestEventDetailsQueries<Guid>));
             container.Register<JsonSerializer, CustomJsonSerializer>();
@@ -76,6 +71,7 @@ namespace benandkatiegetmarried
         protected override void RequestStartup(TinyIoCContainer container, IPipelines pipelines, NancyContext context)
         {
             base.RequestStartup(container, pipelines, context);
+            container.Register(typeof(IDatabase), WeddingDatabaseBuilder.Default());
             pipelines.AfterRequest.AddItemToEndOfPipeline(ctx =>
             {
                 ctx.Response.WithHeader("Access-Control-Allow-Origin", "*")

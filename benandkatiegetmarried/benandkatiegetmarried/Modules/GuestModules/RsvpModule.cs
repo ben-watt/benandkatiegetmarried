@@ -27,6 +27,9 @@ namespace benandkatiegetmarried.Modules.GuestModules
         private dynamic CreateRsvp()
         {
             var request = this.Bind<RsvpRequest>();
+            Guid inviteId;
+            Guid.TryParse(this.Context.CurrentUser.UserName, out inviteId);
+            request.Rsvp.InviteId = inviteId;
             if(request != null)
             {
                 _rsvpHandler.Handle(request);

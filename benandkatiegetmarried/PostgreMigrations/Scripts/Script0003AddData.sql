@@ -15,7 +15,7 @@ INSERT INTO core.Weddings (eventId, Bride, Groom) VALUES
 INSERT INTO core.Users (Id, UserName, Password) VALUES 
 (@benId, 'ben', '$2a$10$dBGckjkQD9Cayr65EITvo.ksOr07d7YA97AYCvMHd..4ubFkZLEx.')
 , (@katieId, 'katie', '$2a$10$dBGckjkQD9Cayr65EITvo.ksOr07d7YA97AYCvMHd..4ubFkZLEx.');
-
+D:\git\Projects\benandkatiegetmarried\benandkatiegetmarried\PostgreMigrations\Scripts\Script0004AddInvitesAndGuests.cs
 INSERT INTO core.UserEventMapping (Id, UserId, eventId) VALUES
 (NEWID(), @benId, @eventId)
 , (NEWID(), @katieId, @eventId);
