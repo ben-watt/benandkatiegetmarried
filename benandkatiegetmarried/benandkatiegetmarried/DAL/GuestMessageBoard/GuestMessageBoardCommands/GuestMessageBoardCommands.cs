@@ -10,8 +10,8 @@ namespace benandkatiegetmarried.DAL.GuestMessageBoard.GuestMessageBoardCommands
 {
     public class GuestMessageBoardCommands : IGuestMessageBoardCommands
     {
-        private IDatabase _db;
-        public GuestMessageBoardCommands(IDatabase db)
+        private IWeddingDatabase _db;
+        public GuestMessageBoardCommands(IWeddingDatabase db)
         {
             _db = db;
         }

@@ -57,7 +57,6 @@ namespace benandkatiegetmarriedTests
             Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
         }
 
-
         public void Should_Return_List_Of_Guests_On_Invite_Code_Supplied()
         {
             var result = _apiBrowser.Get(fullRoot);

@@ -11,7 +11,7 @@ namespace benandkatiegetmarried.DAL.Weddings.Query
 {
     public class WeddingQueries : EventCrudQueries<Wedding, Guid>, IWeddingQueries
     {
-        public WeddingQueries(IDatabase db) : base(db) {}
+        public WeddingQueries(IWeddingDatabase db) : base(db) {}
         public override IEnumerable<Wedding> GetAll(Guid userId)
         {
             var query =

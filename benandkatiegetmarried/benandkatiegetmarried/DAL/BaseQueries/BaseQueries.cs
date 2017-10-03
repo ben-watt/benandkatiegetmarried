@@ -9,9 +9,9 @@ namespace benandkatiegetmarried.DAL.BaseQueries
 {
     public abstract class EventCrudQueries<T, TKey> : IEventCrudQueries<T, TKey>
     {
-        protected IDatabase _db;
+        protected IWeddingDatabase _db;
 
-        public EventCrudQueries(IDatabase db)
+        public EventCrudQueries(IWeddingDatabase db)
         {
             this._db = db;
         }

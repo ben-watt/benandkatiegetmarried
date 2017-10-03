@@ -10,9 +10,9 @@ namespace benandkatiegetmarried.DAL.Rsvp.RsvpQueries
 {
     public class RsvpQueries : IRsvpQueries
     {
-        private IDatabase _db;
+        private IWeddingDatabase _db;
 
-        public RsvpQueries(IDatabase db)
+        public RsvpQueries(IWeddingDatabase db)
         {
             _db = db;
         }

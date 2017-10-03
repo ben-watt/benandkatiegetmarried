@@ -10,7 +10,7 @@ namespace benandkatiegetmarried.DAL.Venue.VenueQueries
 {
     class VenueQueries : EventCrudQueries<Models.Venue, Guid>, IVenueQueries
     {
-        public VenueQueries(IDatabase db) : base(db)
+        public VenueQueries(IWeddingDatabase db) : base(db)
         {
         }
     }

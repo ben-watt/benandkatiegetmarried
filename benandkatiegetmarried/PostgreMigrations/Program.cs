@@ -16,7 +16,7 @@ namespace PostgreMigrations
         static void Main(string[] args)
         {
 
-            var conn = "azure";
+            var conn = "database";
 
             if (args.Count() > 0)
                 conn = args[0];

@@ -10,8 +10,8 @@ namespace benandkatiegetmarried.DAL.UserEvents
 {
     public class UserQueries : IUserQueries
     {
-        IDatabase _db;
-        public UserQueries(IDatabase db)
+        IWeddingDatabase _db;
+        public UserQueries(IWeddingDatabase db)
         {
             _db = db;
         }

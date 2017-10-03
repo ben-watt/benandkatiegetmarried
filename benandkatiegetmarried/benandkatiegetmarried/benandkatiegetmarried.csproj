@@ -170,6 +170,7 @@
     <Compile Include="Common\Validation\UserLoginValidator.cs" />
     <Compile Include="Common\Validation\VenueValidator.cs" />
     <Compile Include="Common\Validation\WeddingValidator.cs" />
+    <Compile Include="ContainerRegistration.cs" />
     <Compile Include="CustomNancyBootstrapper.cs" />
     <Compile Include="DAL\BaseCommands\BaseCommands.cs" />
     <Compile Include="DAL\BaseCommands\IBaseCommands.cs" />
@@ -187,6 +188,7 @@
     <Compile Include="DAL\Guest\Commands\IGuestCommands.cs" />
     <Compile Include="DAL\Guest\Queries\GuestQueries.cs" />
     <Compile Include="DAL\Guest\Queries\IGuestQueries.cs" />
+    <Compile Include="DAL\IWeddingDatabase.cs" />
     <Compile Include="DAL\Login\ILoginCommands.cs" />
     <Compile Include="DAL\Login\ILoginQueries.cs" />
     <Compile Include="DAL\Login\LoginCommands.cs" />
@@ -205,6 +207,7 @@
     <Compile Include="DAL\Venue\VenueCommands\VenueCommands.cs" />
     <Compile Include="DAL\Venue\VenueQueries\IVenueQueries.cs" />
     <Compile Include="DAL\Venue\VenueQueries\VenueQueries.cs" />
+    <Compile Include="DAL\WeddingDatabase.cs" />
     <Compile Include="DAL\WeddingDatabaseBuilder.cs" />
     <Compile Include="DAL\Wedding\Commands\IWeddingCommands.cs" />
     <Compile Include="DAL\Wedding\Commands\WeddingCommands.cs" />
@@ -241,6 +244,7 @@
     </Compile>
     <Compile Include="Common\ModuleService\IModuleService.cs" />
     <Compile Include="Common\ModuleService\ModuleService.cs" />
+    <Compile Include="Register.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="UseCases\IHandler.cs" />
     <Compile Include="UseCases\Login\GuestLoginRequest.cs" />

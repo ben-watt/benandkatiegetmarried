@@ -10,7 +10,7 @@ namespace benandkatiegetmarried.DAL.Weddings.Commands
 {
     public class WeddingCommands : CrudCommands<Models.Wedding, Guid>, IWeddingCommands
     {
-        public WeddingCommands(IDatabase db) : base(db)
+        public WeddingCommands(IWeddingDatabase db) : base(db)
         {
         }
     }

@@ -9,7 +9,7 @@ namespace benandkatiegetmarried.DAL.Guest.Queries
 {
     public class GuestQueries : BaseQueries.EventCrudQueries<Models.Guest, Guid>, IGuestQueries
     {
-        public GuestQueries(IDatabase db) : base(db)
+        public GuestQueries(IWeddingDatabase db) : base(db)
         {
         }
     }

@@ -10,8 +10,8 @@ namespace benandkatiegetmarried.DAL.GuestEventDetails.Queries
 {
     public class GuestEventDetailsQueries<Guid> : IGuestEventDetailsQueries<Guid>
     {
-        private IDatabase _db;
-        public GuestEventDetailsQueries(IDatabase db)
+        private IWeddingDatabase _db;
+        public GuestEventDetailsQueries(IWeddingDatabase db)
         {
             _db = db;
         }

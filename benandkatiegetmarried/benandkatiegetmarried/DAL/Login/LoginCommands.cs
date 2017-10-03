@@ -9,8 +9,8 @@ namespace benandkatiegetmarried.DAL.Login
 {
     public class LoginCommands : ILoginCommands
     {
-        private IDatabase _db;
-        public LoginCommands(IDatabase db)
+        private IWeddingDatabase _db;
+        public LoginCommands(IWeddingDatabase db)
         {
             _db = db;
         }

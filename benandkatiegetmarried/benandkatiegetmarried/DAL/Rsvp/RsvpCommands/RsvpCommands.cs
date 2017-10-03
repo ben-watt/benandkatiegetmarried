@@ -10,8 +10,8 @@ namespace benandkatiegetmarried.DAL.Rsvp.RsvpCommands
 {
     public class RsvpCommands : IRsvpCommands
     {
-        private IDatabase _db;
-        public RsvpCommands(IDatabase db)
+        private IWeddingDatabase _db;
+        public RsvpCommands(IWeddingDatabase db)
         {
             _db = db;
         }

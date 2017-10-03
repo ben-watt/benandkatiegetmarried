@@ -10,7 +10,7 @@ namespace benandkatiegetmarried.DAL.MessageBoard.Commands
 {
     public class MessageBoardCommands : CrudCommands<Models.MessageBoard, Guid>, IMessageBoardCommands
     {
-        public MessageBoardCommands(IDatabase db) : base(db)
+        public MessageBoardCommands(IWeddingDatabase db) : base(db)
         {
         }
     }

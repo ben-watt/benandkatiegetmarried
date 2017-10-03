@@ -10,7 +10,7 @@ namespace benandkatiegetmarried.DAL.Venue.VenueCommands
 {
     public class VenueCommands : CrudCommands<Models.Venue, Guid>, IVenueCommands
     {
-        public VenueCommands(IDatabase db) : base(db)
+        public VenueCommands(IWeddingDatabase db) : base(db)
         {
         }
     }

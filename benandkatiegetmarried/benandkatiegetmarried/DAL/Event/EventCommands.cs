@@ -10,9 +10,9 @@ namespace benandkatiegetmarried.DAL.Event
 {
     public class EventCommands<T> : IEventCommands<T> where T : Models.Event
     {
-        private IDatabase _db;
+        private IWeddingDatabase _db;
 
-        public EventCommands(IDatabase db)
+        public EventCommands(IWeddingDatabase db)
         {
             _db = db;
         }

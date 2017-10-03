@@ -4,21 +4,24 @@ using Nancy.Security;
 using PetaPoco;
 using benandkatiegetmarried.Common.Security;
 using benandkatiegetmarried.Models;
+using benandkatiegetmarried.Common.Logging;
 
 namespace benandkatiegetmarried.DAL.Login
 {
     public class LoginQueries : ILoginQueries
     {
-        private IDatabase _db;
+        private IWeddingDatabase _db;
+        private ILogger _log;
 
-        public LoginQueries(IDatabase db)
+        public LoginQueries(IWeddingDatabase db, ILogger log)
         {
             _db = db;
+            _log = log;
         }
 
         public Invite GetInviteFromSecurityCode(string securityCode)
         {
-            Models.Invite invite;
+            Invite invite;
             using(var uow = _db.GetTransaction())
             {
                 invite = _db.FirstOrDefault<Invite>("WHERE SecurityCode = @0", securityCode);
@@ -47,6 +50,9 @@ namespace benandkatiegetmarried.DAL.Login
         }
         public IUserIdentity GetUserFromIdentifier(Guid identifier, NancyContext context)
         {
+
+            _log.Information($"Request Context HashCode: {context.GetHashCode()}");
+
             if (context.Request.Url.Path.Contains("/guest/"))
             {
                 return GetFromIdentifier<Invite>(identifier);
@@ -56,10 +62,16 @@ namespace benandkatiegetmarried.DAL.Login
 
         private IUserIdentity GetFromIdentifier<T>(Guid identifier) where T : IUserIdentity
         {
+            _log.Information("Get From Identifier Called");
+            _log.Information($"Database Hash: {_db.GetHashCode()}");
+            _log.Information($"LoginQuery Hash: {this.GetHashCode()}");
+
             T entity;
-            using (var uow = _db.GetTransaction())
+            var database = new WeddingDatabase();
+
+            using (var uow = database.GetTransaction())
             {
-                entity = _db.FirstOrDefault<T>("WHERE Id = @0", identifier);
+                entity = database.FirstOrDefault<T>("WHERE Id = @0", identifier);
                 uow.Complete();
             }
             return entity;

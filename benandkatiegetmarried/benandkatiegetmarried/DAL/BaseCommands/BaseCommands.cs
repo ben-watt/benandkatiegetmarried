@@ -9,8 +9,8 @@ namespace benandkatiegetmarried.DAL.BaseCommands
 {
     public abstract class CrudCommands<T, TKey> : ICrudCommands<T, TKey>
     {
-        protected IDatabase _db;
-        public CrudCommands(IDatabase db)
+        protected IWeddingDatabase _db;
+        public CrudCommands(IWeddingDatabase db)
         {
             _db = db;
         }
