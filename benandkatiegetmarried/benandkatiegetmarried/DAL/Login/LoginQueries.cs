@@ -67,11 +67,10 @@ namespace benandkatiegetmarried.DAL.Login
             _log.Information($"LoginQuery Hash: {this.GetHashCode()}");
 
             T entity;
-            var database = new WeddingDatabase();
 
-            using (var uow = database.GetTransaction())
+            using (var uow = _db.GetTransaction())
             {
-                entity = database.FirstOrDefault<T>("WHERE Id = @0", identifier);
+                entity = _db.FirstOrDefault<T>("WHERE Id = @0", identifier);
                 uow.Complete();
             }
             return entity;
