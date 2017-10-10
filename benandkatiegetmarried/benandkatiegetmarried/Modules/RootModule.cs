@@ -40,7 +40,7 @@ namespace benandkatiegetmarried.Modules
             _guestValidator = guestValidator;
             _userValidator = userValidator;
 
-            Get["/"] = _ => Response.AsFile("Content/index.html", "text/html");
+            Get["/"] = _ => Response.AsFile("Content/spa/index.html", "text/html");
             Post["api/user-login"] = _ => UserLogin();
             Post["api/guest-login"] = _ => GuestLogin();
             Post["api/logout"] = _ => Logout();

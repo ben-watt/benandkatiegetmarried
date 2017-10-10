@@ -9,6 +9,7 @@ using benandkatiegetmarried.Common.ErrorHandling;
 using Nancy.Cryptography;
 using benandkatiegetmarried.Common.ModuleService;
 using benandkatiegetmarried.DAL.Login;
+using Nancy.Cookies;
 
 namespace benandkatiegetmarried
 {
@@ -43,12 +44,7 @@ namespace benandkatiegetmarried
 
             FormsAuthentication.Enable(pipelines, authConfig);
             ErrorHandling.Enable(pipelines);
-            pipelines.AfterRequest.AddItemToEndOfPipeline(ctx =>
-            {
-                ctx.Response.WithHeader("Access-Control-Allow-Origin", "*")
-                            .WithHeader("Access-Control-Allow-Methods", "POST,GET")
-                            .WithHeader("Access-Control-Allow-Headers", "Accept, Origin, Content-type, X-Requested-With");
-            });
+
 
             var modules = this.GetAllModules(context);
             container.Register(typeof(IModuleService), new ModuleService(modules));

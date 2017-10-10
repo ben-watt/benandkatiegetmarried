@@ -258,6 +258,7 @@
     <Compile Include="UseCases\Rsvp\RsvpResposne.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Content\spa\" />
     <Folder Include="DAL\Invite\" />
   </ItemGroup>
   <ItemGroup>
