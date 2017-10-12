@@ -1,4 +1,5 @@
-﻿using benandkatiegetmarried.UseCases;
+﻿using benandkatiegetmarried.Models;
+using benandkatiegetmarried.UseCases;
 using benandkatiegetmarried.UseCases.Rsvp;
 using Nancy;
 using Nancy.ModelBinding;
@@ -6,15 +7,13 @@ using Nancy.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace benandkatiegetmarried.Modules.GuestModules
 {
     public class RsvpModule : NancyModule
     {
-        private IHandler<RsvpRequest, RsvpResponse> _rsvpHandler;
-        public RsvpModule(IHandler<RsvpRequest, RsvpResponse> rsvpHandler) 
+        private IHandler<RsvpRequest, UseCases.Rsvp.RsvpResponse> _rsvpHandler;
+        public RsvpModule(IHandler<RsvpRequest, UseCases.Rsvp.RsvpResponse> rsvpHandler) 
             : base("api/guest/{eventId}")
         {
             this.RequiresAuthentication();
@@ -27,12 +26,18 @@ namespace benandkatiegetmarried.Modules.GuestModules
         private dynamic CreateRsvp()
         {
             var request = this.Bind<RsvpRequest>();
-            Guid inviteId;
-            Guid.TryParse(this.Context.CurrentUser.UserName, out inviteId);
-            request.Rsvp.InviteId = inviteId;
-            if(request != null)
+            var invite = (Invite)this.Context.CurrentUser;
+            Guid inviteId = invite.Id;
+            if (request != null && inviteId != null)
             {
-                _rsvpHandler.Handle(request);
+                request.Rsvp.InviteId = inviteId;
+                request.Rsvp.LinkResponses();
+
+                var rsvpResposne = _rsvpHandler.Handle(request);
+                if (rsvpResposne.IsValid)
+                {
+                    return Response.AsJson(rsvpResposne, HttpStatusCode.Created);
+                }
             }
             return HttpStatusCode.BadRequest;
         }

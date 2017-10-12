@@ -21,11 +21,14 @@ namespace benandkatiegetmarried.DAL.Rsvp.RsvpCommands
             using (var uow = _db.GetTransaction())
             {
                     _db.Insert(rsvp);
-                    _db.Insert(rsvp.Responses);
-                    _db.Update<Models.Guest>(@"UPDATE core.Guests 
-                                            SET HasSentRsvp = 1 
-                                            WHERE Id IN (@0)",
-                                            rsvp.Responses.Select(x => x.GuestId));
+                    foreach (var response in rsvp.Responses)
+                    {
+                        _db.Insert(response);
+                    }
+                    _db.Execute(@"UPDATE core.Guests 
+                                SET HasSentRsvp = 1 
+                                WHERE Id IN (@0)",
+                                rsvp.Responses.Select(x => x.GuestId));
                 uow.Complete();
             }
         }

@@ -32,7 +32,11 @@ namespace benandkatiegetmarried.DAL.Rsvp.RsvpQueries
             IEnumerable<Models.Rsvp> result;
             using (var uow = _db.GetTransaction())
             {
-                result = _db.Query<Models.Rsvp>("WHERE GuestId IN (@0)", guestIds);
+                result = _db.Query<Models.Rsvp>(@"SELECT Rsvps.*
+                                                FROM core.RsvpResponses AS res
+                                                    INNER JOIN core.Rsvps
+	                                                    ON Rsvps.Id = res.RsvpId
+                                                WHERE res.GuestId IN (@0)", guestIds).ToList();
                 uow.Complete();
             }
             return result;

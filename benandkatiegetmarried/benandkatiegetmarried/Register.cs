@@ -22,27 +22,5 @@ namespace benandkatiegetmarried
         {
             return new TypeRegistration(typeof(TContract), typeof(TImplementation), Lifetime.Singleton);
         }
-
-        //public static IEnumerable<TypeRegistration> RegisterAllTypes()
-        //{
-        //    var typeRegistrations = new List<TypeRegistration>();
-        //    Assembly here = Assembly.GetExecutingAssembly();
-        //    foreach (var classInAssmbly in here.GetTypes())
-        //    {
-        //        if (classInAssmbly.IsClass == true)
-        //        {
-        //            var contract = classInAssmbly;
-        //            var implementation = contract.GetInterface("I" + contract.Name);
-        //            if (implementation != null)
-        //            {
-        //                typeRegistrations.Add(new TypeRegistration(contract, implementation, Lifetime.PerRequest));
-        //            }
-
-        //        };
-        //    }
-
-        //    return typeRegistrations;
-
-        //}
     }
 }

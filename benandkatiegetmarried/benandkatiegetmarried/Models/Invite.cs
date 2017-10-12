@@ -8,8 +8,6 @@ namespace benandkatiegetmarried.Models
 {
     public class Invite : IIdentity
     {
-        private string _guestType;
-
         public Invite()
         {
             Id = Guid.NewGuid();

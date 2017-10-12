@@ -33,7 +33,7 @@ namespace benandkatiegetmarried.UseCases.Rsvp
             if (ErrorsDuringValidation(validationResult)
                 || RsvpExistsForGuests(guestIds))
             {
-                return new RsvpResponse() { IsValid = false, Errors = (List<ValidationFailure>)validationResult.SelectMany(x => x.Errors) };
+                return new RsvpResponse() { IsValid = false, Errors = validationResult.SelectMany(x => x.Errors).ToList() };
             }
             _rsvpCommands.Create(request.Rsvp);
             return new RsvpResponse() { IsValid = true };
@@ -57,7 +57,8 @@ namespace benandkatiegetmarried.UseCases.Rsvp
         private IList<ValidationResult> ValidateRSVP(RsvpRequest request)
         {
             IList<ValidationResult> validationResult = new List<ValidationResult>();
-            validationResult.Add(_rsvpValidator.Validate(request.Rsvp));
+            var result = _rsvpValidator.Validate(request.Rsvp);
+            validationResult.Add(result);
             return validationResult;
         }
     }
