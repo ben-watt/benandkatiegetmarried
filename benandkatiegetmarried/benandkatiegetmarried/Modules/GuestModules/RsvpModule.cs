@@ -28,8 +28,9 @@ namespace benandkatiegetmarried.Modules.GuestModules
             var request = this.Bind<RsvpRequest>();
             var invite = (Invite)this.Context.CurrentUser;
             Guid inviteId = invite.Id;
-            if (request != null && inviteId != null)
+            if (request != null && request.Rsvp != null && inviteId != null)
             {
+                request.Rsvp.EventId = this.Context.Parameters["eventId"];
                 request.Rsvp.InviteId = inviteId;
                 request.Rsvp.LinkResponses();
 

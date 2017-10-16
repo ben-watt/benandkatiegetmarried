@@ -36,4 +36,7 @@ INSERT INTO core.Venues (Id, eventId, Name, AddressLine1, AddressLine2, Town, Co
 '0161 975 2000',
 'http://www.marriott.com/hotels/travel/mangs-worsley-park-marriott-hotel-and-country-club/?scid=bb1a189a-fec3-4d19-a255-54ba596febe2');
 
+INSERT INTO core.MessageBoards (Id, Type, EventId, Name) VALUES
+(NEWID(), 'guest-book', @eventId, 'Guest Book')
+
 END

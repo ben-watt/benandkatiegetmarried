@@ -10,7 +10,6 @@ namespace benandkatiegetmarried.DAL.GuestMessageBoard.GuestMessageBoardCommands
     {
         void Create(Models.Message message);
         void Update(Models.Message message);
-        void Remove(Guid Id);
         void Delete(Guid messageBoardId, Guid messageId);
     }
 }

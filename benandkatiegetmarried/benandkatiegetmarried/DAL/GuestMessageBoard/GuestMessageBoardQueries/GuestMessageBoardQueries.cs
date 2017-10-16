@@ -31,7 +31,8 @@ namespace benandkatiegetmarried.DAL.GuestMessageBoard.GuestMessageBoardQueries
             IEnumerable<Message> resultSet;
             using (var uow = _db.GetTransaction())
             {
-                resultSet = _db.Query<Models.Message>("WHERE MessageBoardId = @0", messageBoardId);
+                resultSet = _db.Query<Models.Message>(@"WHERE MessageBoardId = @0", messageBoardId);
+            
                 uow.Complete();
             }
             return resultSet;
@@ -42,8 +43,13 @@ namespace benandkatiegetmarried.DAL.GuestMessageBoard.GuestMessageBoardQueries
             IEnumerable<Message> resultSet;
             using (var uow = _db.GetTransaction())
             {
-                resultSet = _db.Query<Models.Message>("WHERE MessageBoardId = @0 AND InviteId = @1"
-                    , messageBoardId, inviteId);
+                resultSet = _db.Query<Models.Message>(@"SELECT m.*, g.*
+                                                        FROM core.Messages AS m
+                                                            INNER JOIN core.MessageAttributions AS ma
+	                                                           ON m.Id = ma.MessageId
+                                                            INNER JOIN core.Guests AS g 
+                                                       WHERE MessageBoardId = @0 AND InviteId = @1",
+                                                       messageBoardId, inviteId);
                 uow.Complete();
             }
             return resultSet;

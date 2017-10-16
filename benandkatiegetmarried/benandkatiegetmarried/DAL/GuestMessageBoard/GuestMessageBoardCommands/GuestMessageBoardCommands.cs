@@ -17,9 +17,16 @@ namespace benandkatiegetmarried.DAL.GuestMessageBoard.GuestMessageBoardCommands
         }
         public void Create(Message message)
         {
+
             using(var uow = _db.GetTransaction())
             {
                 _db.Insert(message);
+
+                foreach(var sig in message.SignedBy)
+                {
+                    _db.Insert(new MessageAttribution(message.Id, sig.Id));
+                }
+
                 uow.Complete();
             }
         }
@@ -28,17 +35,10 @@ namespace benandkatiegetmarried.DAL.GuestMessageBoard.GuestMessageBoardCommands
         {
             using (var uow = _db.GetTransaction())
             {
-                _db.Delete(@"DELETE FROM core.messages WHERE messageBoardId = @0 AND Id = @1"
-                    , messageBoardId.ToString() , messageId.ToString());
-                uow.Complete();
-            }
-        }
-
-        public void Remove(Guid Id)
-        {
-            using (var uow = _db.GetTransaction())
-            {
-                _db.Delete<Message>(Id);
+                _db.Execute(@"DELETE FROM core.messageAtttibutions WHERE MessageId = @1", 
+                    messageId.ToString());
+                _db.Execute(@"DELETE FROM core.messages WHERE messageBoardId = @0 AND Id = @1",
+                    messageBoardId.ToString() , messageId.ToString());
                 uow.Complete();
             }
         }

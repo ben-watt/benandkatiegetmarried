@@ -107,23 +107,25 @@ CREATE TABLE core.UserEventMapping (
 	CONSTRAINT userEventMapping_pkey PRIMARY KEY (Id)
 )
 
-CREATE TABLE core.MessageBoard (
+CREATE TABLE core.MessageBoards (
 	Id uniqueidentifier NOT NULL,
+	[Type] varchar(200) NOT NULL,
 	EventId uniqueidentifier NOT NULL references core.Events(Id),
 	Name character varying (200) NOT NULL,
-	CONSTRAINT messageBoard_pkey PRIMARY KEY (Id)
+	CONSTRAINT messageBoard_pkey PRIMARY KEY (Id),
+	CONSTRAINT messageBoard_event_type_unique UNIQUE
 )
 
 CREATE TABLE core.Messages (
 	Id uniqueidentifier NOT NULL,
-	MessageBoardId uniqueidentifier NOT NULL references core.MessageBoard(Id),
+	MessageBoardId uniqueidentifier NOT NULL references core.MessageBoards(Id),
 	Text varchar(max) NOT NULL,
 	CONSTRAINT messages_pkey PRIMARY KEY (Id)
 )
 
-CREATE TABLE core.MessageAttribution (
+CREATE TABLE core.MessageAttributions (
 	Id uniqueidentifier NOT NULL,
-	MessageId uniqueidentifier NOT NULL references core.MessageBoard(Id),
+	MessageId uniqueidentifier NOT NULL references core.Messages(Id),
 	GuestId uniqueidentifier NOT NULL references core.Guests(Id),
 	CONSTRAINT messageAttribution_pkey PRIMARY KEY (Id)
 )

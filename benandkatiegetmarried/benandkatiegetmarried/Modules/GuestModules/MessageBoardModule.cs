@@ -36,7 +36,7 @@ namespace benandkatiegetmarried.Modules.GuestModules
 
             Get["/"] = p => GetMessageBoards(p.eventId);
             Get["/{messageBoardId}/messages"] = p => GetMessages(p.messageBoardId);
-            Post["/{id}"] = _ => PostMessage();
+            Post["/{messageBoardId}"] = _ => PostMessage();
             Delete["/{messageBoardId}/messages/{messageId}"] = p => DeleteMessage(p.messageBoardId, p.messageId);
             Put["/{messageBoardId}/messages/{messageId}"] = _ => UpdateMessage();
         }
@@ -120,6 +120,8 @@ namespace benandkatiegetmarried.Modules.GuestModules
         private dynamic PostMessage()
         {
             var request = this.Bind<Message>();
+            request.MessageBoardId = this.Context.Parameters["messageBoardId"];
+
             var validationResult = _messageValidator.Validate(request);
             if (validationResult.IsValid)
             {

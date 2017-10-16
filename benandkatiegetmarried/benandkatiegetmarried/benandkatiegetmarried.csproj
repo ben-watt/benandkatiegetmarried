@@ -219,6 +219,7 @@
     <Compile Include="Models\Invite.cs" />
     <Compile Include="Models\Meal.cs" />
     <Compile Include="Models\Message.cs" />
+    <Compile Include="Models\MessageAttribution.cs" />
     <Compile Include="Models\MessageBoard.cs" />
     <Compile Include="Models\PetaPoco.cs" />
     <Compile Include="Models\RSVP.cs" />
