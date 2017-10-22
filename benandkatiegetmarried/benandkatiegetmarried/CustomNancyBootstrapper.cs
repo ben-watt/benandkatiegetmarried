@@ -9,12 +9,18 @@ using benandkatiegetmarried.Common.ErrorHandling;
 using Nancy.Cryptography;
 using benandkatiegetmarried.Common.ModuleService;
 using benandkatiegetmarried.DAL.Login;
-using Nancy.Cookies;
+using Newtonsoft.Json;
 
 namespace benandkatiegetmarried
 {
     public class CustomNancyBootstrapper : DefaultNancyBootstrapper
     {
+
+        protected override void ConfigureApplicationContainer(TinyIoCContainer container)
+        {
+            base.ConfigureApplicationContainer(container);
+            container.Register<JsonSerializer, CustomJsonSerializer>();
+        }
         protected override TinyIoCContainer GetApplicationContainer()
         {
             return new TinyIoCContainer();

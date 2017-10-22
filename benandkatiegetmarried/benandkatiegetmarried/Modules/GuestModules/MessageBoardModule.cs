@@ -12,6 +12,7 @@ using Nancy.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -44,32 +45,38 @@ namespace benandkatiegetmarried.Modules.GuestModules
         private dynamic GetMessages(dynamic id)
         {
             var inviteQuery = this.Request.Query["for-invite"];
-            if (inviteQuery != null)
+            if (IsGuid(id) && (inviteQuery == null || IsGuid(inviteQuery)))
             {
-                return GetMessagesForInviteFromBoard(id, inviteQuery);
-            }
-            return GetAllMessagesOnBoard(id);
-        }
+                var messages = inviteQuery
+                ? _queries.GetMessagesFromInvite((Guid)id, (Guid)inviteQuery)
+                : _queries.GetMessages((Guid)id);
 
-        private dynamic GetMessagesForInviteFromBoard(dynamic messageBoardId, dynamic inviteQuery)
-        {
-            if(IsGuid(messageBoardId) && IsGuid(inviteQuery))
-            {
-                var response = _queries.GetMessagesFromInvite(messageBoardId, inviteQuery);
-                return response;
+                var messageIds = messages.Select(x => x.Id);
+                var likes = _queries.GetLikes(messageIds);
+                var attributions = _queries.GetAttributions(messageIds);
+
+                map(messages, likes, (m,g) => m.Likes.Add(g));
+                map(messages, attributions, (m, g) => m.Attributions.Add(g));
+
+                return messages;
             }
             return ErrorResponse.FromError(
                 new Error() { ErrorMessage = "Message Board Id and Invite Query must be Guids" })
                 .WithStatusCode(HttpStatusCode.BadRequest);
         }
-        private dynamic GetAllMessagesOnBoard(dynamic id)
+
+        private void map(IEnumerable<Message> messages, IEnumerable<MessageGuest> likes, Action<Message, MessageGuest> action)
         {
-            if (IsGuid(id))
+            foreach (var message in messages)
             {
-                var response = _queries.GetMessages(id);
-                return response;
+                foreach (var like in likes)
+                {
+                    if (message.Id == like.MessageId)
+                    {
+                        action.Invoke(message, like);
+                    }
+                }
             }
-            return HttpStatusCode.BadRequest;
         }
 
         private bool IsGuid(dynamic possibleGuid)

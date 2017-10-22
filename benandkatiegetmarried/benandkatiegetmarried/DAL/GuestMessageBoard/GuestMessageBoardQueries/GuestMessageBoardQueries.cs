@@ -31,8 +31,14 @@ namespace benandkatiegetmarried.DAL.GuestMessageBoard.GuestMessageBoardQueries
             IEnumerable<Message> resultSet;
             using (var uow = _db.GetTransaction())
             {
-                resultSet = _db.Query<Models.Message>(@"WHERE MessageBoardId = @0", messageBoardId);
-            
+                resultSet = _db.Query<Message>(@"SELECT Id,
+                                                    MessageBoardId,
+                                                    Text,
+                                                    Date,
+                                                    Hierarchy.ToString() AS Hierarchy,
+                                                    Hierarchy.GetLevel() AS HierarchyLevel
+                                                 FROM core.Messages
+                                                 WHERE MessageBoardId = @0", messageBoardId).ToList();
                 uow.Complete();
             }
             return resultSet;
@@ -43,13 +49,54 @@ namespace benandkatiegetmarried.DAL.GuestMessageBoard.GuestMessageBoardQueries
             IEnumerable<Message> resultSet;
             using (var uow = _db.GetTransaction())
             {
-                resultSet = _db.Query<Models.Message>(@"SELECT m.*, g.*
-                                                        FROM core.Messages AS m
-                                                            INNER JOIN core.MessageAttributions AS ma
-	                                                           ON m.Id = ma.MessageId
-                                                            INNER JOIN core.Guests AS g 
-                                                       WHERE MessageBoardId = @0 AND InviteId = @1",
-                                                       messageBoardId, inviteId);
+                resultSet = _db.Query<Message>(@"SELECT Id,
+                                                    MessageBoardId,
+                                                    Text,
+                                                    Date,
+                                                    Hierarchy.ToString() AS Hierarchy,
+                                                    Hierarchy.GetLevel() AS HierarchyLevel
+                                                FROM core.Messages AS m
+                                                    INNER JOIN core.MessageAttributions AS ma
+	                                                    ON m.Id = ma.MessageId
+                                                    INNER JOIN core.Guests AS g 
+                                                WHERE MessageBoardId = @0 AND InviteId = @1",
+                                                       messageBoardId, inviteId).ToList();
+                uow.Complete();
+            }
+            return resultSet;
+        }
+
+        public IEnumerable<Models.MessageGuest> GetLikes(IEnumerable<Guid> messageIds)
+        {
+            IEnumerable<Models.MessageGuest> resultSet;
+            using (var uow = _db.GetTransaction())
+            {
+                resultSet = _db.Query<Models.MessageGuest>(@"SELECT g.Id,
+                                                        g.FirstName,
+                                                        g.LastName,
+                                                        l.MessageId
+                                                        FROM core.likes AS l
+                                                            INNER JOIN core.Guests AS g
+	                                                           ON l.GuestId = g.Id
+                                                        WHERE MessageId IN (@0)", messageIds).ToList();
+                uow.Complete();
+            }
+            return resultSet;
+        }
+
+        public IEnumerable<Models.MessageGuest> GetAttributions(IEnumerable<Guid> messageIds)
+        {
+            IEnumerable<Models.MessageGuest> resultSet;
+            using (var uow = _db.GetTransaction())
+            {
+                resultSet = _db.Query<Models.MessageGuest>(@"SELECT g.Id,
+                                                        g.FirstName,
+                                                        g.LastName,
+                                                        a.MessageId
+                                                        FROM core.MessageAttributions AS a
+                                                            INNER JOIN core.Guests AS g
+	                                                           ON a.GuestId = g.Id
+                                                        WHERE MessageId IN (@0)", messageIds).ToList();
                 uow.Complete();
             }
             return resultSet;

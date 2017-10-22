@@ -12,5 +12,7 @@ namespace benandkatiegetmarried.DAL.GuestMessageBoard.GuestMessageBoardQueries
         IEnumerable<Models.MessageBoard> GetMessageBoards(Guid eventId);
         IEnumerable<Message> GetMessages(Guid messageBoardId);
         IEnumerable<Message> GetMessagesFromInvite(Guid messageBoardId, Guid InviteId);
+        IEnumerable<Models.MessageGuest> GetAttributions(IEnumerable<Guid> messageIds);
+        IEnumerable<Models.MessageGuest> GetLikes(IEnumerable<Guid> messageIds);
     }
 }

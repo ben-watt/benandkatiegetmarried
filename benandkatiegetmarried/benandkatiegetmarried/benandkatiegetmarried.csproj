@@ -171,6 +171,7 @@
     <Compile Include="Common\Validation\VenueValidator.cs" />
     <Compile Include="Common\Validation\WeddingValidator.cs" />
     <Compile Include="ContainerRegistration.cs" />
+    <Compile Include="CustomJsonSerializer.cs" />
     <Compile Include="CustomNancyBootstrapper.cs" />
     <Compile Include="DAL\BaseCommands\BaseCommands.cs" />
     <Compile Include="DAL\BaseCommands\IBaseCommands.cs" />
@@ -215,6 +216,7 @@
     <Compile Include="DAL\Wedding\Query\WeddingQueries.cs" />
     <Compile Include="Logging.cs" />
     <Compile Include="Models\Event.cs" />
+    <Compile Include="Models\MessageGuest.cs" />
     <Compile Include="Models\Guest.cs" />
     <Compile Include="Models\Invite.cs" />
     <Compile Include="Models\Meal.cs" />

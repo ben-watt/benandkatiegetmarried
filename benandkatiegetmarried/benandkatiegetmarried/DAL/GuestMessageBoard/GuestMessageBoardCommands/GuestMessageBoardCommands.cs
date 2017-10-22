@@ -22,7 +22,7 @@ namespace benandkatiegetmarried.DAL.GuestMessageBoard.GuestMessageBoardCommands
             {
                 _db.Insert(message);
 
-                foreach(var sig in message.SignedBy)
+                foreach(var sig in message.Attributions)
                 {
                     _db.Insert(new MessageAttribution(message.Id, sig.Id));
                 }
