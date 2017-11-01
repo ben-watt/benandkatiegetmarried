@@ -11,5 +11,6 @@ namespace benandkatiegetmarried.DAL.GuestMessageBoard.GuestMessageBoardCommands
         void Create(Models.Message message);
         void Update(Models.Message message);
         void Delete(Guid messageBoardId, Guid messageId);
+        void Like(Guid messageId, Guid guestId);
     }
 }

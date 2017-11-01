@@ -1,6 +1,6 @@
 ﻿using benandkatiegetmarried.Common.ErrorHandling;
-using benandkatiegetmarried.Common.ModuleExtensions;
-using benandkatiegetmarried.Common.Validation;
+using benandkatiegetmarried.DAL.Guest.Queries;
+using benandkatiegetmarried.DAL.GuestEventDetails.Queries;
 using benandkatiegetmarried.DAL.GuestMessageBoard.GuestMessageBoardCommands;
 using benandkatiegetmarried.DAL.GuestMessageBoard.GuestMessageBoardQueries;
 using benandkatiegetmarried.Models;
@@ -12,34 +12,45 @@ using Nancy.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace benandkatiegetmarried.Modules.GuestModules
 {
     public class GuestMessageBoard: NancyModule
     { 
         private IGuestMessageBoardQueries _queries;
+        private IGuestEventDetailsQueries<Guid> _guestQueries;
         private IGuestMessageBoardCommands _commands;
         private IValidator<Message> _messageValidator;
 
         public GuestMessageBoard(IGuestMessageBoardQueries queries
             , IGuestMessageBoardCommands commands
-            , IValidator<Message> messageValidator) : base("api/guest/{eventId}/messageboard")
+            , IValidator<Message> messageValidator
+            , IGuestEventDetailsQueries<Guid> guestQueries) : base("api/guest/{eventId}/messageboard")
         {
             this.RequiresAuthentication();
             this.RequiresClaims("Guest");
 
             _queries = queries;
+            _guestQueries = guestQueries;
             _commands = commands;
             _messageValidator = messageValidator;
 
             Get["/"] = p => GetMessageBoards(p.eventId);
             Get["/{messageBoardId}/messages"] = p => GetMessages(p.messageBoardId);
             Post["/{messageBoardId}"] = _ => PostMessage();
+            Post["/{messageBoardId}/messages/{messageId}"] = p => LikeMessage(p.messageId);
             Delete["/{messageBoardId}/messages/{messageId}"] = p => DeleteMessage(p.messageBoardId, p.messageId);
             Put["/{messageBoardId}/messages/{messageId}"] = _ => UpdateMessage();
+        }
+
+        private dynamic LikeMessage(dynamic messageId)
+        {
+            var guests = this.Bind<IEnumerable<Guest>>();
+            foreach (var guest in guests)
+            {
+                _commands.Like((Guid)messageId, guest.Id);
+            }
+            return HttpStatusCode.NoContent;
         }
 
         private dynamic GetMessages(dynamic id)

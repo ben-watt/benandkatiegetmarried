@@ -35,10 +35,21 @@ namespace benandkatiegetmarried.DAL.GuestMessageBoard.GuestMessageBoardCommands
         {
             using (var uow = _db.GetTransaction())
             {
-                _db.Execute(@"DELETE FROM core.messageAtttibutions WHERE MessageId = @1", 
+                _db.Execute(@"DELETE FROM core.Likes WHERE MessageId = @0",
                     messageId.ToString());
-                _db.Execute(@"DELETE FROM core.messages WHERE messageBoardId = @0 AND Id = @1",
+                _db.Execute(@"DELETE FROM core.MessageAttributions WHERE MessageId = @0", 
+                    messageId.ToString());
+                _db.Execute(@"DELETE FROM core.Messages WHERE messageBoardId = @0 AND Id = @1",
                     messageBoardId.ToString() , messageId.ToString());
+                uow.Complete();
+            }
+        }
+
+        public void Like(Guid messageId, Guid guestId)
+        {
+            using (var uow = _db.GetTransaction())
+            {
+                _db.Insert(new Like() { MessageId = messageId, GuestId = guestId });
                 uow.Complete();
             }
         }

@@ -10,8 +10,8 @@ namespace benandkatiegetmarried.Models
         public string Text { get; set; }    
         public DateTime Date { get; set; }
         public string Hierarchy { get; set; }
+        [PetaPoco.ResultColumn]
         public int HierarchyLevel { get; set; }
-
         [PetaPoco.Ignore]
         public IList<MessageGuest> Likes { get; set; } = new List<MessageGuest>();
         [PetaPoco.Ignore]

@@ -216,6 +216,7 @@
     <Compile Include="DAL\Wedding\Query\WeddingQueries.cs" />
     <Compile Include="Logging.cs" />
     <Compile Include="Models\Event.cs" />
+    <Compile Include="Models\Like.cs" />
     <Compile Include="Models\MessageGuest.cs" />
     <Compile Include="Models\Guest.cs" />
     <Compile Include="Models\Invite.cs" />

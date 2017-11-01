@@ -119,7 +119,7 @@ CREATE TABLE core.MessageBoards (
 CREATE TABLE core.Messages (
 	Id uniqueidentifier NOT NULL,
 	MessageBoardId uniqueidentifier NOT NULL references core.MessageBoards(Id),
-	[Text] varchar(max) NOT NULL,
+	[Text] nvarchar(max) NOT NULL,
 	[Date] datetime2 NOT NULL DEFAULT GETUTCDATE(),
 	[Hierarchy] hierarchyId NOT NULL,
 	CONSTRAINT messages_pkey PRIMARY KEY (Id)
@@ -131,7 +131,7 @@ CREATE TABLE core.Likes (
 	GuestId uniqueidentifier NOT NULL references core.Guests(Id),
 	CONSTRAINT likes_pkey PRIMARY KEY (Id)
 )
-
+				  
 CREATE TABLE core.MessageAttributions (
 	Id uniqueidentifier NOT NULL,
 	MessageId uniqueidentifier NOT NULL references core.Messages(Id),
