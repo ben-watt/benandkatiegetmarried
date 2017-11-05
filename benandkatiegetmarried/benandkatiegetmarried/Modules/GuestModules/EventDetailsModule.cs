@@ -29,6 +29,12 @@ namespace benandkatiegetmarried.Modules.GuestModules
             Get["/event-details"] = p => GetEventDetails(p.eventId);
             Get["/featured-guests"] = p => GetFeaturedGuests(p.eventId);
             Get["/venue-details"] = p => GetVenueDetails(p.eventId);
+            Get["/invite-type"] = p => GetInviteType();
+        }
+
+        private dynamic GetInviteType()
+        {
+            return _queries.GetInviteType(this._invite.Id);
         }
 
         private dynamic GetGuestsOnInvite()

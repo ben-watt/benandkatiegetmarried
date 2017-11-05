@@ -9,5 +9,6 @@ namespace benandkatiegetmarried.DAL.GuestEventDetails.Queries
         IEnumerable<Models.Venue> GetVenueDetails(TKey eventId);
         IEnumerable<Models.Guest> GetFeaturedGuests(TKey eventId);
         IEnumerable<Models.Guest> GetGuestsOnInvite(TKey inviteId);
+        string GetInviteType(TKey inviteId);
     }
 }

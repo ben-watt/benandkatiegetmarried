@@ -263,7 +263,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\spa\" />
-    <Folder Include="DAL\Invite\" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />

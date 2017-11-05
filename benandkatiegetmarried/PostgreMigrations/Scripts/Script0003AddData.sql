@@ -7,7 +7,7 @@ DECLARE @eventId uniqueidentifier = '50a3e288-4332-40b3-aff7-8f5db6e8783d'
 BEGIN 
 
 INSERT INTO core.Events (Id, Name, Type, StartTime, EndTime) VALUES
-(@eventId, 'Ben & Katie Get Married', 'Wedding', '2017-02-24 12:00:00', '2017-02-25 00:00:00');
+(@eventId, 'Ben & Katie Get Married', 'Wedding', '2018-02-24 14:30:00', '2018-02-25 00:00:00');
 
 INSERT INTO core.Weddings (eventId, Bride, Groom) VALUES
 (@eventId, 'Katie', 'Ben');
@@ -21,7 +21,7 @@ INSERT INTO core.UserEventMapping (Id, UserId, eventId) VALUES
 , (NEWID(), @katieId, @eventId);
 
 INSERT INTO core.Invites (Id, eventId, SecurityCode, Password, Greeting, Type) VALUES
-(NEWID(), @eventId, 'ben', '$2a$10$dBGckjkQD9Cayr65EITvo.ksOr07d7YA97AYCvMHd..4ubFkZLEx.', null, 'Day');
+(NEWID(), @eventId, 'ben', '$2a$10$dBGckjkQD9Cayr65EITvo.ksOr07d7YA97AYCvMHd..4ubFkZLEx.', null, 'day');
 
 INSERT INTO core.Venues (Id, eventId, Name, AddressLine1, AddressLine2, Town, County, PostCode, Country, Telephone, Website) VALUES
 (NEWID(),

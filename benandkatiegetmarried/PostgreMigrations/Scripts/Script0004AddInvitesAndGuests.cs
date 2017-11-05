@@ -40,7 +40,7 @@ namespace PostgreMigrations.Scripts
 
                     script.Append(@"INSERT INTO core.Invites (Id, EventId, SecurityCode, Password, Greeting, Type) ");
                     script.AppendFormat(@"VALUES ('{0}', '{1}', '{2}', '{3}', null , '{4}'); ",
-                        inviteId, eventId, generator.Generate(), password, "Day");
+                        inviteId, eventId, generator.Generate(), password, "day");
                 }
 
                 script.Append(@"INSERT INTO core.Guests (Id, EventId, InviteId, 

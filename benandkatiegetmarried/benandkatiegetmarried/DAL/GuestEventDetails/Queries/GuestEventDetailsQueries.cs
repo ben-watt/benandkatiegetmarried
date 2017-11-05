@@ -48,6 +48,18 @@ namespace benandkatiegetmarried.DAL.GuestEventDetails.Queries
             return guests;
         }
 
+        public string GetInviteType(Guid inviteId)
+        {
+            string inviteType = "Day";
+            using(var uow = _db.GetTransaction())
+            {
+                inviteType = _db.Query<string>(@"SELECT Type
+                                    FROM core.Invites
+                                    WHERE Id = @0", inviteId).FirstOrDefault();
+            }
+            return inviteType;
+        }
+
         public IEnumerable<Models.Venue> GetVenueDetails(Guid eventId)
         {
             IEnumerable<Models.Venue> venues;
