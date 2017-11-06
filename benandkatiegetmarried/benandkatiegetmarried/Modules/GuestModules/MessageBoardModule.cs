@@ -11,6 +11,7 @@ using Nancy.Responses;
 using Nancy.Security;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 
 namespace benandkatiegetmarried.Modules.GuestModules
@@ -53,14 +54,14 @@ namespace benandkatiegetmarried.Modules.GuestModules
             return HttpStatusCode.NoContent;
         }
 
-        private dynamic GetMessages(dynamic id)
+        private dynamic GetMessages(dynamic messageBoardId)
         {
             var inviteQuery = this.Request.Query["for-invite"];
-            if (IsGuid(id) && (inviteQuery == null || IsGuid(inviteQuery)))
+            if (IsGuid(messageBoardId) && (inviteQuery == null || IsGuid(inviteQuery)))
             {
                 var messages = inviteQuery
-                ? _queries.GetMessagesFromInvite((Guid)id, (Guid)inviteQuery)
-                : _queries.GetMessages((Guid)id);
+                ? _queries.GetMessagesFromInvite((Guid)messageBoardId, (Guid)inviteQuery)
+                : _queries.GetMessages((Guid)messageBoardId);
 
                 var messageIds = messages.Select(x => x.Id);
                 var likes = _queries.GetLikes(messageIds);

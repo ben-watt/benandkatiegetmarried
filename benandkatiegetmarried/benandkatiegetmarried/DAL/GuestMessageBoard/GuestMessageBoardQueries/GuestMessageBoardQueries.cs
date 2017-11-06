@@ -66,12 +66,16 @@ namespace benandkatiegetmarried.DAL.GuestMessageBoard.GuestMessageBoardQueries
             return resultSet;
         }
 
-        public IEnumerable<Models.MessageGuest> GetLikes(IEnumerable<Guid> messageIds)
+        public IEnumerable<MessageGuest> GetLikes(IEnumerable<Guid> messageIds)
         {
-            IEnumerable<Models.MessageGuest> resultSet;
+            IEnumerable<MessageGuest> resultSet = new List<MessageGuest>();
+
+            if (messageIds.Count() == 0)
+                return resultSet;
+
             using (var uow = _db.GetTransaction())
             {
-                resultSet = _db.Query<Models.MessageGuest>(@"SELECT g.Id,
+                resultSet = _db.Query<MessageGuest>(@"SELECT g.Id,
                                                         g.FirstName,
                                                         g.LastName,
                                                         l.MessageId
@@ -84,9 +88,13 @@ namespace benandkatiegetmarried.DAL.GuestMessageBoard.GuestMessageBoardQueries
             return resultSet;
         }
 
-        public IEnumerable<Models.MessageGuest> GetAttributions(IEnumerable<Guid> messageIds)
+        public IEnumerable<MessageGuest> GetAttributions(IEnumerable<Guid> messageIds)
         {
-            IEnumerable<Models.MessageGuest> resultSet;
+            IEnumerable<MessageGuest> resultSet = new List<MessageGuest>();
+
+            if (messageIds.Count() == 0)
+                return resultSet;
+
             using (var uow = _db.GetTransaction())
             {
                 resultSet = _db.Query<Models.MessageGuest>(@"SELECT g.Id,
