@@ -26,7 +26,7 @@ INSERT INTO core.Invites (Id, eventId, SecurityCode, Password, Greeting, Type) V
 INSERT INTO core.Venues (Id, eventId, Name, AddressLine1, AddressLine2, Town, County, PostCode, Country, Telephone, Website) VALUES
 (NEWID(),
 @eventId, 
-'Worsley Park Marriott Hotel & Country Club',
+'The Worsley Park Marriott Hotel & Country Club',
 'Worsley Park',
 'Worsley',
 'Manchester',
