@@ -50,9 +50,6 @@ namespace benandkatiegetmarried.DAL.Login
         }
         public IUserIdentity GetUserFromIdentifier(Guid identifier, NancyContext context)
         {
-
-            _log.Information($"Request Context HashCode: {context.GetHashCode()}");
-
             if (context.Request.Url.Path.Contains("/guest/"))
             {
                 return GetFromIdentifier<Invite>(identifier);
@@ -62,10 +59,6 @@ namespace benandkatiegetmarried.DAL.Login
 
         private IUserIdentity GetFromIdentifier<T>(Guid identifier) where T : IUserIdentity
         {
-            _log.Information("Get From Identifier Called");
-            _log.Information($"Database Hash: {_db.GetHashCode()}");
-            _log.Information($"LoginQuery Hash: {this.GetHashCode()}");
-
             T entity;
 
             using (var uow = _db.GetTransaction())

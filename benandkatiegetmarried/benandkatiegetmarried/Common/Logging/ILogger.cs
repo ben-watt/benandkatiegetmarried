@@ -8,9 +8,13 @@ namespace benandkatiegetmarried.Common.Logging
 {
     public interface ILogger
     {
-        void Error(string message);
-        void Warning(string message);
+        void SetSessionId(string userId);
+        void Error(Exception error);
         void Information(string message);
+        void Information(string message, IDictionary<string, string> data);
         void Information(string format, params object[] args);
+        void Warning(string message);
+        void Metric(string name, double value, IDictionary<string, string> propertys = null);
+        void Request(IDictionary<string,string> properties );
     }
 }

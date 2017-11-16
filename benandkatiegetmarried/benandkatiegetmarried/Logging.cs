@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Nancy;
 using benandkatiegetmarried.Common.Logging;
+using Microsoft.ApplicationInsights;
+using benandkatiegetmarried.Models;
 
 namespace benandkatiegetmarried
 {
@@ -23,24 +25,22 @@ namespace benandkatiegetmarried
             {
                 var c = (NancyContext)ctx;
                 c.Items["stopwatch"] = DateTime.UtcNow;
-                _log.Information("Request Starting");
+                var invite = (Invite)ctx?.CurrentUser;
+                _log.SetSessionId(invite?.Id.ToString());
                 return null;
             });
 
             pipelines.AfterRequest.AddItemToEndOfPipeline((ctx) =>
             {
-                _log.Information("Ending Request");
+                var startTime = (DateTime)ctx.Items["stopwatch"];
+                var requestTime = (DateTime.UtcNow - startTime);
 
-                var requestTime = (DateTime.UtcNow - (DateTime)ctx.Items["stopwatch"]).TotalSeconds;
-                _log.Information("Request took {0}s", requestTime);
+                _log.Request(new Dictionary<string, string>());
             });
 
             pipelines.OnError.AddItemToEndOfPipeline((ctx, ex) =>
             {
-                _log.Error(ex.Message);
-                _log.Error(ex.StackTrace);
-                _log.Error(ex.TargetSite.MethodHandle.ToString());
-                _log.Error(ex.TargetSite.Module.FullyQualifiedName);
+                _log.Error(ex);
                 return null;
             });
         }

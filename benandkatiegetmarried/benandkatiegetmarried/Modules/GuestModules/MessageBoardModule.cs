@@ -1,5 +1,4 @@
 ﻿using benandkatiegetmarried.Common.ErrorHandling;
-using benandkatiegetmarried.DAL.Guest.Queries;
 using benandkatiegetmarried.DAL.GuestEventDetails.Queries;
 using benandkatiegetmarried.DAL.GuestMessageBoard.GuestMessageBoardCommands;
 using benandkatiegetmarried.DAL.GuestMessageBoard.GuestMessageBoardQueries;
@@ -11,7 +10,6 @@ using Nancy.Responses;
 using Nancy.Security;
 using System;
 using System.Collections.Generic;
-using System.Dynamic;
 using System.Linq;
 
 namespace benandkatiegetmarried.Modules.GuestModules
