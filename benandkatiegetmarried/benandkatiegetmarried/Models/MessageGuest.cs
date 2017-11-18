@@ -8,6 +8,7 @@ namespace benandkatiegetmarried.Models
     public class MessageGuest
     {
         public Guid Id { get; set; }
+        public Guid InviteId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public Guid MessageId { get; set; }

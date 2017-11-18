@@ -12,6 +12,7 @@ namespace benandkatiegetmarried.Models
             this.Id = Guid.NewGuid();
         }
         public Guid Id { get; set; }
+        public Guid InviteId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public bool IsFeatured { get; set; }

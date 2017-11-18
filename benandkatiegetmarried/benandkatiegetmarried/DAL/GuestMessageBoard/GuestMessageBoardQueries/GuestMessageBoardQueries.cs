@@ -78,6 +78,7 @@ namespace benandkatiegetmarried.DAL.GuestMessageBoard.GuestMessageBoardQueries
                 resultSet = _db.Query<MessageGuest>(@"SELECT g.Id,
                                                         g.FirstName,
                                                         g.LastName,
+                                                        g.InviteId,
                                                         l.MessageId
                                                         FROM core.likes AS l
                                                             INNER JOIN core.Guests AS g
@@ -100,6 +101,7 @@ namespace benandkatiegetmarried.DAL.GuestMessageBoard.GuestMessageBoardQueries
                 resultSet = _db.Query<Models.MessageGuest>(@"SELECT g.Id,
                                                         g.FirstName,
                                                         g.LastName,
+                                                        g.InviteId,
                                                         a.MessageId
                                                         FROM core.MessageAttributions AS a
                                                             INNER JOIN core.Guests AS g
