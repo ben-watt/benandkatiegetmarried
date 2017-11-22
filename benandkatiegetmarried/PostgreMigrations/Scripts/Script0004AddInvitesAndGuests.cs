@@ -27,8 +27,8 @@ namespace PostgreMigrations.Scripts
                 var inviteId = Guid.Empty;
                 var guestArray = guest.Split(',');
                 var inviteGroup = guestArray[0];
-                var firstName = guestArray[1];
-                var lastName = guestArray[2];
+                var firstName = guestArray[1].Trim();
+                var lastName = guestArray[2].Trim();
                 var isFeatured = guestArray[3];
                 var lastInviteGroup = -1;
 
