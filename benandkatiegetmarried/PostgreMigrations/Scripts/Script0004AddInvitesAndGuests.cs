@@ -3,13 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Data;
 using Generators;
 using System.IO;
 using benandkatiegetmarried.Common.Security;
-using benandkatiegetmarried.Models;
-using System.Linq.Expressions;
 using System.Collections;
 using System.Reflection;
 
@@ -50,8 +47,8 @@ namespace PostgreMigrations.Scripts
                         InviteId = invites.Get(row.Split(',')[0]).Id,
                         FirstName = row.Split(',')[1],
                         LastName = row.Split(',')[2],
-                        IsFeatured = false,
-                        Type = row.Split(',')[3]
+                        Type = row.Split(',')[3],
+                        IsFeatured = row.Split(',')[4]
                     });
 
 

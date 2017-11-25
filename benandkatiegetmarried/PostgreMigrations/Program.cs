@@ -1,13 +1,8 @@
-﻿using benandkatiegetmarried.Common.Security;
-using DbUp;
+﻿using DbUp;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PostgreMigrations
 {
@@ -16,7 +11,7 @@ namespace PostgreMigrations
         static void Main(string[] args)
         {
 
-            var conn = "database";
+            var conn = "azure";
 
             if (args.Count() > 0)
                 conn = args[0];
