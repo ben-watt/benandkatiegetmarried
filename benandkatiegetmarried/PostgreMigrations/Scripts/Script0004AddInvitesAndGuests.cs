@@ -18,7 +18,6 @@ namespace PostgreMigrations.Scripts
         {
 
             var generator = new WordGeneratorBuilder()
-                .WordFilter(x => x.Length > 2 && x.Length < 5)
                 .Build();
 
 
@@ -31,12 +30,13 @@ namespace PostgreMigrations.Scripts
             var rows = File.ReadAllLines(INPUT_FILE)
                     .GroupBy(row => new InviteGroup(row.GetId(), row.Split(',')[3]))
                     .TeeEach<IEnumerable<IGrouping<InviteGroup, string>>, IGrouping<InviteGroup, string>>(group => {
+                        var secureCode = generator.GeneratePair();
                         invites.Add(group.Key.Id, new Invite()
                         {
                             Id = Guid.NewGuid(),
                             EventId = EVENT_ID,
-                            SecurityCode = generator.Generate(),
-                            Password = generator.Generate(),
+                            SecurityCode = secureCode.Key,
+                            Password = secureCode.Value,
                             Type = group.Key.Type
                         });
                     })
@@ -86,6 +86,16 @@ namespace PostgreMigrations.Scripts
         {
             Id = id;
             Type = type;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return ((InviteGroup)obj).Id == Id ? true : false;
+        }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
         }
     }
 
