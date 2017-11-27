@@ -31,9 +31,9 @@
 17,Francine,Lann,day,0
 19,Irvine,Lann,day,1
 19,Sharon,Tobias,day,0
-20,Esther,Cohen,day,1
+21,Esther,Cohen,day,
 21,Marcia,Flowers,day,1
-21,Ian,Flowers,day,0
+21,Ian,Flowers,day,1
 22,Joyce,Slome,day,1
 22,Anthony,Slome,day,0
 23,Brian,Cohen,day,1
@@ -87,7 +87,7 @@
 49,Vic,Carlton,day,0
 50,Hannah,Watt,day,1
 51,Ruth,Pynegar,day,1
-51,Gary,Barlow,day,1
+51,Gary,Barlow,day,0
 51,Imogen,Pynegar,day,0
 51,Lola,Pynegar,day,0
 52,Christopher,Watt,day,1
@@ -96,12 +96,10 @@
 53,Clare,Watt,day,0
 54,Laura,Watt,day,1
 55,Nancy,Watt,day,1
-56,Wendy,Brunt,day,1
-56,Ian,Brunt,day,1
-56,Reece,Brunt,day,0
-56,Charlotte,Brunt,day,0
 57,Sharon,Whittaker,day,1
 57,Matthew,Whittaker,day,0
+58,David,Kinder,day,1
+58,Liz,,day,0
 59,Dorothy,Whittaker,day,1
 60,Jim,Taylor,day,1
 60,Lynnette,Taylor,day,0
@@ -146,11 +144,6 @@
 82,Ian,Watt,day,1
 82,Kirsty,Watt,day,0
 82,Kate,Watt,day,0
-83,Ians,sister,day,1
-83,the,husband,day,0
-83,daghter,one,day,0
-83,daughter,two,day,0
-83,daughter,three,day,0
 84,Thomas,Gavin,evening,1
 85,Laura,Clarke,evening,1
 86,Thomas,Cresswell,evening,1
@@ -168,3 +161,6 @@
 94,Deborah,Finley,evening,1
 95,Scott,Halls,day,1
 95,Kirsty,Fallon,day,0
+96,Joe,Gubba,evening,0
+96,Mike,Gubba,evening,1
+96,Kim,Gubba,evening,0
