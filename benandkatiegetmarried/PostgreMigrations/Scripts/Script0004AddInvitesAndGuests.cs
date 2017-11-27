@@ -22,7 +22,7 @@ namespace PostgreMigrations.Scripts
 
 
             var EVENT_ID = Guid.Parse("50a3e288-4332-40b3-aff7-8f5db6e8783d");
-            var OUTPUT_FILE = "C:\\Users\\ben.watt\\Desktop\\invites.csv";
+            var OUTPUT_FILE = @"C:\Users\ben.watt\Desktop\invites.csv";
             var INPUT_FILE = @"Content\guests.csv";
 
             var invites = new InviteIdGenerator();
@@ -65,7 +65,7 @@ namespace PostgreMigrations.Scripts
                 (sb, invite) => sb.AppendFormatLine(2,
                     @"INSERT INTO core.Invites (Id, EventId, SecurityCode, Password, Greeting, Type)  
                         VALUES ('{0}', '{1}', '{2}', '{3}', null , '{4}');",
-                      invite.Value.Id, invite.Value.EventId, invite.Value.SecurityCode, invite.Value.Password.EncryptPassword(), "day"))
+                      invite.Value.Id, invite.Value.EventId, invite.Value.SecurityCode, invite.Value.Password.EncryptPassword(), invite.Value.Type))
                .AppendSequence(rows, (sb, row) =>
                     sb.AppendFormatLine(2,
                     @"INSERT INTO core.Guests (Id, EventId, InviteId, FirstName, LastName, IsFeatured) 
