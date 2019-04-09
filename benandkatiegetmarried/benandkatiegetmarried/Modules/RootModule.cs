@@ -1,4 +1,5 @@
 ﻿using benandkatiegetmarried.Common.ErrorHandling;
+using benandkatiegetmarried.Common.Logging;
 using benandkatiegetmarried.DAL.UserEvents;
 using benandkatiegetmarried.UseCases;
 using benandkatiegetmarried.UseCases.Login;
@@ -25,13 +26,15 @@ namespace benandkatiegetmarried.Modules
         private IHandler<UserLoginRequest, UserLoginResponse> _UserLoginHandler;
         private IValidator<GuestLoginRequest> _guestValidator;
         private IValidator<UserLoginRequest> _userValidator;
+        private ILogger _logger;
         private IUserQueries _userEventQueries;
 
         public RootModule(IHandler<GuestLoginRequest, GuestLoginResponse> guestLoginHandler
             , IHandler<UserLoginRequest, UserLoginResponse> userLoginHandler
             , IValidator<GuestLoginRequest> guestValidator
             , IValidator<UserLoginRequest> userValidator
-            , IUserQueries userEventQueries)
+            , IUserQueries userEventQueries
+            , ILogger logger)
         {
 
             _GuestLoginHandler = guestLoginHandler;
@@ -39,6 +42,7 @@ namespace benandkatiegetmarried.Modules
             _userEventQueries = userEventQueries;
             _guestValidator = guestValidator;
             _userValidator = userValidator;
+            _logger = logger;
 
             Get["/"] = _ => Response.AsFile("Content/spa/index.html", "text/html");
             Post["api/user-login"] = _ => UserLogin();
@@ -75,15 +79,30 @@ namespace benandkatiegetmarried.Modules
             var guestValidation = _guestValidator.Validate(request);
             if (!guestValidation.IsValid)
             {
+                _logger.Information("Login Error", new Dictionary<string, string>() {
+                    { "Request", JsonConvert.SerializeObject(request) }
+                });
+
                 return ErrorResponse.ValidationError(guestValidation.Errors);
             }
 
             var response = _GuestLoginHandler.Handle(request);
             if (response.IsValid)
             {
+                _logger.Information("Login Successful", new Dictionary<string, string>() {
+                    { "InviteId", response.InviteId.ToString() },
+                    { "Request", JsonConvert.SerializeObject(request) }
+                });
+
                 return LoginWithRememberMe(response.InviteId, 
                     "{ \"eventId\" : \""+ response.EventId + "\"}");
             }
+
+            _logger.Information("Unauthorised Request", new Dictionary<string, string>() {
+                    { "InviteId", response.InviteId.ToString() },
+                    { "Request", JsonConvert.SerializeObject(request) }
+                });
+
             return RedirectAsUnauthorised();
         }
 

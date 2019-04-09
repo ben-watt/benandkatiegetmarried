@@ -10,6 +10,7 @@ using Nancy.Cryptography;
 using benandkatiegetmarried.Common.ModuleService;
 using benandkatiegetmarried.DAL.Login;
 using Newtonsoft.Json;
+using benandkatiegetmarried.Common.Logging;
 
 namespace benandkatiegetmarried
 {
@@ -49,8 +50,7 @@ namespace benandkatiegetmarried
             };
 
             FormsAuthentication.Enable(pipelines, authConfig);
-            ErrorHandling.Enable(pipelines);
-
+            ErrorHandling.Enable(pipelines, container.Resolve<ILogger>());
 
             var modules = this.GetAllModules(context);
             container.Register(typeof(IModuleService), new ModuleService(modules));

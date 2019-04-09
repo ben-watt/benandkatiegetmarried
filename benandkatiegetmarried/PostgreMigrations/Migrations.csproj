@@ -51,7 +51,7 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Scripts\Script0004AddInvitesAndGuests.cs" />
+    <Compile Include="Scripts\Script0007AddInvitesAndGuests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
